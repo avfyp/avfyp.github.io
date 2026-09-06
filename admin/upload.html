@@ -6,852 +6,162 @@
 
     <title>AVFYP Admin</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body {
-            min-height: 100%;
-            background: #0d0d0d;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            padding: 30px 15px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 700px;
-            margin: auto;
-        }
-
-        h1 {
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #777;
-            font-size: 13px;
-            margin-bottom: 25px;
-        }
-
-        .box {
-            background: #151515;
-            border: 1px solid #292929;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 18px;
-        }
-
-        .field {
-            margin-bottom: 17px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #2d2d2d;
-            border-radius: 7px;
-            outline: none;
-            background: #0d0d0d;
-            color: #fff;
-            font-size: 14px;
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: #555;
-        }
-
-        .hint {
-            display: block;
-            color: #666;
-            font-size: 11px;
-            margin-top: 6px;
-        }
-
-        .checkbox {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
-
-        .checkbox input {
-            width: auto;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        button {
-            border: 1px solid #303030;
-            border-radius: 7px;
-            padding: 13px;
-            background: #222;
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        button:hover {
-            background: #2d2d2d;
-        }
-
-        .primary {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-            font-weight: bold;
-        }
-
-        .primary:hover {
-            background: #ddd;
-        }
-
-        .danger {
-            background: #1b1111;
-        }
-
-        .result {
-            display: none;
-        }
-
-        .result.active {
-            display: block;
-        }
-
-        .result-title {
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            word-break: break-word;
-            background: #0a0a0a;
-            border: 1px solid #252525;
-            border-radius: 7px;
-            padding: 13px;
-            color: #aaa;
-            font-size: 11px;
-            line-height: 1.6;
-            max-height: 400px;
-            overflow: auto;
-        }
-
-        .success {
-            display: none;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #101a10;
-            border: 1px solid #263826;
-            border-radius: 7px;
-            color: #aaa;
-            font-size: 13px;
-        }
-
-        .success.active {
-            display: block;
-        }
-
-        @media (max-width: 500px) {
-            body {
-                padding: 20px 12px;
-            }
-
-            .box {
-                padding: 15px;
-            }
-
-            .buttons {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="upload.css">
 </head>
 
 <body>
 
-<div class="container">
+    <main class="admin-container">
 
-    <h1>AVFYP Admin</h1>
+        <h1>AVFYP Admin</h1>
 
-    <p class="subtitle">
-        Buat postingan video baru
-    </p>
-
-    <div id="success" class="success"></div>
-
-    <div class="box">
-
-        <div class="field">
-            <label for="title">
-                Judul Video
-            </label>
-
-            <input
-                type="text"
-                id="title"
-                placeholder="Contoh: Video Viral Hari Ini"
-            >
-        </div>
+        <p class="subtitle">
+            Buat postingan video baru
+        </p>
 
 
-        <div class="field">
-            <label for="slug">
-                Slug / URL
-            </label>
+        <section class="form-card">
 
-            <input
-                type="text"
-                id="slug"
-                placeholder="video-viral-hari-ini"
-            >
+            <div class="field">
 
-            <small class="hint">
-                Hasil: avfyp.github.io/v/video-viral-hari-ini
-            </small>
-        </div>
+                <label for="title">
+                    Judul Video
+                </label>
 
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Masukkan judul video"
+                    autocomplete="off"
+                >
 
-        <div class="field">
-            <label for="description">
-                Deskripsi
-            </label>
-
-            <textarea
-                id="description"
-                placeholder="Deskripsi video..."
-            ></textarea>
-        </div>
+            </div>
 
 
-        <div class="field">
-            <label for="thumbnail">
-                Thumbnail URL
-            </label>
+            <div class="field">
 
-            <input
-                type="url"
-                id="thumbnail"
-                placeholder="https://example.com/thumb.jpg"
-            >
+                <label for="slug">
+                    Slug / URL
+                </label>
 
-            <small class="hint">
-                Opsional. Boleh dikosongkan.
-            </small>
-        </div>
+                <input
+                    type="text"
+                    id="slug"
+                    placeholder="judul-video"
+                    autocomplete="off"
+                >
 
+                <small id="urlPreview">
+                    https://avfyp.github.io/v/judul-video
+                </small>
 
-        <div class="field">
-            <label for="st">
-                Streamtape / ST
-            </label>
-
-            <input
-                type="url"
-                id="st"
-                placeholder="https://streamtape.com/e/..."
-            >
-
-            <small class="hint">
-                ST adalah server utama.
-            </small>
-        </div>
+            </div>
 
 
-        <div class="field">
-            <label for="gd">
-                Google Drive / GD
-            </label>
+            <div class="field">
 
-            <input
-                type="url"
-                id="gd"
-                placeholder="https://drive.google.com/file/d/.../view"
-            >
+                <label for="st">
+                    Streamtape / ST
+                </label>
 
-            <small class="hint">
-                Opsional. Link Drive otomatis menjadi /preview.
-            </small>
-        </div>
+                <input
+                    type="url"
+                    id="st"
+                    placeholder="https://streamtape.com/..."
+                    autocomplete="off"
+                >
 
+                <small>
+                    Server utama
+                </small>
 
-        <div class="field checkbox">
-            <input
-                type="checkbox"
-                id="popular"
-            >
-
-            <label for="popular">
-                Jadikan Populer
-            </label>
-        </div>
+            </div>
 
 
-        <div class="buttons">
+            <div class="field">
+
+                <label for="gd">
+                    Google Drive / GD
+                </label>
+
+                <input
+                    type="url"
+                    id="gd"
+                    placeholder="https://drive.google.com/file/d/..."
+                    autocomplete="off"
+                >
+
+                <small>
+                    Opsional
+                </small>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="thumbnail">
+                    Thumbnail
+                </label>
+
+                <div class="thumbnail-status" id="thumbnailStatus">
+                    Otomatis dari ST jika tersedia
+                </div>
+
+                <input
+                    type="url"
+                    id="thumbnail"
+                    placeholder="Kosongkan untuk otomatis"
+                    autocomplete="off"
+                >
+
+                <small>
+                    Bisa dikosongkan.
+                    Sistem akan mencoba menggunakan thumbnail ST.
+                </small>
+
+            </div>
+
 
             <button
-                class="primary"
-                id="generateButton"
+                id="uploadButton"
+                class="upload-button"
             >
-                Generate
+                Upload / Buat Video
             </button>
 
-            <button
-                class="danger"
-                id="resetButton"
-            >
-                Reset
-            </button>
-
-        </div>
-
-    </div>
+        </section>
 
 
-    <div
-        class="box result"
-        id="result"
-    >
-
-        <div class="result-title">
-            Data Postingan
-        </div>
-
-        <pre id="jsonOutput"></pre>
-
-        <div class="buttons" style="margin-top: 12px;">
-
-            <button id="copyButton">
-                Copy JSON
-            </button>
-
-            <button id="downloadJsonButton">
-                Download JSON
-            </button>
-
-        </div>
-
-        <div
-            class="buttons"
-            style="margin-top: 10px;"
+        <section
+            id="result"
+            class="result-card"
+            hidden
         >
 
-            <button id="downloadHtmlButton">
-                Download HTML Video
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<script>
-
-    const titleInput =
-        document.getElementById("title");
-
-    const slugInput =
-        document.getElementById("slug");
-
-    const descriptionInput =
-        document.getElementById("description");
-
-    const thumbnailInput =
-        document.getElementById("thumbnail");
-
-    const stInput =
-        document.getElementById("st");
-
-    const gdInput =
-        document.getElementById("gd");
-
-    const popularInput =
-        document.getElementById("popular");
-
-    const generateButton =
-        document.getElementById("generateButton");
-
-    const resetButton =
-        document.getElementById("resetButton");
-
-    const result =
-        document.getElementById("result");
-
-    const jsonOutput =
-        document.getElementById("jsonOutput");
-
-    const copyButton =
-        document.getElementById("copyButton");
-
-    const downloadJsonButton =
-        document.getElementById("downloadJsonButton");
-
-    const downloadHtmlButton =
-        document.getElementById("downloadHtmlButton");
-
-    const success =
-        document.getElementById("success");
-
-
-    let generatedPost = null;
-
-
-    function slugify(text) {
-
-        return text
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9\s-]/g, "")
-            .replace(/\s+/g, "-")
-            .replace(/-+/g, "-");
-
-    }
-
-
-    function normalizeDriveUrl(url) {
-
-        if (!url) {
-            return "";
-        }
-
-        const match =
-            url.match(
-                /drive\.google\.com\/file\/d\/([^/]+)/
-            );
-
-        if (match) {
-
-            return (
-                "https://drive.google.com/file/d/" +
-                match[1] +
-                "/preview"
-            );
-
-        }
-
-        return url;
-
-    }
-
-
-    function showMessage(message) {
-
-        success.textContent =
-            message;
-
-        success.classList.add("active");
-
-        setTimeout(() => {
-
-            success.classList.remove("active");
-
-        }, 3000);
-
-    }
-
-
-    generateButton.addEventListener(
-        "click",
-        () => {
-
-            const title =
-                titleInput.value.trim();
-
-            let slug =
-                slugInput.value.trim();
-
-            const description =
-                descriptionInput.value.trim();
-
-            const thumbnail =
-                thumbnailInput.value.trim();
-
-            const st =
-                stInput.value.trim();
-
-            const gd =
-                normalizeDriveUrl(
-                    gdInput.value.trim()
-                );
-
-
-            if (!title) {
-
-                alert("Judul video wajib diisi.");
-
-                return;
-
-            }
-
-
-            if (!slug) {
-
-                slug =
-                    slugify(title);
-
-                slugInput.value =
-                    slug;
-
-            }
-
-
-            if (!st) {
-
-                alert("URL Streamtape / ST wajib diisi.");
-
-                return;
-
-            }
-
-
-            generatedPost = {
-
-                id: Date.now(),
-
-                title: title,
-
-                description:
-                    description,
-
-                slug: slug,
-
-                thumbnail:
-                    thumbnail,
-
-                popular:
-                    popularInput.checked,
-
-                servers: {
-
-                    st: st,
-
-                    gd: gd
-
-                }
-
-            };
-
-
-            jsonOutput.textContent =
-                JSON.stringify(
-                    generatedPost,
-                    null,
-                    4
-                );
-
-
-            result.classList.add("active");
-
-
-            showMessage(
-                "Postingan berhasil dibuat."
-            );
-
-        }
-    );
-
-
-    copyButton.addEventListener(
-        "click",
-        async () => {
-
-            if (!generatedPost) {
-                return;
-            }
-
-            await navigator.clipboard.writeText(
-                JSON.stringify(
-                    generatedPost,
-                    null,
-                    4
-                )
-            );
-
-            showMessage(
-                "JSON berhasil dicopy."
-            );
-
-        }
-    );
-
-
-    downloadJsonButton.addEventListener(
-        "click",
-        () => {
-
-            if (!generatedPost) {
-                return;
-            }
-
-
-            const blob =
-                new Blob(
-                    [
-                        JSON.stringify(
-                            generatedPost,
-                            null,
-                            4
-                        )
-                    ],
-                    {
-                        type:
-                            "application/json"
-                    }
-                );
-
-
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const a =
-                document.createElement("a");
-
-
-            a.href = url;
-
-            a.download =
-                generatedPost.slug +
-                ".json";
-
-
-            a.click();
-
-
-            URL.revokeObjectURL(url);
-
-        }
-    );
-
-
-    downloadHtmlButton.addEventListener(
-        "click",
-        () => {
-
-            if (!generatedPost) {
-                return;
-            }
-
-
-            const html =
-`<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${escapeHtml(generatedPost.title)} - AVFYP</title>
-    <link rel="stylesheet" href="../../css/video.css">
-</head>
-
-<body>
-
-    <header class="video-header">
-        <a href="/" class="back">← AVFYP</a>
-    </header>
-
-    <main class="video-container">
-
-        <h1>${escapeHtml(generatedPost.title)}</h1>
-
-        <div class="player-wrapper">
-
-            <iframe
-                id="videoPlayer"
-                src="${escapeHtml(generatedPost.servers.st)}"
-                allowfullscreen
-                allow="autoplay; fullscreen"
-                loading="lazy">
-            </iframe>
-
-        </div>
-
-        <div class="server-switcher">
+            <h2>Video berhasil dibuat</h2>
+
+            <p>
+                File sudah dibuat. Simpan sebagai:
+            </p>
+
+            <div class="path-box" id="filePath">
+                v/judul-video/index.html
+            </div>
 
             <button
-                class="server-button active"
-                data-server="st">
-                ST
+                id="downloadAgain"
+                class="secondary-button"
+            >
+                Download Lagi
             </button>
 
-            ${
-                generatedPost.servers.gd
-                ? `
-            <button
-                class="server-button"
-                data-server="gd">
-                GD
-            </button>
-            `
-                : ""
-            }
-
-        </div>
-
-        <div class="video-description">
-            ${escapeHtml(generatedPost.description)}
-        </div>
+        </section>
 
     </main>
 
-<script>
 
-const servers = ${JSON.stringify(generatedPost.servers)};
-
-const player =
-    document.getElementById("videoPlayer");
-
-document
-    .querySelectorAll(".server-button")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const server =
-                    button.dataset.server;
-
-                if (!servers[server]) {
-                    return;
-                }
-
-                player.src =
-                    servers[server];
-
-                document
-                    .querySelectorAll(".server-button")
-                    .forEach(btn =>
-                        btn.classList.remove("active")
-                    );
-
-                button.classList.add("active");
-
-            }
-        );
-
-    });
-
-<\/script>
+    <script src="upload.js"></script>
 
 </body>
-</html>`;
-
-
-            const blob =
-                new Blob(
-                    [html],
-                    {
-                        type: "text/html"
-                    }
-                );
-
-
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const a =
-                document.createElement("a");
-
-
-            a.href = url;
-
-            a.download =
-                "index.html";
-
-
-            a.click();
-
-
-            URL.revokeObjectURL(url);
-
-
-            showMessage(
-                "index.html video berhasil dibuat."
-            );
-
-        }
-    );
-
-
-    resetButton.addEventListener(
-        "click",
-        () => {
-
-            titleInput.value = "";
-            slugInput.value = "";
-            descriptionInput.value = "";
-            thumbnailInput.value = "";
-            stInput.value = "";
-            gdInput.value = "";
-            popularInput.checked = false;
-
-            result.classList.remove("active");
-
-            jsonOutput.textContent = "";
-
-            generatedPost = null;
-
-        }
-    );
-
-
-    titleInput.addEventListener(
-        "input",
-        () => {
-
-            if (!slugInput.value) {
-
-                slugInput.value =
-                    slugify(
-                        titleInput.value
-                    );
-
-            }
-
-        }
-    );
-
-
-    function escapeHtml(text) {
-
-        return String(text)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
-    }
-
-</script>
-
-</body>
-              </html>
+</html>
