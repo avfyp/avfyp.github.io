@@ -1,141 +1,13 @@
 /* ==================================================
-   DATA VIDEO
-================================================== */
-
-const videos = [
-
-    {
-        id: 1,
-        title: "Video Pertama",
-        description: "Deskripsi video pertama"
-    },
-
-    {
-        id: 2,
-        title: "Video Kedua",
-        description: "Deskripsi video kedua"
-    },
-
-    {
-        id: 3,
-        title: "Video Ketiga",
-        description: "Deskripsi video ketiga"
-    },
-
-    {
-        id: 4,
-        title: "Video Keempat",
-        description: "Deskripsi video keempat"
-    },
-
-    {
-        id: 5,
-        title: "Video Kelima",
-        description: "Deskripsi video kelima"
-    },
-
-    {
-        id: 6,
-        title: "Video Keenam",
-        description: "Deskripsi video keenam"
-    },
-
-    {
-        id: 7,
-        title: "Video Ketujuh",
-        description: "Deskripsi video ketujuh"
-    },
-
-    {
-        id: 8,
-        title: "Video Kedelapan",
-        description: "Deskripsi video kedelapan"
-    },
-
-    {
-        id: 9,
-        title: "Video Kesembilan",
-        description: "Deskripsi video kesembilan"
-    },
-
-    {
-        id: 10,
-        title: "Video Kesepuluh",
-        description: "Deskripsi video kesepuluh"
-    },
-
-    {
-        id: 11,
-        title: "Video Kesebelas",
-        description: "Deskripsi video kesebelas"
-    },
-
-    {
-        id: 12,
-        title: "Video Keduabelas",
-        description: "Deskripsi video keduabelas"
-    },
-
-    {
-        id: 13,
-        title: "Video Ketigabelas",
-        description: "Deskripsi video ketigabelas"
-    },
-
-    {
-        id: 14,
-        title: "Video Keempatbelas",
-        description: "Deskripsi video keempatbelas"
-    },
-
-    {
-        id: 15,
-        title: "Video Kelimabelas",
-        description: "Deskripsi video kelimabelas"
-    },
-
-    {
-        id: 16,
-        title: "Video Keenambelas",
-        description: "Deskripsi video keenambelas"
-    },
-
-    {
-        id: 17,
-        title: "Video Ketujuhbelas",
-        description: "Deskripsi video ketujuhbelas"
-    },
-
-    {
-        id: 18,
-        title: "Video Kedelapanbelas",
-        description: "Deskripsi video kedelapanbelas"
-    },
-
-    {
-        id: 19,
-        title: "Video Kesembilanbelas",
-        description: "Deskripsi video kesembilanbelas"
-    },
-
-    {
-        id: 20,
-        title: "Video Keduapuluh",
-        description: "Deskripsi video keduapuluh"
-    }
-
-];
-
-
-/* ==================================================
    SETTINGS
 ================================================== */
 
 const POSTS_PER_PAGE = 15;
 
-let currentPage = 1;
+let videos = [];
+let filteredVideos = [];
 
-let filteredVideos = [...videos];
+let currentPage = 1;
 
 
 /* ==================================================
@@ -221,6 +93,93 @@ overlay.addEventListener(
 
 
 /* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* ==================================================
+   LOAD POSTS.JSON
+================================================== */
+
+async function loadPosts() {
+
+    try {
+
+        const response =
+            await fetch("/posts.json?cache=" + Date.now());
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "Format posts.json tidak valid."
+            );
+
+        }
+
+
+        /*
+         * Posting terbaru ditaruh paling atas.
+         *
+         * Worker menambahkan posting baru
+         * ke bagian depan posts.json.
+         */
+
+        videos = data;
+
+        filteredVideos = [...videos];
+
+
+        renderPopular();
+
+        renderVideos();
+
+
+    } catch (error) {
+
+        console.error(
+            "Gagal memuat posts.json:",
+            error
+        );
+
+
+        videoGrid.innerHTML = `
+            <div class="no-result">
+                Gagal memuat daftar video.
+            </div>
+        `;
+
+        popularGrid.innerHTML = "";
+
+    }
+
+}
+
+
+/* ==================================================
    RENDER VIDEO
 ================================================== */
 
@@ -281,23 +240,65 @@ function renderVideos() {
             "video-card";
 
 
+        /*
+         * URL menuju halaman video.
+         */
+
+        const videoUrl =
+            "/v/" +
+            encodeURIComponent(video.slug) +
+            "/";
+
+
+        /*
+         * Thumbnail.
+         *
+         * Kalau tidak ada thumbnail,
+         * tampilkan placeholder VIDEO.
+         */
+
+        const thumbnail =
+            video.thumbnail
+                ? `
+                    <img
+                        src="${escapeHTML(video.thumbnail)}"
+                        alt="${escapeHTML(video.title)}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="thumbnail-placeholder">
+                        VIDEO
+                    </div>
+                `;
+
+
         card.innerHTML = `
 
-            <div class="thumbnail">
-                VIDEO
-            </div>
+            <a
+                href="${videoUrl}"
+                class="video-link"
+            >
 
-            <div class="video-info">
+                <div class="thumbnail">
 
-                <h3>
-                    ${video.title}
-                </h3>
+                    ${thumbnail}
 
-                <p>
-                    ${video.description}
-                </p>
+                </div>
 
-            </div>
+                <div class="video-info">
+
+                    <h3>
+                        ${escapeHTML(video.title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(video.description || "")}
+                    </p>
+
+                </div>
+
+            </a>
 
         `;
 
@@ -318,12 +319,16 @@ function renderVideos() {
 
 function updatePagination(totalPages) {
 
+    const pages =
+        totalPages || 1;
+
+
     pageNumber.textContent =
         currentPage;
 
 
     pageInfo.textContent =
-        `Halaman ${currentPage} dari ${totalPages || 1}`;
+        `Halaman ${currentPage} dari ${pages}`;
 
 
     prevButton.disabled =
@@ -331,7 +336,7 @@ function updatePagination(totalPages) {
 
 
     nextButton.disabled =
-        currentPage >= totalPages;
+        currentPage >= pages;
 
 }
 
@@ -400,16 +405,21 @@ function searchVideos() {
     filteredVideos =
         videos.filter(video => {
 
+            const title =
+                String(
+                    video.title || ""
+                ).toLowerCase();
+
+
+            const description =
+                String(
+                    video.description || ""
+                ).toLowerCase();
+
+
             return (
-                video.title
-                    .toLowerCase()
-                    .includes(keyword)
-
-                ||
-
-                video.description
-                    .toLowerCase()
-                    .includes(keyword)
+                title.includes(keyword) ||
+                description.includes(keyword)
             );
 
         });
@@ -438,21 +448,30 @@ searchButton.addEventListener(
    TOP 3 POPULER
 ================================================== */
 
-/*
-   Untuk sementara Top 3 menggunakan
-   3 postingan pilihan secara manual.
-
-   Nanti saat sistem postingan sudah jadi,
-   bagian ini bisa mengambil data dari posts.json.
-*/
-
 function renderPopular() {
 
-    const popular =
-        videos.slice(0, 3);
-
-
     popularGrid.innerHTML = "";
+
+
+    /*
+     * Ambil postingan yang ditandai popular:true.
+     */
+
+    const popularVideos =
+        videos
+            .filter(video => video.popular === true)
+            .slice(0, 3);
+
+
+    /*
+     * Kalau belum ada yang ditandai populer,
+     * ambil 3 postingan terbaru.
+     */
+
+    const popular =
+        popularVideos.length > 0
+            ? popularVideos
+            : videos.slice(0, 3);
 
 
     popular.forEach((video, index) => {
@@ -465,27 +484,58 @@ function renderPopular() {
             "popular-card";
 
 
+        const videoUrl =
+            "/v/" +
+            encodeURIComponent(video.slug) +
+            "/";
+
+
+        const thumbnail =
+            video.thumbnail
+                ? `
+                    <img
+                        src="${escapeHTML(video.thumbnail)}"
+                        alt="${escapeHTML(video.title)}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="popular-placeholder">
+                        VIDEO
+                    </div>
+                `;
+
+
         card.innerHTML = `
 
-            <div class="popular-number">
-                ${index + 1}
-            </div>
+            <a
+                href="${videoUrl}"
+                class="popular-link"
+            >
 
-            <div class="popular-thumbnail">
-                VIDEO
-            </div>
+                <div class="popular-number">
+                    ${index + 1}
+                </div>
 
-            <div class="popular-info">
+                <div class="popular-thumbnail">
 
-                <h3>
-                    ${video.title}
-                </h3>
+                    ${thumbnail}
 
-                <span>
-                    Postingan populer
-                </span>
+                </div>
 
-            </div>
+                <div class="popular-info">
+
+                    <h3>
+                        ${escapeHTML(video.title)}
+                    </h3>
+
+                    <span>
+                        Postingan populer
+                    </span>
+
+                </div>
+
+            </a>
 
         `;
 
@@ -501,6 +551,4 @@ function renderPopular() {
    INITIALIZE
 ================================================== */
 
-renderPopular();
-
-renderVideos();
+loadPosts();
