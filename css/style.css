@@ -719,51 +719,36 @@ body {
 
 }
 
-/* =========================
-   ABOUT
-========================= */
-
+/* ABOUT */
 .about {
     max-width: 700px;
-
     margin: 10px auto 0;
-
     padding: 25px 20px;
-
     text-align: center;
-
     border-top: 1px solid #242424;
 }
 
 .about p {
     color: #777777;
-
     font-size: 13px;
-
     line-height: 1.7;
 }
 
-
-/* =========================
-   FOOTER
-========================= */
-
+/* FOOTER */
 .footer {
     padding: 0 20px 35px;
-
     text-align: center;
 }
 
 .copyright {
     color: #666666;
-
     font-size: 12px;
-
+    line-height: 1.6;
     margin-bottom: 7px;
 }
 
 .copyright-note {
     color: #444444;
-
     font-size: 11px;
+    line-height: 1.5;
 }
