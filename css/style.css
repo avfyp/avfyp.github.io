@@ -44,8 +44,6 @@ body {
 }
 
 
-/* Hamburger */
-
 .menu-button {
     width: 40px;
     height: 40px;
@@ -62,6 +60,7 @@ body {
     cursor: pointer;
 }
 
+
 .menu-button span {
     width: 24px;
     height: 2px;
@@ -71,12 +70,8 @@ body {
     background: #ffffff;
 
     border-radius: 2px;
-
-    transition: 0.2s;
 }
 
-
-/* Logo */
 
 .logo {
     margin-left: 14px;
@@ -110,6 +105,7 @@ body {
 
     transition: left 0.25s ease;
 }
+
 
 .sidebar.active {
     left: 0;
@@ -174,7 +170,7 @@ body {
 }
 
 
-/* Overlay */
+/* OVERLAY */
 
 .overlay {
     position: fixed;
@@ -190,6 +186,7 @@ body {
 
     transition: 0.25s;
 }
+
 
 .overlay.active {
     opacity: 1;
@@ -311,160 +308,6 @@ body {
 
 
 /* =========================
-   POPULAR
-========================= */
-
-.popular-section {
-    margin-bottom: 30px;
-}
-
-
-.popular-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 16px;
-}
-
-
-.popular-card {
-    position: relative;
-
-    background: #151515;
-
-    border: 1px solid #252525;
-
-    border-radius: 8px;
-
-    overflow: hidden;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-
-.popular-card:hover {
-    transform: translateY(-3px);
-
-    border-color: #444444;
-}
-
-
-.popular-number {
-    position: absolute;
-
-    top: 10px;
-    left: 10px;
-
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.75);
-
-    border-radius: 50%;
-
-    font-weight: bold;
-
-    z-index: 2;
-}
-
-
-.popular-thumbnail {
-    aspect-ratio: 16 / 9;
-
-    background: #202020;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #666666;
-
-    font-size: 13px;
-}
-
-
-.popular-info {
-    padding: 12px;
-}
-
-
-.popular-info h3 {
-    font-size: 15px;
-
-    margin-bottom: 6px;
-}
-
-
-.popular-info span {
-    color: #777777;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   STATISTICS
-========================= */
-
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 15px;
-
-    margin-bottom: 35px;
-}
-
-
-.stat-box {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 18px;
-
-    background: #151515;
-
-    border: 1px solid #252525;
-
-    border-radius: 8px;
-}
-
-
-.stat-icon {
-    font-size: 25px;
-}
-
-
-.stat-box strong {
-    display: block;
-
-    font-size: 20px;
-
-    margin-bottom: 4px;
-}
-
-
-.stat-box small {
-    color: #777777;
-
-    font-size: 12px;
-}
-
-
-/* =========================
    VIDEO GRID
 ========================= */
 
@@ -556,8 +399,6 @@ body {
     gap: 15px;
 
     margin-top: 30px;
-
-    padding-bottom: 40px;
 }
 
 
@@ -594,6 +435,110 @@ body {
     text-align: center;
 
     color: #aaaaaa;
+}
+
+
+/* =========================
+   POPULAR TOP 3
+========================= */
+
+.popular-section {
+    margin-top: 50px;
+
+    padding-bottom: 60px;
+}
+
+
+.popular-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+
+.popular-card {
+    position: relative;
+
+    background: #151515;
+
+    border: 1px solid #252525;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.popular-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #444444;
+}
+
+
+.popular-number {
+    position: absolute;
+
+    top: 10px;
+    left: 10px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    border-radius: 50%;
+
+    font-weight: bold;
+
+    z-index: 2;
+}
+
+
+.popular-thumbnail {
+    aspect-ratio: 16 / 9;
+
+    background: #202020;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #666666;
+
+    font-size: 13px;
+}
+
+
+.popular-info {
+    padding: 12px;
+}
+
+
+.popular-info h3 {
+    font-size: 15px;
+
+    margin-bottom: 5px;
+}
+
+
+.popular-info span {
+    color: #777777;
+
+    font-size: 12px;
 }
 
 
@@ -665,7 +610,7 @@ body {
 
 
 /* =========================
-   EMPTY SEARCH
+   NO RESULT
 ========================= */
 
 .no-result {
@@ -726,16 +671,6 @@ body {
     }
 
 
-    .stats {
-        gap: 10px;
-    }
-
-
-    .stat-box {
-        padding: 14px;
-    }
-
-
     .telegram-popup {
         right: 12px;
         bottom: 12px;
@@ -766,11 +701,6 @@ body {
     }
 
 
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-
     .telegram-text {
         display: none;
     }
@@ -787,4 +717,4 @@ body {
         border-radius: 50%;
     }
 
-        }
+}
