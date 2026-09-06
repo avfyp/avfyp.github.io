@@ -1,11 +1,8 @@
-const WORKER_URL =
-    "https://avfyp-upload.cntk-njay.workers.dev/";
-
+const WORKER_URL = "https://avfyp-upload.cntk-njay.workers.dev/";
 const form = document.getElementById("uploadForm");
 const uploadButton = document.getElementById("uploadButton");
 const statusBox = document.getElementById("status");
 const resultBox = document.getElementById("result");
-
 const titleInput = document.getElementById("title");
 const slugInput = document.getElementById("slug");
 
