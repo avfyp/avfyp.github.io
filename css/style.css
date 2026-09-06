@@ -718,3 +718,44 @@ body {
     }
 
 }
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    max-width: 700px;
+
+    margin: 10px auto 0;
+
+    padding: 25px 20px;
+
+    text-align: center;
+
+    border-top: 1px solid #242424;
+}
+
+.about p {
+    color: #777777;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    padding: 0 20px 30px;
+
+    text-align: center;
+}
+
+.footer p {
+    color: #555555;
+
+    font-size: 12px;
+}
