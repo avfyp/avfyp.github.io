@@ -13,29 +13,23 @@ const gdInput =
 const thumbnailInput =
     document.getElementById("thumbnail");
 
-const uploadButton =
-    document.getElementById("uploadButton");
+const createButton =
+    document.getElementById("createButton");
 
 const urlPreview =
     document.getElementById("urlPreview");
 
-const thumbnailStatus =
-    document.getElementById(
-        "thumbnailStatus"
-    );
-
 const result =
     document.getElementById("result");
 
-const filePath =
-    document.getElementById("filePath");
+const videoUrl =
+    document.getElementById("videoUrl");
 
-const downloadAgain =
-    document.getElementById("downloadAgain");
+const copyUrl =
+    document.getElementById("copyUrl");
 
-
-let generatedHTML = "";
-
+const copyStatus =
+    document.getElementById("copyStatus");
 
 
 /* =========================
@@ -54,12 +48,15 @@ function createSlug(text) {
 }
 
 
+function updatePreview() {
 
-function updateSlug() {
+    let slug =
+        slugInput.value.trim();
 
-    if (!slugInput.value.trim()) {
 
-        slugInput.value =
+    if (!slug) {
+
+        slug =
             createSlug(
                 titleInput.value
             );
@@ -67,21 +64,39 @@ function updateSlug() {
     }
 
 
-    const slug =
-        slugInput.value.trim();
+    if (slug) {
 
+        urlPreview.textContent =
+            "https://avfyp.github.io/v/" +
+            slug;
 
-    urlPreview.textContent =
-        slug
-            ? `https://avfyp.github.io/v/${slug}`
-            : "https://avfyp.github.io/v/judul-video";
+    }
+    else {
+
+        urlPreview.textContent =
+            "https://avfyp.github.io/v/judul-video";
+
+    }
 
 }
 
 
 titleInput.addEventListener(
     "input",
-    updateSlug
+    () => {
+
+        if (!slugInput.value.trim()) {
+
+            slugInput.value =
+                createSlug(
+                    titleInput.value
+                );
+
+        }
+
+        updatePreview();
+
+    }
 );
 
 
@@ -94,11 +109,10 @@ slugInput.addEventListener(
                 slugInput.value
             );
 
-        updateSlug();
+        updatePreview();
 
     }
 );
-
 
 
 /* =========================
@@ -118,369 +132,34 @@ function normalizeDriveUrl(url) {
         );
 
 
-    if (!match) {
-        return url;
+    if (match) {
+
+        return (
+            "https://drive.google.com/file/d/" +
+            match[1] +
+            "/preview"
+        );
+
     }
 
 
-    return (
-        "https://drive.google.com/file/d/" +
-        match[1] +
-        "/preview"
-    );
+    return url;
 
 }
 
 
-
 /* =========================
-   STREAMTAPE THUMBNAIL
+   BUAT VIDEO
 ========================= */
 
-function getStreamtapeThumbnail(url) {
-
-    /*
-       Tidak semua URL Streamtape
-       menyediakan thumbnail yang
-       bisa diambil dari browser.
-
-       Fungsi ini hanya mencoba
-       pola thumbnail yang tersedia.
-    */
-
-
-    if (!url) {
-        return "";
-    }
-
-
-    try {
-
-        const parsed =
-            new URL(url);
-
-
-        const parts =
-            parsed.pathname
-                .split("/")
-                .filter(Boolean);
-
-
-        if (parts.length === 0) {
-            return "";
-        }
-
-
-        const id =
-            parts.find(
-                part =>
-                    /^[a-zA-Z0-9]+$/.test(
-                        part
-                    )
-            );
-
-
-        if (!id) {
-            return "";
-        }
-
-
-        /*
-           Jangan menganggap endpoint
-           thumbnail tertentu selalu aktif.
-           Jika gagal, halaman video
-           akan menggunakan fallback.
-        */
-
-        return "";
-
-    }
-    catch {
-
-        return "";
-
-    }
-
-}
-
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(value) {
-
-    return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-
-/* =========================
-   CREATE HTML
-========================= */
-
-function createVideoHTML(data) {
-
-    const st =
-        escapeHTML(
-            data.st
-        );
-
-    const gd =
-        escapeHTML(
-            data.gd
-        );
-
-    const title =
-        escapeHTML(
-            data.title
-        );
-
-    const thumbnail =
-        escapeHTML(
-            data.thumbnail
-        );
-
-
-    const gdButton =
-        data.gd
-            ? `
-                <button
-                    class="server-button"
-                    data-server="gd"
-                >
-                    GD
-                </button>
-            `
-            : "";
-
-
-    return `<!DOCTYPE html>
-<html lang="id">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>${title} - AVFYP</title>
-
-    <link
-        rel="stylesheet"
-        href="../../css/video.css"
-    >
-
-</head>
-
-
-<body>
-
-<header class="video-header">
-
-    <a
-        href="/"
-        class="logo"
-    >
-        AVFYP
-    </a>
-
-    <a
-        href="/"
-        class="home-button"
-    >
-        ← Beranda
-    </a>
-
-</header>
-
-
-<main class="video-container">
-
-    <h1>${title}</h1>
-
-
-    <div class="player-wrapper">
-
-        <iframe
-            id="videoPlayer"
-            src="${st}"
-            allowfullscreen
-            allow="autoplay; fullscreen"
-            loading="lazy"
-        ></iframe>
-
-    </div>
-
-
-    <div class="server-switcher">
-
-        <button
-            class="server-button active"
-            data-server="st"
-        >
-            ST
-        </button>
-
-        ${gdButton}
-
-    </div>
-
-
-    <div
-        class="thumbnail-preview"
-        ${thumbnail
-            ? `style="background-image:url('${thumbnail}')"`
-            : ""
-        }
-    ></div>
-
-
-</main>
-
-
-<script>
-
-const servers = {
-    st: ${JSON.stringify(data.st)},
-    gd: ${JSON.stringify(data.gd)}
-};
-
-const player =
-    document.getElementById("videoPlayer");
-
-
-document
-    .querySelectorAll(".server-button")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const server =
-                    button.dataset.server;
-
-
-                if (!servers[server]) {
-                    return;
-                }
-
-
-                player.src =
-                    servers[server];
-
-
-                document
-                    .querySelectorAll(
-                        ".server-button"
-                    )
-                    .forEach(item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    });
-
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-    });
-
-</script>
-
-
-</body>
-</html>`;
-
-}
-
-
-
-/* =========================
-   DOWNLOAD
-========================= */
-
-function downloadHTML(
-    html,
-    slug
-) {
-
-    const blob =
-        new Blob(
-            [html],
-            {
-                type:
-                    "text/html"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        "index.html";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-}
-
-
-
-/* =========================
-   UPLOAD / GENERATE
-========================= */
-
-uploadButton.addEventListener(
+createButton.addEventListener(
     "click",
     () => {
 
         const title =
             titleInput.value.trim();
 
-        const slug =
+        let slug =
             slugInput.value.trim();
 
         const st =
@@ -491,7 +170,7 @@ uploadButton.addEventListener(
                 gdInput.value.trim()
             );
 
-        let thumbnail =
+        const thumbnail =
             thumbnailInput.value.trim();
 
 
@@ -508,11 +187,11 @@ uploadButton.addEventListener(
 
         if (!slug) {
 
-            alert(
-                "Slug wajib diisi."
-            );
+            slug =
+                createSlug(title);
 
-            return;
+            slugInput.value =
+                slug;
 
         }
 
@@ -529,110 +208,130 @@ uploadButton.addEventListener(
 
 
         /*
-           Coba thumbnail otomatis.
-        */
+         * URL publik video
+         */
 
-        if (!thumbnail) {
-
-            thumbnail =
-                getStreamtapeThumbnail(
-                    st
-                );
-
-        }
+        const url =
+            "https://avfyp.github.io/v/" +
+            slug;
 
 
-        if (thumbnail) {
+        /*
+         * Simpan data sementara
+         * untuk halaman admin.
+         */
 
-            thumbnailStatus.textContent =
-                "Thumbnail otomatis dari ST";
+        const postData = {
 
-        }
-        else {
+            title: title,
 
-            thumbnailStatus.textContent =
-                "Thumbnail ST tidak tersedia — menggunakan player ST";
+            slug: slug,
 
-        }
+            st: st,
 
+            gd: gd,
 
-        const data = {
-
-            title:
-                title,
-
-            slug:
-                slug,
-
-            st:
-                st,
-
-            gd:
-                gd,
-
-            thumbnail:
-                thumbnail
+            thumbnail: thumbnail
 
         };
 
 
-        generatedHTML =
-            createVideoHTML(
-                data
-            );
-
-
-        /*
-           Download otomatis.
-        */
-
-        downloadHTML(
-            generatedHTML,
-            slug
+        localStorage.setItem(
+            "avfyp_last_post",
+            JSON.stringify(postData)
         );
 
 
-        filePath.textContent =
-            `v/${slug}/index.html`;
+        videoUrl.textContent =
+            url;
 
 
         result.hidden =
             false;
 
 
-        window.scrollTo({
-            top:
-                document.body.scrollHeight,
+        copyStatus.textContent =
+            "";
 
-            behavior:
-                "smooth"
+
+        result.scrollIntoView({
+            behavior: "smooth"
         });
 
     }
 );
 
 
-
 /* =========================
-   DOWNLOAD LAGI
+   COPY URL
 ========================= */
 
-downloadAgain.addEventListener(
+copyUrl.addEventListener(
     "click",
-    () => {
+    async () => {
 
-        if (!generatedHTML) {
+        const url =
+            videoUrl.textContent.trim();
+
+
+        if (!url) {
             return;
         }
 
 
-        const slug =
-            slugInput.value.trim();
+        try {
+
+            await navigator.clipboard.writeText(
+                url
+            );
+
+            copyStatus.textContent =
+                "✓ URL berhasil disalin";
+
+        }
+        catch {
+
+            /*
+             * Fallback untuk browser
+             * yang tidak mengizinkan
+             * clipboard API.
+             */
+
+            const textarea =
+                document.createElement(
+                    "textarea"
+                );
+
+            textarea.value =
+                url;
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+            textarea.remove();
 
 
-        downloadHTML(
-            generatedHTML,
-            slug
+            copyStatus.textContent =
+                "✓ URL berhasil disalin";
+
+        }
+
+
+        setTimeout(
+            () => {
+
+                copyStatus.textContent =
+                    "";
+
+            },
+            2500
         );
 
     }
