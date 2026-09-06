@@ -4,36 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AVFYP | HOME</title>
+    <title>AVFYP</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- Header -->
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <header class="header">
 
-        <!-- Hamburger -->
-        <button class="menu-button" id="menuButton" aria-label="Buka menu">
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Buka menu"
+        >
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <!-- Logo -->
-        <div class="logo">AVFYP</div>
+        <div class="logo">
+            AVFYP
+        </div>
 
     </header>
 
 
-    <!-- Main -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <span>MENU</span>
+
+            <button id="closeMenu" class="close-menu">
+                ×
+            </button>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="index.html">
+                🏠 Beranda
+            </a>
+
+            <a href="#">
+                🔥 Populer
+            </a>
+
+            <a href="#">
+                🆕 Terbaru
+            </a>
+
+            <a href="#">
+                📂 Kategori
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Overlay -->
+
+    <div class="overlay" id="overlay"></div>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="container">
 
         <h1>Beranda</h1>
 
+
         <!-- Search -->
+
         <div class="search-box">
+
             <input
                 type="search"
                 id="searchInput"
@@ -41,65 +96,154 @@
                 autocomplete="off"
             >
 
-            <button id="searchButton" aria-label="Cari">
+            <button
+                id="searchButton"
+                aria-label="Cari"
+            >
                 🔍
             </button>
+
         </div>
 
 
-        <!-- Video Grid -->
-        <section class="video-grid" id="videoGrid">
+        <!-- =========================
+             POPULAR
+        ========================== -->
 
-            <article class="video-card">
-                <div class="thumbnail">
-                    <span>VIDEO</span>
+        <section class="popular-section">
+
+            <div class="section-title">
+                <h2>🔥 Populer</h2>
+                <span>Top 3</span>
+            </div>
+
+            <div
+                class="popular-grid"
+                id="popularGrid"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <section class="stats">
+
+            <div class="stat-box">
+
+                <span class="stat-icon">🎬</span>
+
+                <div>
+                    <strong id="totalPosts">
+                        0
+                    </strong>
+
+                    <small>
+                        Total Postingan
+                    </small>
                 </div>
 
-                <div class="video-info">
-                    <h2>Video Pertama</h2>
-                    <p>Deskripsi video</p>
-                </div>
-            </article>
+            </div>
 
 
-            <article class="video-card">
-                <div class="thumbnail">
-                    <span>VIDEO</span>
-                </div>
+            <div class="stat-box">
 
-                <div class="video-info">
-                    <h2>Video Kedua</h2>
-                    <p>Deskripsi video</p>
-                </div>
-            </article>
+                <span class="stat-icon">👁️</span>
 
+                <div>
+                    <strong id="totalViews">
+                        0
+                    </strong>
 
-            <article class="video-card">
-                <div class="thumbnail">
-                    <span>VIDEO</span>
+                    <small>
+                        Total Dilihat
+                    </small>
                 </div>
 
-                <div class="video-info">
-                    <h2>Video Ketiga</h2>
-                    <p>Deskripsi video</p>
-                </div>
-            </article>
+            </div>
+
+        </section>
 
 
-            <article class="video-card">
-                <div class="thumbnail">
-                    <span>VIDEO</span>
-                </div>
+        <!-- =========================
+             ALL VIDEOS
+        ========================== -->
 
-                <div class="video-info">
-                    <h2>Video Keempat</h2>
-                    <p>Deskripsi video</p>
-                </div>
-            </article>
+        <section>
+
+            <div class="section-title">
+
+                <h2>Video Terbaru</h2>
+
+                <span id="pageInfo">
+                    Halaman 1
+                </span>
+
+            </div>
+
+
+            <div
+                class="video-grid"
+                id="videoGrid"
+            ></div>
+
+
+            <!-- Pagination -->
+
+            <div class="pagination">
+
+                <button
+                    id="prevButton"
+                    disabled
+                >
+                    ← Sebelumnya
+                </button>
+
+                <span id="pageNumber">
+                    1
+                </span>
+
+                <button id="nextButton">
+                    Selanjutnya →
+                </button>
+
+            </div>
 
         </section>
 
     </main>
+
+
+    <!-- =========================
+         TELEGRAM POPUP
+    ========================== -->
+
+    <a
+        href="https://t.me/AVFYP"
+        target="_blank"
+        class="telegram-popup"
+        aria-label="Telegram AVFYP"
+    >
+
+        <span class="telegram-icon">
+            ✈️
+        </span>
+
+        <div class="telegram-text">
+
+            <strong>
+                Join Telegram
+            </strong>
+
+            <small>
+                Dapatkan update terbaru
+            </small>
+
+        </div>
+
+    </a>
 
 
     <script src="js/script.js"></script>
