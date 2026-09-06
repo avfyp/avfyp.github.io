@@ -3,145 +3,127 @@
 ================================================== */
 
 const videos = [
+
     {
         id: 1,
         title: "Video Pertama",
-        description: "Deskripsi video pertama",
-        views: 15420
+        description: "Deskripsi video pertama"
     },
 
     {
         id: 2,
         title: "Video Kedua",
-        description: "Deskripsi video kedua",
-        views: 12850
+        description: "Deskripsi video kedua"
     },
 
     {
         id: 3,
         title: "Video Ketiga",
-        description: "Deskripsi video ketiga",
-        views: 10240
+        description: "Deskripsi video ketiga"
     },
 
     {
         id: 4,
         title: "Video Keempat",
-        description: "Deskripsi video keempat",
-        views: 9340
+        description: "Deskripsi video keempat"
     },
 
     {
         id: 5,
         title: "Video Kelima",
-        description: "Deskripsi video kelima",
-        views: 8210
+        description: "Deskripsi video kelima"
     },
 
     {
         id: 6,
         title: "Video Keenam",
-        description: "Deskripsi video keenam",
-        views: 7650
+        description: "Deskripsi video keenam"
     },
 
     {
         id: 7,
         title: "Video Ketujuh",
-        description: "Deskripsi video ketujuh",
-        views: 6930
+        description: "Deskripsi video ketujuh"
     },
 
     {
         id: 8,
         title: "Video Kedelapan",
-        description: "Deskripsi video kedelapan",
-        views: 6210
+        description: "Deskripsi video kedelapan"
     },
 
     {
         id: 9,
         title: "Video Kesembilan",
-        description: "Deskripsi video kesembilan",
-        views: 5890
+        description: "Deskripsi video kesembilan"
     },
 
     {
         id: 10,
         title: "Video Kesepuluh",
-        description: "Deskripsi video kesepuluh",
-        views: 5230
+        description: "Deskripsi video kesepuluh"
     },
 
     {
         id: 11,
         title: "Video Kesebelas",
-        description: "Deskripsi video kesebelas",
-        views: 4780
+        description: "Deskripsi video kesebelas"
     },
 
     {
         id: 12,
         title: "Video Keduabelas",
-        description: "Deskripsi video keduabelas",
-        views: 4310
+        description: "Deskripsi video keduabelas"
     },
 
     {
         id: 13,
         title: "Video Ketigabelas",
-        description: "Deskripsi video ketigabelas",
-        views: 3970
+        description: "Deskripsi video ketigabelas"
     },
 
     {
         id: 14,
         title: "Video Keempatbelas",
-        description: "Deskripsi video keempatbelas",
-        views: 3520
+        description: "Deskripsi video keempatbelas"
     },
 
     {
         id: 15,
         title: "Video Kelimabelas",
-        description: "Deskripsi video kelimabelas",
-        views: 3140
+        description: "Deskripsi video kelimabelas"
     },
 
     {
         id: 16,
         title: "Video Keenambelas",
-        description: "Deskripsi video keenambelas",
-        views: 2980
+        description: "Deskripsi video keenambelas"
     },
 
     {
         id: 17,
         title: "Video Ketujuhbelas",
-        description: "Deskripsi video ketujuhbelas",
-        views: 2760
+        description: "Deskripsi video ketujuhbelas"
     },
 
     {
         id: 18,
         title: "Video Kedelapanbelas",
-        description: "Deskripsi video kedelapanbelas",
-        views: 2510
+        description: "Deskripsi video kedelapanbelas"
     },
 
     {
         id: 19,
         title: "Video Kesembilanbelas",
-        description: "Deskripsi video kesembilanbelas",
-        views: 2290
+        description: "Deskripsi video kesembilanbelas"
     },
 
     {
         id: 20,
         title: "Video Keduapuluh",
-        description: "Deskripsi video keduapuluh",
-        views: 2140
+        description: "Deskripsi video keduapuluh"
     }
+
 ];
 
 
@@ -166,12 +148,6 @@ const videoGrid =
 const popularGrid =
     document.getElementById("popularGrid");
 
-const totalPosts =
-    document.getElementById("totalPosts");
-
-const totalViews =
-    document.getElementById("totalViews");
-
 const pageNumber =
     document.getElementById("pageNumber");
 
@@ -192,7 +168,7 @@ const searchButton =
 
 
 /* ==================================================
-   HAMBURGER MENU
+   HAMBURGER
 ================================================== */
 
 const menuButton =
@@ -245,100 +221,7 @@ overlay.addEventListener(
 
 
 /* ==================================================
-   FORMAT VIEWS
-================================================== */
-
-function formatViews(number) {
-
-    return new Intl.NumberFormat(
-        "id-ID"
-    ).format(number);
-
-}
-
-
-/* ==================================================
-   STATISTICS
-================================================== */
-
-function updateStatistics() {
-
-    totalPosts.textContent =
-        formatViews(videos.length);
-
-
-    const views = videos.reduce(
-        (total, video) => {
-            return total + video.views;
-        },
-        0
-    );
-
-
-    totalViews.textContent =
-        formatViews(views);
-
-}
-
-
-/* ==================================================
-   POPULAR TOP 3
-================================================== */
-
-function renderPopular() {
-
-    const popular = [...videos]
-        .sort((a, b) => b.views - a.views)
-        .slice(0, 3);
-
-
-    popularGrid.innerHTML = "";
-
-
-    popular.forEach((video, index) => {
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "popular-card";
-
-
-        card.innerHTML = `
-
-            <div class="popular-number">
-                ${index + 1}
-            </div>
-
-            <div class="popular-thumbnail">
-                VIDEO
-            </div>
-
-            <div class="popular-info">
-
-                <h3>
-                    ${video.title}
-                </h3>
-
-                <span>
-                    👁️ ${formatViews(video.views)} views
-                </span>
-
-            </div>
-
-        `;
-
-
-        popularGrid.appendChild(card);
-
-    });
-
-}
-
-
-/* ==================================================
-   RENDER VIDEOS
+   RENDER VIDEO
 ================================================== */
 
 function renderVideos() {
@@ -354,7 +237,10 @@ function renderVideos() {
 
 
     if (currentPage > totalPages) {
-        currentPage = totalPages || 1;
+
+        currentPage =
+            totalPages || 1;
+
     }
 
 
@@ -411,10 +297,6 @@ function renderVideos() {
                     ${video.description}
                 </p>
 
-                <p>
-                    👁️ ${formatViews(video.views)} views
-                </p>
-
             </div>
 
         `;
@@ -425,9 +307,7 @@ function renderVideos() {
     });
 
 
-    updatePagination(
-        totalPages
-    );
+    updatePagination(totalPages);
 
 }
 
@@ -555,10 +435,71 @@ searchButton.addEventListener(
 
 
 /* ==================================================
-   INITIALIZE
+   TOP 3 POPULER
 ================================================== */
 
-updateStatistics();
+/*
+   Untuk sementara Top 3 menggunakan
+   3 postingan pilihan secara manual.
+
+   Nanti saat sistem postingan sudah jadi,
+   bagian ini bisa mengambil data dari posts.json.
+*/
+
+function renderPopular() {
+
+    const popular =
+        videos.slice(0, 3);
+
+
+    popularGrid.innerHTML = "";
+
+
+    popular.forEach((video, index) => {
+
+        const card =
+            document.createElement("article");
+
+
+        card.className =
+            "popular-card";
+
+
+        card.innerHTML = `
+
+            <div class="popular-number">
+                ${index + 1}
+            </div>
+
+            <div class="popular-thumbnail">
+                VIDEO
+            </div>
+
+            <div class="popular-info">
+
+                <h3>
+                    ${video.title}
+                </h3>
+
+                <span>
+                    Postingan populer
+                </span>
+
+            </div>
+
+        `;
+
+
+        popularGrid.appendChild(card);
+
+    });
+
+}
+
+
+/* ==================================================
+   INITIALIZE
+================================================== */
 
 renderPopular();
 
