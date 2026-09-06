@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: #0d0d0d;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    background: #0d0d0d;
+    border-bottom: 1px solid #222;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+
+/* Hamburger */
+
+.menu-button {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    background: transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 5px;
+
+    cursor: pointer;
+}
+
+.menu-button span {
+    display: block;
+
+    width: 22px;
+    height: 2px;
+
+    background: #ffffff;
+
+    border-radius: 2px;
+
+    transition: 0.2s;
+}
+
+
+/* Logo */
+
+.logo {
+    margin-left: 14px;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 30px 20px;
+}
+
+.container h1 {
+    font-size: 26px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+
+    margin-bottom: 28px;
+
+    background: #151515;
+
+    border: 1px solid #2a2a2a;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+.search-box input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 13px 15px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: #666;
+}
+
+.search-box button {
+    width: 48px;
+
+    border: none;
+
+    border-left: 1px solid #2a2a2a;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.search-box button:hover {
+    background: #222;
+}
+
+
+/* =========================
+   VIDEO GRID
+========================= */
+
+.video-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================
+   VIDEO CARD
+========================= */
+
+.video-card {
+    background: #151515;
+
+    border: 1px solid #242424;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #444;
+}
+
+
+/* Thumbnail */
+
+.thumbnail {
+    aspect-ratio: 16 / 9;
+
+    background: #202020;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #666;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* Video info */
+
+.video-info {
+    padding: 14px;
+}
+
+.video-info h2 {
+    font-size: 16px;
+
+    line-height: 1.4;
+
+    margin-bottom: 6px;
+}
+
+.video-info p {
+    color: #888;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .container {
+        padding: 20px 12px;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
