@@ -1,338 +1,212 @@
-const titleInput =
-    document.getElementById("title");
+const WORKER_URL =
+    "https://avfyp-upload.cntk-njay.workers.dev/";
 
-const slugInput =
-    document.getElementById("slug");
+const form = document.getElementById("uploadForm");
+const uploadButton = document.getElementById("uploadButton");
+const statusBox = document.getElementById("status");
+const resultBox = document.getElementById("result");
 
-const stInput =
-    document.getElementById("st");
-
-const gdInput =
-    document.getElementById("gd");
-
-const thumbnailInput =
-    document.getElementById("thumbnail");
-
-const createButton =
-    document.getElementById("createButton");
-
-const urlPreview =
-    document.getElementById("urlPreview");
-
-const result =
-    document.getElementById("result");
-
-const videoUrl =
-    document.getElementById("videoUrl");
-
-const copyUrl =
-    document.getElementById("copyUrl");
-
-const copyStatus =
-    document.getElementById("copyStatus");
+const titleInput = document.getElementById("title");
+const slugInput = document.getElementById("slug");
 
 
-/* =========================
-   SLUG
-========================= */
+// ==============================
+// AUTO SLUG
+// ==============================
 
-function createSlug(text) {
-
+function makeSlug(text) {
     return text
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-")
-        .replace(/-+/g, "-");
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+}
 
+titleInput.addEventListener("input", () => {
+
+    if (!slugInput.value.trim()) {
+        slugInput.value = makeSlug(titleInput.value);
+    }
+
+});
+
+
+// ==============================
+// STATUS
+// ==============================
+
+function showStatus(message) {
+    statusBox.textContent = message;
+    statusBox.classList.remove("hidden");
+}
+
+function hideStatus() {
+    statusBox.classList.add("hidden");
 }
 
 
-function updatePreview() {
+// ==============================
+// UPLOAD
+// ==============================
 
-    let slug =
-        slugInput.value.trim();
+form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    hideStatus();
+
+    resultBox.classList.add("hidden");
+    resultBox.innerHTML = "";
+
+    const adminKey =
+        document.getElementById("adminKey").value.trim();
+
+    const title =
+        titleInput.value.trim();
+
+    const slug =
+        slugInput.value.trim() || makeSlug(title);
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const thumbnail =
+        document.getElementById("thumbnail").value.trim();
+
+    const st =
+        document.getElementById("st").value.trim();
+
+    const gd =
+        document.getElementById("gd").value.trim();
+
+    const popular =
+        document.getElementById("popular").checked;
 
 
-    if (!slug) {
+    if (!adminKey) {
+        showStatus("❌ Password admin belum diisi.");
+        return;
+    }
 
-        slug =
-            createSlug(
-                titleInput.value
-            );
+    if (!title) {
+        showStatus("❌ Judul belum diisi.");
+        return;
+    }
 
+    if (!st && !gd) {
+        showStatus("❌ Minimal isi satu server video.");
+        return;
     }
 
 
-    if (slug) {
+    const payload = {
+        title,
+        slug,
+        description,
+        thumbnail,
+        st,
+        gd,
+        popular
+    };
 
-        urlPreview.textContent =
-            "https://avfyp.github.io/v/" +
-            slug;
 
-    }
-    else {
+    uploadButton.disabled = true;
+    uploadButton.textContent = "⏳ Mengupload...";
 
-        urlPreview.textContent =
-            "https://avfyp.github.io/v/judul-video";
+    showStatus("Menghubungi server AVFYP...");
 
-    }
 
-}
+    try {
 
+        const response = await fetch(WORKER_URL, {
 
-titleInput.addEventListener(
-    "input",
-    () => {
+            method: "POST",
 
-        if (!slugInput.value.trim()) {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + adminKey
+            },
 
-            slugInput.value =
-                createSlug(
-                    titleInput.value
-                );
+            body: JSON.stringify(payload)
 
-        }
-
-        updatePreview();
-
-    }
-);
-
-
-slugInput.addEventListener(
-    "input",
-    () => {
-
-        slugInput.value =
-            createSlug(
-                slugInput.value
-            );
-
-        updatePreview();
-
-    }
-);
-
-
-/* =========================
-   DRIVE
-========================= */
-
-function normalizeDriveUrl(url) {
-
-    if (!url) {
-        return "";
-    }
-
-
-    const match =
-        url.match(
-            /drive\.google\.com\/file\/d\/([^/]+)/
-        );
-
-
-    if (match) {
-
-        return (
-            "https://drive.google.com/file/d/" +
-            match[1] +
-            "/preview"
-        );
-
-    }
-
-
-    return url;
-
-}
-
-
-/* =========================
-   BUAT VIDEO
-========================= */
-
-createButton.addEventListener(
-    "click",
-    () => {
-
-        const title =
-            titleInput.value.trim();
-
-        let slug =
-            slugInput.value.trim();
-
-        const st =
-            stInput.value.trim();
-
-        const gd =
-            normalizeDriveUrl(
-                gdInput.value.trim()
-            );
-
-        const thumbnail =
-            thumbnailInput.value.trim();
-
-
-        if (!title) {
-
-            alert(
-                "Judul video wajib diisi."
-            );
-
-            return;
-
-        }
-
-
-        if (!slug) {
-
-            slug =
-                createSlug(title);
-
-            slugInput.value =
-                slug;
-
-        }
-
-
-        if (!st) {
-
-            alert(
-                "Link Streamtape / ST wajib diisi."
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * URL publik video
-         */
-
-        const url =
-            "https://avfyp.github.io/v/" +
-            slug;
-
-
-        /*
-         * Simpan data sementara
-         * untuk halaman admin.
-         */
-
-        const postData = {
-
-            title: title,
-
-            slug: slug,
-
-            st: st,
-
-            gd: gd,
-
-            thumbnail: thumbnail
-
-        };
-
-
-        localStorage.setItem(
-            "avfyp_last_post",
-            JSON.stringify(postData)
-        );
-
-
-        videoUrl.textContent =
-            url;
-
-
-        result.hidden =
-            false;
-
-
-        copyStatus.textContent =
-            "";
-
-
-        result.scrollIntoView({
-            behavior: "smooth"
         });
 
-    }
-);
 
-
-/* =========================
-   COPY URL
-========================= */
-
-copyUrl.addEventListener(
-    "click",
-    async () => {
-
-        const url =
-            videoUrl.textContent.trim();
-
-
-        if (!url) {
-            return;
-        }
-
+        let data;
 
         try {
-
-            await navigator.clipboard.writeText(
-                url
-            );
-
-            copyStatus.textContent =
-                "✓ URL berhasil disalin";
-
-        }
-        catch {
-
-            /*
-             * Fallback untuk browser
-             * yang tidak mengizinkan
-             * clipboard API.
-             */
-
-            const textarea =
-                document.createElement(
-                    "textarea"
-                );
-
-            textarea.value =
-                url;
-
-            document.body.appendChild(
-                textarea
-            );
-
-            textarea.select();
-
-            document.execCommand(
-                "copy"
-            );
-
-            textarea.remove();
-
-
-            copyStatus.textContent =
-                "✓ URL berhasil disalin";
-
+            data = await response.json();
+        } catch {
+            data = {};
         }
 
 
-        setTimeout(
-            () => {
+        if (!response.ok) {
 
-                copyStatus.textContent =
-                    "";
+            const message =
+                data.error ||
+                `Upload gagal. HTTP ${response.status}`;
 
-            },
-            2500
+            throw new Error(message);
+        }
+
+
+        showStatus("✅ Video berhasil ditambahkan!");
+
+
+        const videoUrl =
+            "https://avfyp.github.io/v/" + slug + "/";
+
+
+        resultBox.innerHTML = `
+            <strong>Posting berhasil dibuat.</strong>
+
+            <p>
+                URL video:
+            </p>
+
+            <p>
+                <a
+                    href="${videoUrl}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ${videoUrl}
+                </a>
+            </p>
+        `;
+
+        resultBox.classList.remove("hidden");
+
+
+        // Password tidak disimpan.
+        document.getElementById("adminKey").value = "";
+
+        // Reset form selain password.
+        titleInput.value = "";
+        slugInput.value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("thumbnail").value = "";
+        document.getElementById("st").value = "";
+        document.getElementById("gd").value = "";
+        document.getElementById("popular").checked = false;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "❌ " + (error.message || "Terjadi kesalahan.")
         );
 
+    } finally {
+
+        uploadButton.disabled = false;
+        uploadButton.textContent = "🚀 Upload Video";
+
     }
-);
+
+});
