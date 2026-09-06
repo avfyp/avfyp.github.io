@@ -113,9 +113,9 @@ form.addEventListener("submit", async (event) => {
 
 
     uploadButton.disabled = true;
-    uploadButton.textContent = "⏳ Mengupload...";
+    uploadButton.textContent = "⌛ Mengupload...";
 
-    showStatus("Menghubungi server AVFYP...");
+    showStatus("🕒 Menghubungi server AVFYP...");
 
 
     try {
