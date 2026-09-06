@@ -3,11 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+
+    <title>AVFYP</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>Hello World!</h1>
+    <!-- Header -->
+    <header class="header">
+
+        <!-- Hamburger -->
+        <button class="menu-button" id="menuButton" aria-label="Buka menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Logo -->
+        <div class="logo">AVFYP</div>
+
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <h1>Beranda</h1>
+
+        <!-- Search -->
+        <div class="search-box">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Cari video..."
+                autocomplete="off"
+            >
+
+            <button id="searchButton" aria-label="Cari">
+                🔍
+            </button>
+        </div>
+
+
+        <!-- Video Grid -->
+        <section class="video-grid" id="videoGrid">
+
+            <article class="video-card">
+                <div class="thumbnail">
+                    <span>VIDEO</span>
+                </div>
+
+                <div class="video-info">
+                    <h2>Video Pertama</h2>
+                    <p>Deskripsi video</p>
+                </div>
+            </article>
+
+
+            <article class="video-card">
+                <div class="thumbnail">
+                    <span>VIDEO</span>
+                </div>
+
+                <div class="video-info">
+                    <h2>Video Kedua</h2>
+                    <p>Deskripsi video</p>
+                </div>
+            </article>
+
+
+            <article class="video-card">
+                <div class="thumbnail">
+                    <span>VIDEO</span>
+                </div>
+
+                <div class="video-info">
+                    <h2>Video Ketiga</h2>
+                    <p>Deskripsi video</p>
+                </div>
+            </article>
+
+
+            <article class="video-card">
+                <div class="thumbnail">
+                    <span>VIDEO</span>
+                </div>
+
+                <div class="video-info">
+                    <h2>Video Keempat</h2>
+                    <p>Deskripsi video</p>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
 
 </body>
 </html>
