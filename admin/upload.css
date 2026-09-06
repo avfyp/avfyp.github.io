@@ -51,6 +51,7 @@ h1 {
 
 .form-card,
 .result-card {
+
     background: #151515;
 
     border: 1px solid #292929;
@@ -67,6 +68,7 @@ h1 {
 
 
 .field label {
+
     display: block;
 
     font-size: 14px;
@@ -78,6 +80,7 @@ h1 {
 
 
 .field input {
+
     width: 100%;
 
     padding: 14px;
@@ -97,11 +100,13 @@ h1 {
 
 
 .field input:focus {
+
     border-color: #555555;
 }
 
 
 .field small {
+
     display: block;
 
     color: #666666;
@@ -115,46 +120,23 @@ h1 {
 
 
 #urlPreview {
+
     color: #777777;
 
     word-break: break-all;
 }
 
 
-/* THUMBNAIL */
-
-.thumbnail-status {
-    margin-bottom: 8px;
-
-    padding: 10px 12px;
-
-    background: #0d0d0d;
-
-    border: 1px solid #292929;
-
-    border-radius: 7px;
-
-    color: #777777;
-
-    font-size: 12px;
-}
-
-
 /* BUTTON */
 
 .upload-button,
-.secondary-button {
+.copy-button {
+
     width: 100%;
 
     padding: 14px;
 
-    border: 1px solid #ffffff;
-
     border-radius: 7px;
-
-    background: #ffffff;
-
-    color: #000000;
 
     font-size: 14px;
 
@@ -164,46 +146,41 @@ h1 {
 }
 
 
-.upload-button:hover,
-.secondary-button:hover {
-    background: #dddddd;
+.upload-button {
+
+    border: 1px solid #ffffff;
+
+    background: #ffffff;
+
+    color: #000000;
 }
 
 
-.upload-button:disabled {
-    opacity: 0.5;
+.upload-button:hover {
 
-    cursor: wait;
+    background: #dddddd;
 }
 
 
 /* RESULT */
 
 .result-card {
+
     margin-top: 20px;
 }
 
 
 .result-card h2 {
+
     font-size: 18px;
 
-    margin-bottom: 10px;
-}
-
-
-.result-card p {
-    color: #777777;
-
-    font-size: 13px;
-
     margin-bottom: 12px;
 }
 
 
-.path-box {
-    padding: 13px;
+.url-box {
 
-    margin-bottom: 12px;
+    padding: 14px;
 
     background: #0b0b0b;
 
@@ -217,21 +194,39 @@ h1 {
 
     font-size: 12px;
 
+    line-height: 1.6;
+
     word-break: break-all;
+
+    margin-bottom: 12px;
 }
 
 
-.secondary-button {
-    background: #222222;
+.copy-button {
 
-    border-color: #333333;
+    border: 1px solid #333333;
+
+    background: #222222;
 
     color: #ffffff;
 }
 
 
-.secondary-button:hover {
+.copy-button:hover {
+
     background: #2d2d2d;
+}
+
+
+.copy-status {
+
+    text-align: center;
+
+    color: #777777;
+
+    font-size: 12px;
+
+    margin-top: 10px;
 }
 
 
@@ -254,4 +249,4 @@ h1 {
         font-size: 25px;
     }
 
-  }
+}
