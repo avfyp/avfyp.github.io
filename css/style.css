@@ -749,13 +749,21 @@ body {
 ========================= */
 
 .footer {
-    padding: 0 20px 30px;
+    padding: 0 20px 35px;
 
     text-align: center;
 }
 
-.footer p {
-    color: #555555;
+.copyright {
+    color: #666666;
 
     font-size: 12px;
+
+    margin-bottom: 7px;
+}
+
+.copyright-note {
+    color: #444444;
+
+    font-size: 11px;
 }
