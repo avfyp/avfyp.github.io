@@ -1,167 +1,191 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AVFYP Admin</title>
 
-    <link rel="stylesheet" href="upload.css">
+    <link
+        rel="stylesheet"
+        href="upload.css"
+    >
 </head>
 
 <body>
 
-    <main class="admin-container">
+<main class="admin-container">
 
-        <h1>AVFYP Admin</h1>
+    <h1>AVFYP Admin</h1>
 
-        <p class="subtitle">
-            Buat postingan video baru
-        </p>
-
-
-        <section class="form-card">
-
-            <div class="field">
-
-                <label for="title">
-                    Judul Video
-                </label>
-
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Masukkan judul video"
-                    autocomplete="off"
-                >
-
-            </div>
+    <p class="subtitle">
+        Buat postingan video baru
+    </p>
 
 
-            <div class="field">
+    <section class="form-card">
 
-                <label for="slug">
-                    Slug / URL
-                </label>
+        <!-- JUDUL -->
 
-                <input
-                    type="text"
-                    id="slug"
-                    placeholder="judul-video"
-                    autocomplete="off"
-                >
+        <div class="field">
 
-                <small id="urlPreview">
-                    https://avfyp.github.io/v/judul-video
-                </small>
+            <label for="title">
+                Judul Video
+            </label>
 
-            </div>
-
-
-            <div class="field">
-
-                <label for="st">
-                    Streamtape / ST
-                </label>
-
-                <input
-                    type="url"
-                    id="st"
-                    placeholder="https://streamtape.com/..."
-                    autocomplete="off"
-                >
-
-                <small>
-                    Server utama
-                </small>
-
-            </div>
-
-
-            <div class="field">
-
-                <label for="gd">
-                    Google Drive / GD
-                </label>
-
-                <input
-                    type="url"
-                    id="gd"
-                    placeholder="https://drive.google.com/file/d/..."
-                    autocomplete="off"
-                >
-
-                <small>
-                    Opsional
-                </small>
-
-            </div>
-
-
-            <div class="field">
-
-                <label for="thumbnail">
-                    Thumbnail
-                </label>
-
-                <div class="thumbnail-status" id="thumbnailStatus">
-                    Otomatis dari ST jika tersedia
-                </div>
-
-                <input
-                    type="url"
-                    id="thumbnail"
-                    placeholder="Kosongkan untuk otomatis"
-                    autocomplete="off"
-                >
-
-                <small>
-                    Bisa dikosongkan.
-                    Sistem akan mencoba menggunakan thumbnail ST.
-                </small>
-
-            </div>
-
-
-            <button
-                id="uploadButton"
-                class="upload-button"
+            <input
+                type="text"
+                id="title"
+                placeholder="Masukkan judul video"
+                autocomplete="off"
             >
-                Upload / Buat Video
-            </button>
 
-        </section>
+        </div>
 
 
-        <section
-            id="result"
-            class="result-card"
-            hidden
+        <!-- SLUG -->
+
+        <div class="field">
+
+            <label for="slug">
+                Slug / URL
+            </label>
+
+            <input
+                type="text"
+                id="slug"
+                placeholder="judul-video"
+                autocomplete="off"
+            >
+
+            <small id="urlPreview">
+                https://avfyp.github.io/v/judul-video
+            </small>
+
+        </div>
+
+
+        <!-- ST -->
+
+        <div class="field">
+
+            <label for="st">
+                Streamtape / ST
+            </label>
+
+            <input
+                type="url"
+                id="st"
+                placeholder="https://streamtape.com/..."
+                autocomplete="off"
+            >
+
+            <small>
+                Server utama
+            </small>
+
+        </div>
+
+
+        <!-- GD -->
+
+        <div class="field">
+
+            <label for="gd">
+                Google Drive / GD
+            </label>
+
+            <input
+                type="url"
+                id="gd"
+                placeholder="https://drive.google.com/file/d/..."
+                autocomplete="off"
+            >
+
+            <small>
+                Opsional
+            </small>
+
+        </div>
+
+
+        <!-- THUMBNAIL -->
+
+        <div class="field">
+
+            <label for="thumbnail">
+                Thumbnail
+            </label>
+
+            <input
+                type="url"
+                id="thumbnail"
+                placeholder="Kosongkan jika tidak ada"
+                autocomplete="off"
+            >
+
+            <small>
+                Opsional
+            </small>
+
+        </div>
+
+
+        <button
+            id="createButton"
+            class="upload-button"
         >
+            Buat Video
+        </button>
 
-            <h2>Video berhasil dibuat</h2>
-
-            <p>
-                File sudah dibuat. Simpan sebagai:
-            </p>
-
-            <div class="path-box" id="filePath">
-                v/judul-video/index.html
-            </div>
-
-            <button
-                id="downloadAgain"
-                class="secondary-button"
-            >
-                Download Lagi
-            </button>
-
-        </section>
-
-    </main>
+    </section>
 
 
-    <script src="upload.js"></script>
+    <!-- HASIL -->
+
+    <section
+        id="result"
+        class="result-card"
+        hidden
+    >
+
+        <h2>
+            URL Video
+        </h2>
+
+        <div
+            id="videoUrl"
+            class="url-box"
+        >
+            https://avfyp.github.io/v/judul-video
+        </div>
+
+
+        <button
+            id="copyUrl"
+            class="copy-button"
+        >
+            Salin URL
+        </button>
+
+
+        <p
+            id="copyStatus"
+            class="copy-status"
+        ></p>
+
+    </section>
+
+</main>
+
+
+<script src="upload.js"></script>
 
 </body>
+
 </html>
