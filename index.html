@@ -11,10 +11,7 @@
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
+    <!-- HEADER -->
     <header class="header">
 
         <button
@@ -27,30 +24,30 @@
             <span></span>
         </button>
 
-        <div class="logo">
-            AVFYP
-        </div>
+        <div class="logo">AVFYP</div>
 
     </header>
 
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
+
             <span>MENU</span>
 
-            <button id="closeMenu" class="close-menu">
+            <button
+                id="closeMenu"
+                class="close-menu"
+            >
                 ×
             </button>
+
         </div>
 
         <nav class="sidebar-menu">
 
-            <a href="index.html">
+            <a href="/">
                 🏠 Beranda
             </a>
 
@@ -71,22 +68,20 @@
     </aside>
 
 
-    <!-- Overlay -->
+    <!-- OVERLAY -->
+    <div
+        class="overlay"
+        id="overlay"
+    ></div>
 
-    <div class="overlay" id="overlay"></div>
 
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
+    <!-- MAIN -->
     <main class="container">
 
         <h1>Beranda</h1>
 
 
-        <!-- Search -->
-
+        <!-- SEARCH -->
         <div class="search-box">
 
             <input
@@ -106,71 +101,7 @@
         </div>
 
 
-        <!-- =========================
-             POPULAR
-        ========================== -->
-
-        <section class="popular-section">
-
-            <div class="section-title">
-                <h2>🔥 Populer</h2>
-                <span>Top 3</span>
-            </div>
-
-            <div
-                class="popular-grid"
-                id="popularGrid"
-            ></div>
-
-        </section>
-
-
-        <!-- =========================
-             STATISTICS
-        ========================== -->
-
-        <section class="stats">
-
-            <div class="stat-box">
-
-                <span class="stat-icon">🎬</span>
-
-                <div>
-                    <strong id="totalPosts">
-                        0
-                    </strong>
-
-                    <small>
-                        Total Postingan
-                    </small>
-                </div>
-
-            </div>
-
-
-            <div class="stat-box">
-
-                <span class="stat-icon">👁️</span>
-
-                <div>
-                    <strong id="totalViews">
-                        0
-                    </strong>
-
-                    <small>
-                        Total Dilihat
-                    </small>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             ALL VIDEOS
-        ========================== -->
-
+        <!-- VIDEO -->
         <section>
 
             <div class="section-title">
@@ -190,8 +121,7 @@
             ></div>
 
 
-            <!-- Pagination -->
-
+            <!-- PAGINATION -->
             <div class="pagination">
 
                 <button
@@ -213,13 +143,30 @@
 
         </section>
 
+
+        <!-- TOP 3 -->
+        <section class="popular-section">
+
+            <div class="section-title">
+
+                <h2>🔥 Populer</h2>
+
+                <span>Top 3</span>
+
+            </div>
+
+
+            <div
+                class="popular-grid"
+                id="popularGrid"
+            ></div>
+
+        </section>
+
     </main>
 
 
-    <!-- =========================
-         TELEGRAM POPUP
-    ========================== -->
-
+    <!-- TELEGRAM -->
     <a
         href="https://t.me/AVFYP"
         target="_blank"
