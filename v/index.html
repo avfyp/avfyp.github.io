@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AVFYP</title>
+
+    <link
+        rel="stylesheet"
+        href="../../css/video.css"
+    >
+</head>
+
+<body>
+
+<header class="video-header">
+
+    <a
+        href="/"
+        class="logo"
+    >
+        AVFYP
+    </a>
+
+    <a
+        href="/"
+        class="home-button"
+    >
+        ← Beranda
+    </a>
+
+</header>
+
+
+<main class="video-container">
+
+    <div
+        id="loading"
+        class="loading"
+    >
+        Memuat video...
+    </div>
+
+
+    <div
+        id="error"
+        class="error"
+        style="display:none;"
+    >
+        Video tidak ditemukan.
+    </div>
+
+
+    <article
+        id="videoContent"
+        style="display:none;"
+    >
+
+        <h1 id="videoTitle"></h1>
+
+
+        <div class="player-wrapper">
+
+            <iframe
+                id="videoPlayer"
+                src=""
+                allowfullscreen
+                allow="autoplay; fullscreen"
+                loading="lazy"
+            ></iframe>
+
+        </div>
+
+
+        <div
+            id="serverSwitcher"
+            class="server-switcher"
+        ></div>
+
+
+        <div
+            id="videoDescription"
+            class="video-description"
+        ></div>
+
+    </article>
+
+</main>
+
+
+<script>
+
+let posts = [];
+
+let currentPost = null;
+
+
+const loading =
+    document.getElementById("loading");
+
+const error =
+    document.getElementById("error");
+
+const content =
+    document.getElementById("videoContent");
+
+const title =
+    document.getElementById("videoTitle");
+
+const description =
+    document.getElementById(
+        "videoDescription"
+    );
+
+const player =
+    document.getElementById("videoPlayer");
+
+const switcher =
+    document.getElementById(
+        "serverSwitcher"
+    );
+
+
+function getSlug() {
+
+    const path =
+        window.location.pathname;
+
+    const parts =
+        path.split("/")
+            .filter(Boolean);
+
+    const vIndex =
+        parts.indexOf("v");
+
+    if (
+        vIndex === -1 ||
+        !parts[vIndex + 1]
+    ) {
+
+        return "";
+
+    }
+
+    return parts[vIndex + 1];
+
+}
+
+
+function normalizeDriveUrl(url) {
+
+    if (!url) {
+        return "";
+    }
+
+    const match =
+        url.match(
+            /drive\.google\.com\/file\/d\/([^/]+)/
+        );
+
+    if (match) {
+
+        return (
+            "https://drive.google.com/file/d/" +
+            match[1] +
+            "/preview"
+        );
+
+    }
+
+    return url;
+
+}
+
+
+function escapeHtml(text) {
+
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function showVideo(post) {
+
+    currentPost =
+        post;
+
+
+    title.textContent =
+        post.title;
+
+
+    description.textContent =
+        post.description || "";
+
+
+    const servers =
+        post.servers || {};
+
+
+    const st =
+        servers.st || "";
+
+
+    const gd =
+        normalizeDriveUrl(
+            servers.gd || ""
+        );
+
+
+    if (!st) {
+
+        showError();
+
+        return;
+
+    }
+
+
+    player.src =
+        st;
+
+
+    switcher.innerHTML =
+        "";
+
+
+    createServerButton(
+        "ST",
+        st,
+        true
+    );
+
+
+    if (gd) {
+
+        createServerButton(
+            "GD",
+            gd,
+            false
+        );
+
+    }
+
+
+    loading.style.display =
+        "none";
+
+    error.style.display =
+        "none";
+
+    content.style.display =
+        "block";
+
+}
+
+
+function createServerButton(
+    name,
+    url,
+    active
+) {
+
+    const button =
+        document.createElement("button");
+
+
+    button.className =
+        "server-button";
+
+
+    if (active) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    button.textContent =
+        name;
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            player.src =
+                url;
+
+
+            document
+                .querySelectorAll(
+                    ".server-button"
+                )
+                .forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+
+            button.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+
+    switcher.appendChild(
+        button
+    );
+
+}
+
+
+function showError() {
+
+    loading.style.display =
+        "none";
+
+    content.style.display =
+        "none";
+
+    error.style.display =
+        "block";
+
+}
+
+
+async function loadPost() {
+
+    try {
+
+        const response =
+            await fetch(
+                "../../posts.json"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "posts.json gagal dimuat"
+            );
+
+        }
+
+
+        posts =
+            await response.json();
+
+
+        const slug =
+            getSlug();
+
+
+        const post =
+            posts.find(
+                item =>
+                    item.slug === slug
+            );
+
+
+        if (!post) {
+
+            showError();
+
+            return;
+
+        }
+
+
+        showVideo(post);
+
+    }
+    catch (err) {
+
+        console.error(err);
+
+        showError();
+
+    }
+
+}
+
+
+loadPost();
+
+</script>
+
+</body>
+</html>
