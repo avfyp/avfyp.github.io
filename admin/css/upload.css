@@ -1,0 +1,289 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: #0d0d0d;
+    color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+.admin-container {
+    width: 100%;
+    max-width: 720px;
+
+    margin: 0 auto;
+    padding: 30px 16px 50px;
+}
+
+
+.admin-header {
+    margin-bottom: 24px;
+}
+
+.admin-header h1 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.admin-header p {
+    margin: 0;
+
+    color: #888;
+    font-size: 14px;
+}
+
+
+.upload-card {
+    background: #151515;
+
+    border: 1px solid #292929;
+    border-radius: 12px;
+
+    padding: 22px;
+}
+
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+input,
+textarea {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    background: #0d0d0d;
+    color: #ffffff;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+
+input:focus,
+textarea:focus {
+    border-color: #666;
+}
+
+
+textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #777;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* SERVER */
+
+.server-section {
+    margin-top: 24px;
+    margin-bottom: 20px;
+
+    padding: 17px;
+
+    border: 1px solid #292929;
+    border-radius: 10px;
+
+    background: #111111;
+}
+
+
+.section-heading {
+    margin-bottom: 17px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.server-section .form-group {
+    margin-bottom: 15px;
+}
+
+
+.server-section .form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+
+/* CHECKBOX */
+
+.checkbox-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    color: #ccc;
+
+    font-size: 14px;
+}
+
+
+.checkbox-row input {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    accent-color: #ffffff;
+}
+
+
+/* BUTTON */
+
+#uploadButton {
+    width: 100%;
+
+    margin-top: 24px;
+
+    padding: 14px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #000000;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        opacity .2s,
+        transform .1s;
+}
+
+
+#uploadButton:hover {
+    opacity: .9;
+}
+
+
+#uploadButton:active {
+    transform: scale(.99);
+}
+
+
+#uploadButton:disabled {
+    opacity: .5;
+
+    cursor: not-allowed;
+}
+
+
+/* STATUS */
+
+.status {
+    display: none;
+
+    margin-top: 18px;
+    padding: 13px;
+
+    border-radius: 8px;
+
+    background: #0d0d0d;
+
+    border: 1px solid #292929;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
+
+.status.show {
+    display: block;
+}
+
+
+.status.success {
+    border-color: #315d3d;
+
+    color: #8df0a4;
+}
+
+
+.status.error {
+    border-color: #633535;
+
+    color: #ff8585;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .admin-container {
+        padding: 20px 12px 40px;
+    }
+
+
+    .admin-header h1 {
+        font-size: 24px;
+    }
+
+
+    .upload-card {
+        padding: 17px;
+    }
+
+
+    .server-section {
+        padding: 14px;
+    }
+
+}
