@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AVFYP Admin Upload</title>
+
+    <link rel="stylesheet" href="/admin/css/upload.css">
+</head>
+
+<body>
+
+<main class="admin-container">
+
+    <div class="admin-header">
+
+        <div>
+            <div class="logo">AVFYP</div>
+
+            <h1>Upload Video</h1>
+
+            <p>
+                Tambah postingan baru ke website.
+            </p>
+        </div>
+
+        <a
+            href="/"
+            class="home-button"
+        >
+            ← Home
+        </a>
+
+    </div>
+
+
+    <form id="uploadForm">
+
+        <label>
+            Password Admin
+
+            <input
+                type="password"
+                id="adminKey"
+                placeholder="Masukkan password admin"
+                required
+            >
+        </label>
+
+
+        <label>
+            Judul Video
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Judul video"
+                required
+            >
+        </label>
+
+
+        <label>
+            Slug URL
+
+            <input
+                type="text"
+                id="slug"
+                placeholder="judul-video"
+            >
+
+            <small>
+                Kosongkan untuk otomatis dari judul.
+            </small>
+        </label>
+
+
+        <label>
+            Deskripsi
+
+            <textarea
+                id="description"
+                rows="4"
+                placeholder="Deskripsi video..."
+            ></textarea>
+        </label>
+
+
+        <label>
+            Thumbnail URL
+
+            <input
+                type="url"
+                id="thumbnail"
+                placeholder="https://..."
+            >
+
+            <small>
+                Opsional.
+            </small>
+        </label>
+
+
+        <div class="server-box">
+
+            <h2>Server Video</h2>
+
+            <label>
+                Streamtape (ST)
+
+                <input
+                    type="url"
+                    id="st"
+                    placeholder="https://..."
+                >
+            </label>
+
+
+            <label>
+                AVPLAYER (AV)
+
+                <input
+                    type="url"
+                    id="av"
+                    placeholder="https://..."
+                >
+            </label>
+
+        </div>
+
+
+        <label class="checkbox">
+
+            <input
+                type="checkbox"
+                id="popular"
+            >
+
+            <span>
+                Masukkan ke Populer
+            </span>
+
+        </label>
+
+
+        <button
+            type="submit"
+            id="uploadButton"
+        >
+            🚀 Upload Video
+        </button>
+
+    </form>
+
+
+    <div
+        id="status"
+        class="status hidden"
+    ></div>
+
+
+    <div
+        id="result"
+        class="result hidden"
+    ></div>
+
+</main>
+
+
+<script src="/admin/js/upload.js"></script>
+
+</body>
+</html>
