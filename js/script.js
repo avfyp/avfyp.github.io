@@ -1,524 +1,554 @@
-const POSTS_PER_PAGE = 15;
+/* ==================================================
+   SETTINGS
+================================================== */
 
-const API_URL = "https://avfyp-upload.cntk-njay.workers.dev";
+const POSTS_PER_PAGE = 15;
 
 let videos = [];
 let filteredVideos = [];
+
 let currentPage = 1;
 
-// ===============================
-// ELEMENT
-// ===============================
 
-const videoGrid = document.getElementById("videoGrid");
-const popularGrid = document.getElementById("popularGrid");
+/* ==================================================
+   ELEMENTS
+================================================== */
 
-const searchInput = document.getElementById("searchInput");
-const searchButton = document.getElementById("searchButton");
+const videoGrid =
+    document.getElementById("videoGrid");
 
-const prevButton = document.getElementById("prevButton");
-const nextButton = document.getElementById("nextButton");
+const popularGrid =
+    document.getElementById("popularGrid");
 
-const pageNumber = document.getElementById("pageNumber");
-const pageInfo = document.getElementById("pageInfo");
+const pageNumber =
+    document.getElementById("pageNumber");
 
-// ===============================
-// LOAD POSTS
-// ===============================
+const pageInfo =
+    document.getElementById("pageInfo");
+
+const prevButton =
+    document.getElementById("prevButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const searchButton =
+    document.getElementById("searchButton");
+
+
+/* ==================================================
+   HAMBURGER
+================================================== */
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const closeMenu =
+    document.getElementById("closeMenu");
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const overlay =
+    document.getElementById("overlay");
+
+
+function openMenu() {
+
+    sidebar.classList.add("active");
+
+    overlay.classList.add("active");
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove("active");
+
+    overlay.classList.remove("active");
+
+}
+
+
+menuButton.addEventListener(
+    "click",
+    openMenu
+);
+
+
+closeMenu.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+overlay.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* ==================================================
+   LOAD POSTS.JSON
+================================================== */
 
 async function loadPosts() {
-    try {
-        const response = await fetch("/posts.json?t=" + Date.now());
-
-        if (!response.ok) {
-            throw new Error("Gagal mengambil posts.json");
-        }
-
-        const data = await response.json();
-
-        if (!Array.isArray(data)) {
-            throw new Error("Format posts.json tidak valid");
-        }
-
-        videos = data;
-        filteredVideos = [...videos];
-
-        renderVideos();
-        loadPopular();
-
-    } catch (error) {
-        console.error("Load posts error:", error);
-
-        videoGrid.innerHTML = `
-            <div class="message">
-                Gagal memuat video.
-            </div>
-        `;
-
-        popularGrid.innerHTML = `
-            <div class="message">
-                Gagal memuat video populer.
-            </div>
-        `;
-    }
-}
-
-// ===============================
-// VIDEO CARD
-// ===============================
-
-function createVideoCard(video) {
-
-    const title = video.title || "Tanpa Judul";
-
-    const description =
-        video.description ||
-        "Tonton video di AVFYP.";
-
-    const slug = video.slug || "";
-
-    const thumbnail =
-        video.thumbnail ||
-        "https://via.placeholder.com/640x360/151515/ffffff?text=AVFYP";
-
-    return `
-        <a
-            href="/v/${encodeURIComponent(slug)}/"
-            class="video-card"
-        >
-
-            <div class="thumbnail">
-                <img
-                    src="${escapeHtml(thumbnail)}"
-                    alt="${escapeHtml(title)}"
-                    loading="lazy"
-                    onerror="this.src='https://via.placeholder.com/640x360/151515/ffffff?text=AVFYP'"
-                >
-            </div>
-
-            <div class="video-info">
-
-                <h3>
-                    ${escapeHtml(title)}
-                </h3>
-
-                <p>
-                    ${escapeHtml(description)}
-                </p>
-
-            </div>
-
-        </a>
-    `;
-}
-
-// ===============================
-// RENDER VIDEOS
-// ===============================
-
-function renderVideos() {
-
-    const totalPages =
-        Math.max(
-            1,
-            Math.ceil(
-                filteredVideos.length /
-                POSTS_PER_PAGE
-            )
-        );
-
-    if (currentPage > totalPages) {
-        currentPage = totalPages;
-    }
-
-    const start =
-        (currentPage - 1) *
-        POSTS_PER_PAGE;
-
-    const end =
-        start +
-        POSTS_PER_PAGE;
-
-    const pageVideos =
-        filteredVideos.slice(start, end);
-
-    if (!pageVideos.length) {
-
-        videoGrid.innerHTML = `
-            <div class="message">
-                Video tidak ditemukan.
-            </div>
-        `;
-
-    } else {
-
-        videoGrid.innerHTML =
-            pageVideos
-                .map(createVideoCard)
-                .join("");
-    }
-
-    updatePagination(totalPages);
-}
-
-// ===============================
-// PAGINATION
-// ===============================
-
-function updatePagination(totalPages) {
-
-    pageNumber.textContent =
-        currentPage;
-
-    pageInfo.textContent =
-        `Halaman ${currentPage} dari ${totalPages}`;
-
-    prevButton.disabled =
-        currentPage <= 1;
-
-    nextButton.disabled =
-        currentPage >= totalPages;
-}
-
-prevButton.addEventListener("click", () => {
-
-    if (currentPage > 1) {
-
-        currentPage--;
-
-        renderVideos();
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-});
-
-nextButton.addEventListener("click", () => {
-
-    const totalPages =
-        Math.max(
-            1,
-            Math.ceil(
-                filteredVideos.length /
-                POSTS_PER_PAGE
-            )
-        );
-
-    if (currentPage < totalPages) {
-
-        currentPage++;
-
-        renderVideos();
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-});
-
-// ===============================
-// SEARCH
-// ===============================
-
-function doSearch() {
-
-    const keyword =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-    if (!keyword) {
-
-        filteredVideos = [...videos];
-
-    } else {
-
-        filteredVideos =
-            videos.filter(video => {
-
-                const title =
-                    String(
-                        video.title || ""
-                    ).toLowerCase();
-
-                const description =
-                    String(
-                        video.description || ""
-                    ).toLowerCase();
-
-                return (
-                    title.includes(keyword) ||
-                    description.includes(keyword)
-                );
-            });
-    }
-
-    currentPage = 1;
-
-    renderVideos();
-}
-
-searchButton.addEventListener(
-    "click",
-    doSearch
-);
-
-searchInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            doSearch();
-        }
-    }
-);
-
-// ===============================
-// POPULAR
-// ===============================
-
-async function loadPopular() {
 
     try {
 
         const response =
-            await fetch(
-                API_URL +
-                "/api/popular?t=" +
-                Date.now()
-            );
+            await fetch("/posts.json?cache=" + Date.now());
 
         if (!response.ok) {
+
             throw new Error(
-                "Gagal mengambil popular"
+                `HTTP ${response.status}`
             );
+
         }
 
         const data =
             await response.json();
 
-        if (
-            !data.ok ||
-            !Array.isArray(data.posts)
-        ) {
+
+        if (!Array.isArray(data)) {
+
             throw new Error(
-                "Data popular tidak valid"
+                "Format posts.json tidak valid."
             );
+
         }
 
-        renderPopular(
-            data.posts.slice(0, 3)
-        );
+
+        /*
+         * Posting terbaru ditaruh paling atas.
+         *
+         * Worker menambahkan posting baru
+         * ke bagian depan posts.json.
+         */
+
+        videos = data;
+
+        filteredVideos = [...videos];
+
+
+        renderPopular();
+
+        renderVideos();
+
 
     } catch (error) {
 
         console.error(
-            "Popular error:",
+            "Gagal memuat posts.json:",
             error
         );
 
-        // Jika API belum tersedia,
-        // gunakan fallback dari posts.json.
-        renderPopular(
-            videos
-                .filter(video => video.popular)
-                .slice(0, 3)
-        );
-    }
-}
 
-// ===============================
-// POPULAR CARD
-// ===============================
-
-function renderPopular(posts) {
-
-    if (!posts.length) {
-
-        popularGrid.innerHTML = `
-            <div class="message">
-                Belum ada video populer.
+        videoGrid.innerHTML = `
+            <div class="no-result">
+                Gagal memuat daftar video.
             </div>
         `;
 
-        return;
+        popularGrid.innerHTML = "";
+
     }
 
-    popularGrid.innerHTML =
-        posts
-            .map(video => {
+}
 
-                const title =
-                    video.title ||
-                    "Tanpa Judul";
 
-                const slug =
-                    video.slug ||
-                    "";
+/* ==================================================
+   RENDER VIDEO
+================================================== */
 
-                const thumbnail =
-                    video.thumbnail ||
-                    "https://via.placeholder.com/640x360/151515/ffffff?text=AVFYP";
+function renderVideos() {
 
-                const views =
-                    Number(video.views || 0);
+    videoGrid.innerHTML = "";
 
-                return `
-                    <a
-                        href="/v/${encodeURIComponent(slug)}/"
-                        class="video-card popular-card"
+
+    const totalPages =
+        Math.ceil(
+            filteredVideos.length /
+            POSTS_PER_PAGE
+        );
+
+
+    if (currentPage > totalPages) {
+
+        currentPage =
+            totalPages || 1;
+
+    }
+
+
+    const start =
+        (currentPage - 1) *
+        POSTS_PER_PAGE;
+
+
+    const end =
+        start + POSTS_PER_PAGE;
+
+
+    const currentVideos =
+        filteredVideos.slice(
+            start,
+            end
+        );
+
+
+    if (currentVideos.length === 0) {
+
+        videoGrid.innerHTML = `
+            <div class="no-result">
+                Tidak ada video yang ditemukan.
+            </div>
+        `;
+
+    }
+
+
+    currentVideos.forEach(video => {
+
+        const card =
+            document.createElement("article");
+
+
+        card.className =
+            "video-card";
+
+
+        /*
+         * URL menuju halaman video.
+         */
+
+        const videoUrl =
+            "/v/" +
+            encodeURIComponent(video.slug) +
+            "/";
+
+
+        /*
+         * Thumbnail.
+         *
+         * Kalau tidak ada thumbnail,
+         * tampilkan placeholder VIDEO.
+         */
+
+        const thumbnail =
+            video.thumbnail
+                ? `
+                    <img
+                        src="${escapeHTML(video.thumbnail)}"
+                        alt="${escapeHTML(video.title)}"
+                        loading="lazy"
                     >
-
-                        <div class="thumbnail">
-
-                            <img
-                                src="${escapeHtml(thumbnail)}"
-                                alt="${escapeHtml(title)}"
-                                loading="lazy"
-                                onerror="this.src='https://via.placeholder.com/640x360/151515/ffffff?text=AVFYP'"
-                            >
-
-                            <span class="popular-rank">
-                                #${posts.indexOf(video) + 1}
-                            </span>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <h3>
-                                ${escapeHtml(title)}
-                            </h3>
-
-                            <p>
-                                ${formatViews(views)} views
-                            </p>
-
-                        </div>
-
-                    </a>
+                `
+                : `
+                    <div class="thumbnail-placeholder">
+                        VIDEO
+                    </div>
                 `;
-            })
-            .join("");
+
+
+        card.innerHTML = `
+
+            <a
+                href="${videoUrl}"
+                class="video-link"
+            >
+
+                <div class="thumbnail">
+
+                    ${thumbnail}
+
+                </div>
+
+                <div class="video-info">
+
+                    <h3>
+                        ${escapeHTML(video.title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(video.description || "")}
+                    </p>
+
+                </div>
+
+            </a>
+
+        `;
+
+
+        videoGrid.appendChild(card);
+
+    });
+
+
+    updatePagination(totalPages);
+
 }
 
-// ===============================
-// FORMAT VIEWS
-// ===============================
 
-function formatViews(number) {
+/* ==================================================
+   PAGINATION
+================================================== */
 
-    number =
-        Number(number) || 0;
+function updatePagination(totalPages) {
 
-    if (number >= 1000000) {
+    const pages =
+        totalPages || 1;
 
-        return (
-            (number / 1000000)
-                .toFixed(1)
-                .replace(".0", "") +
-            "M"
-        );
+
+    pageNumber.textContent =
+        currentPage;
+
+
+    pageInfo.textContent =
+        `Halaman ${currentPage} dari ${pages}`;
+
+
+    prevButton.disabled =
+        currentPage <= 1;
+
+
+    nextButton.disabled =
+        currentPage >= pages;
+
+}
+
+
+prevButton.addEventListener(
+    "click",
+    () => {
+
+        if (currentPage > 1) {
+
+            currentPage--;
+
+            renderVideos();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
 
     }
+);
 
-    if (number >= 1000) {
 
-        return (
-            (number / 1000)
-                .toFixed(1)
-                .replace(".0", "") +
-            "K"
-        );
+nextButton.addEventListener(
+    "click",
+    () => {
+
+        const totalPages =
+            Math.ceil(
+                filteredVideos.length /
+                POSTS_PER_PAGE
+            );
+
+
+        if (currentPage < totalPages) {
+
+            currentPage++;
+
+            renderVideos();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
     }
+);
 
-    return number.toString();
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+function searchVideos() {
+
+    const keyword =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    filteredVideos =
+        videos.filter(video => {
+
+            const title =
+                String(
+                    video.title || ""
+                ).toLowerCase();
+
+
+            const description =
+                String(
+                    video.description || ""
+                ).toLowerCase();
+
+
+            return (
+                title.includes(keyword) ||
+                description.includes(keyword)
+            );
+
+        });
+
+
+    currentPage = 1;
+
+    renderVideos();
+
 }
 
-// ===============================
-// HTML ESCAPE
-// ===============================
 
-function escapeHtml(value) {
+searchInput.addEventListener(
+    "input",
+    searchVideos
+);
 
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+searchButton.addEventListener(
+    "click",
+    searchVideos
+);
+
+
+/* ==================================================
+   TOP 3 POPULER
+================================================== */
+
+function renderPopular() {
+
+    popularGrid.innerHTML = "";
+
+
+    /*
+     * Ambil postingan yang ditandai popular:true.
+     */
+
+    const popularVideos =
+        videos
+            .filter(video => video.popular === true)
+            .slice(0, 3);
+
+
+    /*
+     * Kalau belum ada yang ditandai populer,
+     * ambil 3 postingan terbaru.
+     */
+
+    const popular =
+        popularVideos.length > 0
+            ? popularVideos
+            : videos.slice(0, 3);
+
+
+    popular.forEach((video, index) => {
+
+        const card =
+            document.createElement("article");
+
+
+        card.className =
+            "popular-card";
+
+
+        const videoUrl =
+            "/v/" +
+            encodeURIComponent(video.slug) +
+            "/";
+
+
+        const thumbnail =
+            video.thumbnail
+                ? `
+                    <img
+                        src="${escapeHTML(video.thumbnail)}"
+                        alt="${escapeHTML(video.title)}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="popular-placeholder">
+                        VIDEO
+                    </div>
+                `;
+
+
+        card.innerHTML = `
+
+            <a
+                href="${videoUrl}"
+                class="popular-link"
+            >
+
+                <div class="popular-number">
+                    ${index + 1}
+                </div>
+
+                <div class="popular-thumbnail">
+
+                    ${thumbnail}
+
+                </div>
+
+                <div class="popular-info">
+
+                    <h3>
+                        ${escapeHTML(video.title)}
+                    </h3>
+
+                    <span>
+                        Postingan populer
+                    </span>
+
+                </div>
+
+            </a>
+
+        `;
+
+
+        popularGrid.appendChild(card);
+
+    });
+
 }
 
-// ===============================
-// HAMBURGER MENU
-// ===============================
 
-const menuButton =
-    document.getElementById(
-        "menuButton"
-    );
-
-const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
-
-const overlay =
-    document.getElementById(
-        "overlay"
-    );
-
-const closeMenu =
-    document.getElementById(
-        "closeMenu"
-    );
-
-function openSidebar() {
-
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-
-    document.body.classList.add(
-        "menu-open"
-    );
-}
-
-function closeSidebar() {
-
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-
-    document.body.classList.remove(
-        "menu-open"
-    );
-}
-
-if (menuButton) {
-    menuButton.addEventListener(
-        "click",
-        openSidebar
-    );
-}
-
-if (closeMenu) {
-    closeMenu.addEventListener(
-        "click",
-        closeSidebar
-    );
-}
-
-if (overlay) {
-    overlay.addEventListener(
-        "click",
-        closeSidebar
-    );
-}
-
-// ===============================
-// START
-// ===============================
+/* ==================================================
+   INITIALIZE
+================================================== */
 
 loadPosts();
