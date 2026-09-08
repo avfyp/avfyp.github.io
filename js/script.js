@@ -1,852 +1,833 @@
+/* =====================================================
+   AVFYP - MAIN SCRIPT
+   ===================================================== */
 
-const POSTS_URL = "/posts.json";
-const WORKER_URL = "https://avfyp-upload.cntk-njay.workers.dev";
+document.addEventListener("DOMContentLoaded", () => {
 
-const POSTS_PER_PAGE = 15;
+    /* =================================================
+       ELEMENT
+       ================================================= */
 
-let videos = [];
-let filteredVideos = [];
+    const menuButton = document.getElementById("menuButton");
+    const closeMenu = document.getElementById("closeMenu");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
 
-let currentPage = 1;
+    const videoGrid = document.getElementById("videoGrid");
+    const popularGrid = document.getElementById("popularGrid");
 
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
 
-// =====================================================
-// ELEMENT
-// =====================================================
+    const prevButton = document.getElementById("prevButton");
+    const nextButton = document.getElementById("nextButton");
 
-const videoGrid =
-    document.getElementById("videoGrid");
-
-const popularGrid =
-    document.getElementById("popularGrid");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const searchButton =
-    document.getElementById("searchButton");
-
-const prevButton =
-    document.getElementById("prevButton");
-
-const nextButton =
-    document.getElementById("nextButton");
-
-const pageNumber =
-    document.getElementById("pageNumber");
-
-const pageInfo =
-    document.getElementById("pageInfo");
+    const pageNumber = document.getElementById("pageNumber");
+    const pageInfo = document.getElementById("pageInfo");
 
 
-// =====================================================
-// MENU
-// =====================================================
+    /* =================================================
+       MENU
+       ================================================= */
 
-const menuButton =
-    document.getElementById("menuButton");
+    function openMenu() {
 
-const sidebar =
-    document.getElementById("sidebar");
-
-const overlay =
-    document.getElementById("overlay");
-
-const closeMenu =
-    document.getElementById("closeMenu");
-
-
-function openMenu() {
-
-    sidebar.classList.add("open");
-
-    overlay.classList.add("show");
-
-}
-
-
-function closeSidebar() {
-
-    sidebar.classList.remove("open");
-
-    overlay.classList.remove("show");
-
-}
-
-
-if (menuButton) {
-
-    menuButton.addEventListener(
-        "click",
-        openMenu
-    );
-
-}
-
-
-if (closeMenu) {
-
-    closeMenu.addEventListener(
-        "click",
-        closeSidebar
-    );
-
-}
-
-
-if (overlay) {
-
-    overlay.addEventListener(
-        "click",
-        closeSidebar
-    );
-
-}
-
-
-// =====================================================
-// LOAD POSTS
-// =====================================================
-
-async function loadPosts() {
-
-    try {
-
-        const response =
-            await fetch(
-                POSTS_URL + "?t=" + Date.now()
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Gagal mengambil posts.json"
-            );
-
+        if (sidebar) {
+            sidebar.classList.add("active");
         }
 
-
-        const data =
-            await response.json();
-
-
-        if (!Array.isArray(data)) {
-
-            throw new Error(
-                "Format posts.json tidak valid"
-            );
-
+        if (overlay) {
+            overlay.classList.add("active");
         }
 
-
-        videos = data;
-
-        filteredVideos = [...videos];
-
-        currentPage = 1;
-
-        renderVideos();
-
-        loadPopular();
-
-
-    } catch (error) {
-
-        console.error(
-            "Load posts error:",
-            error
-        );
-
-
-        videoGrid.innerHTML =
-            `
-            <div class="empty-message">
-                ❌ Gagal memuat video.
-            </div>
-            `;
-
-    }
-
-}
-
-
-// =====================================================
-// RENDER VIDEO
-// =====================================================
-
-function renderVideos() {
-
-    if (!videoGrid) {
-        return;
+        document.body.style.overflow = "hidden";
     }
 
 
-    const totalPages =
-        Math.max(
-            1,
-            Math.ceil(
-                filteredVideos.length /
-                POSTS_PER_PAGE
-            )
-        );
+    function closeSidebar() {
 
+        if (sidebar) {
+            sidebar.classList.remove("active");
+        }
 
-    if (currentPage > totalPages) {
+        if (overlay) {
+            overlay.classList.remove("active");
+        }
 
-        currentPage =
-            totalPages;
-
+        document.body.style.overflow = "";
     }
 
 
-    const start =
-        (currentPage - 1) *
-        POSTS_PER_PAGE;
-
-
-    const end =
-        start +
-        POSTS_PER_PAGE;
-
-
-    const pageVideos =
-        filteredVideos.slice(
-            start,
-            end
-        );
-
-
-    videoGrid.innerHTML = "";
-
-
-    if (
-        pageVideos.length === 0
-    ) {
-
-        videoGrid.innerHTML =
-            `
-            <div class="empty-message">
-                Tidak ada video ditemukan.
-            </div>
-            `;
-
-        updatePagination(
-            0
-        );
-
-        return;
+    if (menuButton) {
+        menuButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            openMenu();
+        });
     }
 
 
-    pageVideos.forEach(
-        function(video) {
+    if (closeMenu) {
+        closeMenu.addEventListener("click", (event) => {
+            event.preventDefault();
+            closeSidebar();
+        });
+    }
 
-            const card =
-                createVideoCard(
-                    video
+
+    if (overlay) {
+        overlay.addEventListener("click", () => {
+            closeSidebar();
+        });
+    }
+
+
+    /* =================================================
+       ESC UNTUK TUTUP SIDEBAR
+       ================================================= */
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+            closeSidebar();
+        }
+
+    });
+
+
+    /* =================================================
+       DATA
+       ================================================= */
+
+    let allPosts = [];
+
+    let filteredPosts = [];
+
+    let currentPage = 1;
+
+    const POSTS_PER_PAGE = 15;
+
+
+    /* =================================================
+       LOAD POSTS
+       ================================================= */
+
+    async function loadPosts() {
+
+        showLoading();
+
+        try {
+
+            const response = await fetch(
+                "/posts.json?v=" + Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "HTTP " + response.status
                 );
+            }
 
-            videoGrid.appendChild(
-                card
+            const data = await response.json();
+
+            if (!Array.isArray(data)) {
+                throw new Error(
+                    "posts.json bukan array"
+                );
+            }
+
+            allPosts = data;
+
+            filteredPosts = [...allPosts];
+
+            currentPage = 1;
+
+            renderVideos();
+
+            renderPopular();
+
+        } catch (error) {
+
+            console.error(
+                "Gagal memuat posts.json:",
+                error
             );
+
+            showError();
 
         }
-    );
+
+    }
 
 
-    updatePagination(
-        totalPages
-    );
+    /* =================================================
+       LOADING
+       ================================================= */
 
-}
+    function showLoading() {
 
+        if (!videoGrid) {
+            return;
+        }
 
-// =====================================================
-// VIDEO CARD
-// =====================================================
-
-function createVideoCard(video) {
-
-    const card =
-        document.createElement(
-            "a"
-        );
-
-
-    card.className =
-        "video-card";
-
-
-    card.href =
-        "/v/" +
-        encodeURIComponent(
-            video.slug
-        ) +
-        "/";
-
-
-    // ================================================
-    // THUMBNAIL
-    // ================================================
-
-    const thumbnail =
-        document.createElement(
-            "div"
-        );
-
-
-    thumbnail.className =
-        "video-thumbnail";
-
-
-    if (video.thumbnail) {
-
-        const img =
-            document.createElement(
-                "img"
-            );
-
-
-        img.src =
-            video.thumbnail;
-
-
-        img.alt =
-            video.title ||
-            "Video";
-
-
-        img.loading =
-            "lazy";
-
-
-        img.onerror =
-            function() {
-
-                img.style.display =
-                    "none";
-
-            };
-
-
-        thumbnail.appendChild(
-            img
-        );
-
-    } else {
-
-        thumbnail.innerHTML =
-            `
-            <div class="thumbnail-placeholder">
-                ▶
+        videoGrid.innerHTML = `
+            <div class="empty-message">
+                Memuat video...
             </div>
+        `;
+
+    }
+
+
+    /* =================================================
+       ERROR
+       ================================================= */
+
+    function showError() {
+
+        if (!videoGrid) {
+            return;
+        }
+
+        videoGrid.innerHTML = `
+            <div class="empty-message">
+                Gagal memuat video.
+                <br>
+                <small>
+                    Silakan refresh halaman.
+                </small>
+            </div>
+        `;
+
+        if (popularGrid) {
+            popularGrid.innerHTML = "";
+        }
+
+        updatePagination(0);
+
+    }
+
+
+    /* =================================================
+       ESCAPE HTML
+       ================================================= */
+
+    function escapeHtml(value) {
+
+        if (value === null || value === undefined) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =================================================
+       SLUG
+       ================================================= */
+
+    function getSlug(post) {
+
+        if (post.slug) {
+            return String(post.slug);
+        }
+
+        if (post.id !== undefined) {
+            return String(post.id);
+        }
+
+        return "";
+
+    }
+
+
+    /* =================================================
+       VIDEO URL
+       ================================================= */
+
+    function getVideoUrl(post) {
+
+        const slug = getSlug(post);
+
+        if (!slug) {
+            return "#";
+        }
+
+        return "/v/" +
+            encodeURIComponent(slug) +
+            "/";
+
+    }
+
+
+    /* =================================================
+       THUMBNAIL
+       ================================================= */
+
+    function getThumbnail(post) {
+
+        if (
+            post.thumbnail &&
+            String(post.thumbnail).trim() !== ""
+        ) {
+
+            return String(post.thumbnail);
+
+        }
+
+        /*
+         * Thumbnail fallback.
+         * Kalau thumbnail kosong, gunakan
+         * tampilan hitam dengan tombol play.
+         */
+
+        return "";
+
+    }
+
+
+    /* =================================================
+       RENDER VIDEO CARD
+       ================================================= */
+
+    function createVideoCard(post) {
+
+        const title = escapeHtml(
+            post.title || "Tanpa Judul"
+        );
+
+        const description = escapeHtml(
+            post.description || ""
+        );
+
+        const url = getVideoUrl(post);
+
+        const thumbnail = getThumbnail(post);
+
+
+        let thumbnailHtml = "";
+
+        if (thumbnail) {
+
+            thumbnailHtml = `
+                <img
+                    src="${escapeHtml(thumbnail)}"
+                    alt="${title}"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
             `;
 
-    }
+        }
 
 
-    // ================================================
-    // INFO
-    // ================================================
+        return `
+            <a
+                class="video-card"
+                href="${url}"
+            >
 
-    const info =
-        document.createElement(
-            "div"
-        );
+                <div class="video-thumbnail">
+                    ${thumbnailHtml}
+                </div>
 
+                <div class="video-info">
 
-    info.className =
-        "video-info";
+                    <div class="video-title">
+                        ${title}
+                    </div>
 
+                    ${
+                        description
+                        ? `
+                            <div class="video-description">
+                                ${description}
+                            </div>
+                        `
+                        : ""
+                    }
 
-    const title =
-        document.createElement(
-            "h3"
-        );
+                </div>
 
-
-    title.textContent =
-        video.title ||
-        "Tanpa Judul";
-
-
-    const description =
-        document.createElement(
-            "p"
-        );
-
-
-    description.textContent =
-        video.description ||
-        "";
-
-
-    info.appendChild(
-        title
-    );
-
-
-    if (video.description) {
-
-        info.appendChild(
-            description
-        );
+            </a>
+        `;
 
     }
 
 
-    card.appendChild(
-        thumbnail
-    );
+    /* =================================================
+       RENDER VIDEO
+       ================================================= */
 
+    function renderVideos() {
 
-    card.appendChild(
-        info
-    );
-
-
-    return card;
-
-}
-
-
-// =====================================================
-// PAGINATION
-// =====================================================
-
-function updatePagination(
-    totalPages
-) {
-
-    pageNumber.textContent =
-        currentPage;
-
-
-    pageInfo.textContent =
-        "Halaman " +
-        currentPage +
-        " / " +
-        totalPages;
-
-
-    prevButton.disabled =
-        currentPage <= 1;
-
-
-    nextButton.disabled =
-        currentPage >= totalPages;
-
-}
-
-
-prevButton.addEventListener(
-    "click",
-    function() {
-
-        if (
-            currentPage <= 1
-        ) {
+        if (!videoGrid) {
             return;
         }
 
 
-        currentPage--;
+        if (filteredPosts.length === 0) {
 
-        renderVideos();
+            videoGrid.innerHTML = `
+                <div class="empty-message">
+                    Video tidak ditemukan.
+                </div>
+            `;
+
+            updatePagination(0);
+
+            return;
+        }
 
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
-);
+        const totalPages = Math.ceil(
+            filteredPosts.length / POSTS_PER_PAGE
+        );
 
 
-nextButton.addEventListener(
-    "click",
-    function() {
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
 
-        const totalPages =
-            Math.ceil(
-                filteredVideos.length /
-                POSTS_PER_PAGE
+
+        if (currentPage < 1) {
+            currentPage = 1;
+        }
+
+
+        const startIndex =
+            (currentPage - 1) *
+            POSTS_PER_PAGE;
+
+
+        const endIndex =
+            startIndex +
+            POSTS_PER_PAGE;
+
+
+        const pagePosts =
+            filteredPosts.slice(
+                startIndex,
+                endIndex
             );
 
 
-        if (
-            currentPage >=
-            totalPages
-        ) {
-            return;
+        videoGrid.innerHTML =
+            pagePosts
+                .map(createVideoCard)
+                .join("");
+
+
+        updatePagination(totalPages);
+
+    }
+
+
+    /* =================================================
+       PAGINATION
+       ================================================= */
+
+    function updatePagination(totalPages) {
+
+        if (pageNumber) {
+
+            pageNumber.textContent =
+                totalPages > 0
+                ? currentPage
+                : "0";
+
         }
 
 
-        currentPage++;
+        if (pageInfo) {
 
-        renderVideos();
+            pageInfo.textContent =
+                totalPages > 0
+                ? `Halaman ${currentPage} / ${totalPages}`
+                : "Tidak ada video";
 
+        }
+
+
+        if (prevButton) {
+
+            prevButton.disabled =
+                currentPage <= 1 ||
+                totalPages <= 1;
+
+        }
+
+
+        if (nextButton) {
+
+            nextButton.disabled =
+                currentPage >= totalPages ||
+                totalPages <= 1;
+
+        }
+
+    }
+
+
+    /* =================================================
+       PREVIOUS
+       ================================================= */
+
+    if (prevButton) {
+
+        prevButton.addEventListener(
+            "click",
+            () => {
+
+                if (currentPage > 1) {
+
+                    currentPage--;
+
+                    renderVideos();
+
+                    scrollToVideos();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       NEXT
+       ================================================= */
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            () => {
+
+                const totalPages =
+                    Math.ceil(
+                        filteredPosts.length /
+                        POSTS_PER_PAGE
+                    );
+
+
+                if (currentPage < totalPages) {
+
+                    currentPage++;
+
+                    renderVideos();
+
+                    scrollToVideos();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       SCROLL KE VIDEO
+       ================================================= */
+
+    function scrollToVideos() {
+
+        const section =
+            videoGrid?.closest("section");
+
+        if (!section) {
+            return;
+        }
+
+        const headerHeight = 70;
+
+        const top =
+            section.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight;
 
         window.scrollTo({
-            top: 0,
+            top: Math.max(0, top),
             behavior: "smooth"
         });
 
     }
-);
 
 
-// =====================================================
-// SEARCH
-// =====================================================
+    /* =================================================
+       SEARCH
+       ================================================= */
 
-function doSearch() {
+    function performSearch() {
 
-    const keyword =
-        searchInput.value
-            .trim()
-            .toLowerCase();
+        const keyword =
+            searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
 
 
-    if (!keyword) {
+        if (!keyword) {
 
-        filteredVideos =
-            [...videos];
+            filteredPosts =
+                [...allPosts];
 
-    } else {
+        } else {
 
-        filteredVideos =
-            videos.filter(
-                function(video) {
+            filteredPosts =
+                allPosts.filter((post) => {
 
                     const title =
                         String(
-                            video.title || ""
+                            post.title || ""
                         ).toLowerCase();
 
 
                     const description =
                         String(
-                            video.description || ""
+                            post.description || ""
+                        ).toLowerCase();
+
+
+                    const slug =
+                        String(
+                            post.slug || ""
                         ).toLowerCase();
 
 
                     return (
-                        title.includes(
-                            keyword
-                        ) ||
-                        description.includes(
-                            keyword
-                        )
+                        title.includes(keyword) ||
+                        description.includes(keyword) ||
+                        slug.includes(keyword)
                     );
 
-                }
-            );
+                });
+
+        }
+
+
+        currentPage = 1;
+
+        renderVideos();
 
     }
 
 
-    currentPage = 1;
+    if (searchButton) {
 
-    renderVideos();
+        searchButton.addEventListener(
+            "click",
+            performSearch
+        );
 
-}
-
-
-if (searchButton) {
-
-    searchButton.addEventListener(
-        "click",
-        doSearch
-    );
-
-}
+    }
 
 
-if (searchInput) {
+    if (searchInput) {
 
-    searchInput.addEventListener(
-        "keydown",
-        function(event) {
+        searchInput.addEventListener(
+            "keydown",
+            (event) => {
 
-            if (
-                event.key === "Enter"
-            ) {
+                if (event.key === "Enter") {
 
-                doSearch();
+                    event.preventDefault();
+
+                    performSearch();
+
+                }
 
             }
-
-        }
-    );
-
-}
+        );
 
 
-// =====================================================
-// TOP 3 POPULER
-// =====================================================
+        searchInput.addEventListener(
+            "input",
+            () => {
 
-async function loadPopular() {
+                if (
+                    searchInput.value.trim() === ""
+                ) {
 
-    if (!popularGrid) {
-        return;
+                    filteredPosts =
+                        [...allPosts];
+
+                    currentPage = 1;
+
+                    renderVideos();
+
+                }
+
+            }
+        );
+
     }
 
 
-    try {
+    /* =================================================
+       POPULAR
+       ================================================= */
 
-        const response =
-            await fetch(
-                WORKER_URL +
-                "/api/popular?t=" +
-                Date.now()
-            );
+    function renderPopular() {
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Gagal mengambil popular"
-            );
-
+        if (!popularGrid) {
+            return;
         }
 
 
-        const data =
-            await response.json();
+        if (allPosts.length === 0) {
 
-
-        if (
-            !data.ok ||
-            !Array.isArray(
-                data.posts
-            )
-        ) {
-
-            throw new Error(
-                "Data popular tidak valid"
-            );
-
-        }
-
-
-        popularGrid.innerHTML =
-            "";
-
-
-        const popular =
-            data.posts.slice(
-                0,
-                3
-            );
-
-
-        if (
-            popular.length === 0
-        ) {
-
-            popularGrid.innerHTML =
-                `
-                <div class="empty-message">
-                    Belum ada video populer.
-                </div>
-                `;
+            popularGrid.innerHTML = "";
 
             return;
         }
 
 
-        popular.forEach(
-            function(video, index) {
+        /*
+         * Untuk sementara:
+         * post dengan popular:true akan diprioritaskan.
+         *
+         * Jika nanti D1 sudah terhubung ke homepage,
+         * bagian ini bisa diganti menjadi sorting
+         * berdasarkan total views.
+         */
 
-                const card =
-                    document.createElement(
-                        "a"
-                    );
-
-
-                card.className =
-                    "popular-card";
-
-
-                card.href =
-                    "/v/" +
-                    encodeURIComponent(
-                        video.slug
-                    ) +
-                    "/";
+        const popularPosts =
+            allPosts
+                .filter(
+                    post => post.popular === true
+                )
+                .slice(0, 3);
 
 
-                // ====================================
-                // THUMB
-                // ====================================
+        /*
+         * Kalau belum ada popular:true,
+         * ambil 3 post pertama sebagai fallback.
+         */
 
-                const thumb =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                thumb.className =
-                    "popular-thumbnail";
-
-
-                if (
-                    video.thumbnail
-                ) {
-
-                    const img =
-                        document.createElement(
-                            "img"
-                        );
-
-
-                    img.src =
-                        video.thumbnail;
-
-
-                    img.alt =
-                        video.title ||
-                        "Video";
-
-
-                    img.loading =
-                        "lazy";
-
-
-                    thumb.appendChild(
-                        img
-                    );
-
-                } else {
-
-                    thumb.innerHTML =
-                        `
-                        <div class="thumbnail-placeholder">
-                            ▶
-                        </div>
-                        `;
-
-                }
-
-
-                // ====================================
-                // INFO
-                // ====================================
-
-                const info =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                info.className =
-                    "popular-info";
-
-
-                const rank =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                rank.className =
-                    "popular-rank";
-
-
-                rank.textContent =
-                    "#" +
-                    (index + 1);
-
-
-                const title =
-                    document.createElement(
-                        "h3"
-                    );
-
-
-                title.textContent =
-                    video.title ||
-                    "Tanpa Judul";
-
-
-                const views =
-                    document.createElement(
-                        "p"
-                    );
-
-
-                views.className =
-                    "popular-views";
-
-
-                views.textContent =
-                    Number(
-                        video.views || 0
-                    ).toLocaleString(
-                        "id-ID"
-                    ) +
-                    " views";
-
-
-                info.appendChild(
-                    rank
-                );
-
-
-                info.appendChild(
-                    title
-                );
-
-
-                info.appendChild(
-                    views
-                );
-
-
-                card.appendChild(
-                    thumb
-                );
-
-
-                card.appendChild(
-                    info
-                );
-
-
-                popularGrid.appendChild(
-                    card
-                );
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Popular error:",
-            error
-        );
+        const finalPopular =
+            popularPosts.length > 0
+            ? popularPosts
+            : allPosts.slice(0, 3);
 
 
         popularGrid.innerHTML =
-            `
-            <div class="empty-message">
-                Gagal memuat video populer.
-            </div>
-            `;
+            finalPopular
+                .map(
+                    (post, index) =>
+                        createPopularCard(
+                            post,
+                            index + 1
+                        )
+                )
+                .join("");
 
     }
 
-}
+
+    /* =================================================
+       POPULAR CARD
+       ================================================= */
+
+    function createPopularCard(
+        post,
+        rank
+    ) {
+
+        const title = escapeHtml(
+            post.title || "Tanpa Judul"
+        );
+
+        const url = getVideoUrl(post);
+
+        const thumbnail =
+            getThumbnail(post);
 
 
-// =====================================================
-// START
-// =====================================================
+        let thumbnailHtml = "";
 
-loadPosts();
+        if (thumbnail) {
+
+            thumbnailHtml = `
+                <img
+                    src="${escapeHtml(thumbnail)}"
+                    alt="${title}"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
+            `;
+
+        }
+
+
+        return `
+            <a
+                class="popular-card"
+                href="${url}"
+            >
+
+                <div class="popular-thumbnail">
+                    ${thumbnailHtml}
+                </div>
+
+                <div class="popular-info">
+
+                    <div class="popular-rank">
+                        #${rank}
+                    </div>
+
+                    <div class="popular-title">
+                        ${title}
+                    </div>
+
+                </div>
+
+            </a>
+        `;
+
+    }
+
+
+    /* =================================================
+       SIDEBAR LINK
+       ================================================= */
+
+    if (sidebar) {
+
+        const sidebarLinks =
+            sidebar.querySelectorAll("a");
+
+        sidebarLinks.forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    closeSidebar();
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =================================================
+       START
+       ================================================= */
+
+    loadPosts();
+
+});
