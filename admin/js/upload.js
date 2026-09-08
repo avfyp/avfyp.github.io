@@ -1,37 +1,9 @@
 const WORKER_URL =
-    "https://avfyp-upload.cntk-njay.workers.dev";
+    "https://avfyp-upload.cntk-njay.workers.dev/";
 
 
-// ==========================================
-// ELEMENTS
-// ==========================================
-
-const adminKey =
-    document.getElementById("adminKey");
-
-const titleInput =
-    document.getElementById("title");
-
-const slugInput =
-    document.getElementById("slug");
-
-const descriptionInput =
-    document.getElementById("description");
-
-const thumbnailInput =
-    document.getElementById("thumbnail");
-
-const stInput =
-    document.getElementById("st");
-
-const gdInput =
-    document.getElementById("gd");
-
-const vdInput =
-    document.getElementById("vd");
-
-const popularInput =
-    document.getElementById("popular");
+const form =
+    document.getElementById("uploadForm");
 
 const uploadButton =
     document.getElementById("uploadButton");
@@ -39,315 +11,281 @@ const uploadButton =
 const statusBox =
     document.getElementById("status");
 
+const resultBox =
+    document.getElementById("result");
 
-// ==========================================
-// SLUG
-// ==========================================
+const titleInput =
+    document.getElementById("title");
 
-let slugManuallyEdited = false;
-
-
-titleInput.addEventListener(
-    "input",
-    () => {
-
-        if (slugManuallyEdited) {
-            return;
-        }
-
-        slugInput.value =
-            createSlug(titleInput.value);
-    }
-);
+const slugInput =
+    document.getElementById("slug");
 
 
-slugInput.addEventListener(
-    "input",
-    () => {
+function makeSlug(text) {
 
-        slugManuallyEdited = true;
-
-        slugInput.value =
-            createSlug(slugInput.value);
-    }
-);
-
-
-function createSlug(text) {
-
-    return String(text)
+    return text
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
         .replace(/^-|-$/g, "");
+
 }
 
 
-// ==========================================
-// STATUS
-// ==========================================
+titleInput.addEventListener(
+    "input",
+    () => {
 
-function showStatus(
-    message,
-    type = ""
-) {
+        if (!slugInput.value.trim()) {
+
+            slugInput.value =
+                makeSlug(
+                    titleInput.value
+                );
+
+        }
+
+    }
+);
+
+
+function showStatus(message) {
 
     statusBox.textContent =
         message;
 
-    statusBox.className =
-        "status show";
+    statusBox.classList.remove(
+        "hidden"
+    );
 
-    if (type) {
-        statusBox.classList.add(type);
-    }
 }
 
 
-// ==========================================
-// UPLOAD
-// ==========================================
+form.addEventListener(
+    "submit",
+    async (event) => {
 
-uploadButton.addEventListener(
-    "click",
-    uploadVideo
-);
+        event.preventDefault();
 
-
-async function uploadVideo() {
-
-    const key =
-        adminKey.value.trim();
-
-    const title =
-        titleInput.value.trim();
-
-    const slug =
-        slugInput.value.trim();
-
-    const description =
-        descriptionInput.value.trim();
-
-    const thumbnail =
-        thumbnailInput.value.trim();
-
-    const st =
-        stInput.value.trim();
-
-    const gd =
-        gdInput.value.trim();
-
-    const vd =
-        vdInput.value.trim();
-
-    const popular =
-        popularInput.checked;
-
-
-    // --------------------------------------
-    // VALIDATION
-    // --------------------------------------
-
-    if (!key) {
-
-        showStatus(
-            "Admin Key wajib diisi.",
-            "error"
+        statusBox.classList.add(
+            "hidden"
         );
 
-        return;
-    }
-
-
-    if (!title) {
-
-        showStatus(
-            "Judul video wajib diisi.",
-            "error"
+        resultBox.classList.add(
+            "hidden"
         );
 
-        return;
-    }
+        resultBox.innerHTML = "";
 
 
-    if (!slug) {
-
-        showStatus(
-            "Slug video wajib diisi.",
-            "error"
-        );
-
-        return;
-    }
+        const adminKey =
+            document
+                .getElementById("adminKey")
+                .value
+                .trim();
 
 
-    if (!st && !gd && !vd) {
-
-        showStatus(
-            "Minimal satu server video harus diisi.",
-            "error"
-        );
-
-        return;
-    }
+        const title =
+            titleInput
+                .value
+                .trim();
 
 
-    // --------------------------------------
-    // BUTTON
-    // --------------------------------------
-
-    uploadButton.disabled = true;
-
-    uploadButton.textContent =
-        "⏳ Mengupload...";
+        const slug =
+            slugInput
+                .value
+                .trim() ||
+            makeSlug(title);
 
 
-    showStatus(
-        "Mengirim data ke Worker..."
-    );
+        const description =
+            document
+                .getElementById("description")
+                .value
+                .trim();
 
 
-    // --------------------------------------
-    // REQUEST
-    // --------------------------------------
+        const thumbnail =
+            document
+                .getElementById("thumbnail")
+                .value
+                .trim();
 
-    try {
 
-        const response =
-            await fetch(
-                WORKER_URL,
-                {
-                    method: "POST",
+        const st =
+            document
+                .getElementById("st")
+                .value
+                .trim();
 
-                    headers: {
-                        "Content-Type":
-                            "application/json",
 
-                        "Authorization":
-                            "Bearer " + key
-                    },
+        const av =
+            document
+                .getElementById("av")
+                .value
+                .trim();
 
-                    body: JSON.stringify({
 
-                        title: title,
+        const popular =
+            document
+                .getElementById("popular")
+                .checked;
 
-                        description:
-                            description,
 
-                        slug: slug,
+        if (!adminKey) {
 
-                        thumbnail:
-                            thumbnail,
-
-                        st: st,
-
-                        gd: gd,
-
-                        vd: vd,
-
-                        popular: popular
-                    })
-                }
+            showStatus(
+                "❌ Password admin belum diisi."
             );
 
+            return;
+        }
 
-        let data;
+
+        if (!title) {
+
+            showStatus(
+                "❌ Judul belum diisi."
+            );
+
+            return;
+        }
+
+
+        if (!st && !av) {
+
+            showStatus(
+                "❌ Minimal isi satu server video."
+            );
+
+            return;
+        }
+
+
+        uploadButton.disabled = true;
+
+        uploadButton.textContent =
+            "⌛ Mengupload...";
+
+
+        showStatus(
+            "🕒 Menghubungi server AVFYP..."
+        );
 
 
         try {
 
-            data =
-                await response.json();
+            const response =
+                await fetch(
+                    WORKER_URL,
+                    {
+                        method: "POST",
 
-        } catch {
+                        headers: {
+                            "Content-Type":
+                                "application/json",
 
-            throw new Error(
-                "Worker mengembalikan response yang tidak valid."
+                            "Authorization":
+                                "Bearer " +
+                                adminKey
+                        },
+
+                        body:
+                            JSON.stringify({
+                                title,
+                                slug,
+                                description,
+                                thumbnail,
+                                st,
+                                av,
+                                popular
+                            })
+                    }
+                );
+
+
+            let data = {};
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch (_) {}
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    `Upload gagal. HTTP ${response.status}`
+                );
+
+            }
+
+
+            showStatus(
+                "✅ Video berhasil ditambahkan!"
             );
-        }
 
 
-        if (
-            !response.ok ||
-            !data.ok
-        ) {
+            const videoUrl =
+                "https://avfyp.github.io/v/" +
+                encodeURIComponent(slug) +
+                "/";
 
-            throw new Error(
-                data.error ||
-                "Upload gagal."
+
+            resultBox.innerHTML = `
+                <strong>
+                    Posting berhasil dibuat.
+                </strong>
+
+                <p>
+                    URL video:
+                </p>
+
+                <p>
+                    <a
+                        href="${videoUrl}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ${videoUrl}
+                    </a>
+                </p>
+            `;
+
+
+            resultBox.classList.remove(
+                "hidden"
             );
+
+
+            form.reset();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                "❌ " +
+                (
+                    error.message ||
+                    "Terjadi kesalahan."
+                )
+            );
+
+        } finally {
+
+            uploadButton.disabled =
+                false;
+
+            uploadButton.textContent =
+                "🚀 Upload Video";
+
         }
 
-
-        // ----------------------------------
-        // SUCCESS
-        // ----------------------------------
-
-        let message =
-            "✅ Upload berhasil!\n\n";
-
-
-        if (data.url) {
-
-            message +=
-                "URL video:\n" +
-                data.url +
-                "\n\n";
-        }
-
-
-        message +=
-            "Video page dan posts.json sudah diperbarui.";
-
-
-        showStatus(
-            message,
-            "success"
-        );
-
-
-        // ----------------------------------
-        // RESET
-        // ----------------------------------
-
-        titleInput.value = "";
-        slugInput.value = "";
-
-        descriptionInput.value = "";
-
-        thumbnailInput.value = "";
-
-        stInput.value = "";
-        gdInput.value = "";
-        vdInput.value = "";
-
-        popularInput.checked = false;
-
-        slugManuallyEdited = false;
-
-
-    } catch (error) {
-
-        console.error(
-            "Upload error:",
-            error
-        );
-
-
-        showStatus(
-            "❌ " + error.message,
-            "error"
-        );
-
-
-    } finally {
-
-        uploadButton.disabled =
-            false;
-
-        uploadButton.textContent =
-            "🚀 Upload Video";
     }
-}
+);
