@@ -1,63 +1,529 @@
 /* =====================================================
+   AVFYP - MAIN STYLE
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #0d0d0d;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    background: #111111;
+    border-bottom: 1px solid #252525;
+}
+
+.logo {
+    margin-left: 18px;
+
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   HAMBURGER
+   ===================================================== */
+
+.menu-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    background: #222222;
+}
+
+.menu-button span {
+    display: block;
+
+    width: 21px;
+    height: 2px;
+
+    background: #ffffff;
+    border-radius: 2px;
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -290px;
+
+    z-index: 2000;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #151515;
+
+    border-right: 1px solid #292929;
+
+    transition: left 0.25s ease;
+
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid #292929;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.close-menu {
+    width: 34px;
+    height: 34px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: #222222;
+    color: #ffffff;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.close-menu:hover {
+    background: #303030;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+
+    padding: 12px;
+}
+
+.sidebar-menu a {
+    display: block;
+
+    padding: 13px 14px;
+
+    color: #dddddd;
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+}
+
+.sidebar-menu a:hover {
+    background: #222222;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   OVERLAY
+   ===================================================== */
+
+.overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1500;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 28px 22px 50px;
+}
+
+.container > h1 {
+    margin-bottom: 22px;
+
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.search-box {
+    width: 100%;
+
+    display: flex;
+
+    margin-bottom: 30px;
+}
+
+.search-box input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 46px;
+
+    padding: 0 15px;
+
+    background: #151515;
+
+    color: #ffffff;
+
+    border: 1px solid #303030;
+    border-right: 0;
+
+    border-radius: 9px 0 0 9px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: #777777;
+}
+
+.search-box input:focus {
+    border-color: #555555;
+}
+
+.search-box button {
+    width: 54px;
+
+    height: 46px;
+
+    border: 1px solid #303030;
+
+    border-radius: 0 9px 9px 0;
+
+    background: #222222;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.search-box button:hover {
+    background: #2c2c2c;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+   ===================================================== */
+
+.section-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.section-title span {
+    color: #777777;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   VIDEO GRID
+   ===================================================== */
+
+.video-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =====================================================
    VIDEO CARD
    ===================================================== */
 
 .video-card {
     display: block;
-    color: #fff;
-    text-decoration: none;
-    background: #151515;
-    border: 1px solid #292929;
-    border-radius: 10px;
+
+    min-width: 0;
+
     overflow: hidden;
-    transition: transform 0.15s ease,
-                border-color 0.15s ease;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
 }
 
 .video-card:hover {
     transform: translateY(-2px);
-    border-color: #444;
+
+    border-color: #444444;
+
+    background: #181818;
 }
 
 .video-thumbnail {
+    position: relative;
+
     width: 100%;
+
     aspect-ratio: 16 / 9;
-    background: #111;
+
+    background: #101010;
+
     overflow: hidden;
 }
 
 .video-thumbnail img {
+    display: block;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
-    display: block;
 }
 
-.thumbnail-placeholder {
-    width: 100%;
-    height: 100%;
+.video-thumbnail::after {
+    content: "▶";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 44px;
+    height: 44px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
-    color: #555;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    opacity: 0.9;
 }
 
 .video-info {
     padding: 12px;
 }
 
-.video-info h3 {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.4;
+.video-title {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1.45;
+
+    color: #ffffff;
 }
 
-.video-info p {
-    margin: 6px 0 0;
-    color: #888;
+.video-description {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    margin-top: 6px;
+
+    color: #888888;
+
     font-size: 12px;
-    line-height: 1.4;
+
+    line-height: 1.45;
+}
+
+
+/* =====================================================
+   EMPTY / LOADING
+   ===================================================== */
+
+.empty-message {
+    grid-column: 1 / -1;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #777777;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   PAGINATION
+   ===================================================== */
+
+.pagination {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.pagination button {
+    min-height: 40px;
+
+    padding: 0 15px;
+
+    border: 1px solid #303030;
+
+    border-radius: 8px;
+
+    background: #181818;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #252525;
+}
+
+.pagination button:disabled {
+    opacity: 0.35;
+
+    cursor: not-allowed;
+}
+
+.pagination span {
+    min-width: 35px;
+
+    text-align: center;
+
+    color: #bbbbbb;
+
+    font-size: 14px;
 }
 
 
@@ -65,89 +531,335 @@
    POPULAR
    ===================================================== */
 
+.popular-section {
+    margin-top: 42px;
+
+    padding-top: 28px;
+
+    border-top: 1px solid #292929;
+}
+
 .popular-grid {
     display: grid;
+
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
-    gap: 14px;
+
+    gap: 16px;
 }
 
 .popular-card {
     display: block;
-    color: #fff;
-    text-decoration: none;
-    background: #151515;
-    border: 1px solid #292929;
-    border-radius: 10px;
+
     overflow: hidden;
-    transition: transform 0.15s ease,
-                border-color 0.15s ease;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease;
 }
 
 .popular-card:hover {
     transform: translateY(-2px);
-    border-color: #444;
+
+    border-color: #444444;
 }
 
 .popular-thumbnail {
+    position: relative;
+
     width: 100%;
+
     aspect-ratio: 16 / 9;
-    background: #111;
+
+    background: #101010;
+
     overflow: hidden;
 }
 
 .popular-thumbnail img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: block;
 }
 
 .popular-info {
-    padding: 11px;
+    padding: 12px;
 }
 
 .popular-rank {
-    display: block;
-    color: #888;
+    margin-bottom: 5px;
+
+    color: #777777;
+
     font-size: 12px;
-    margin-bottom: 4px;
 }
 
-.popular-info h3 {
-    margin: 0;
+.popular-title {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
     font-size: 14px;
-    line-height: 1.4;
+    font-weight: 700;
+
+    line-height: 1.45;
 }
 
 .popular-views {
-    margin: 6px 0 0;
-    color: #777;
+    margin-top: 6px;
+
+    color: #777777;
+
     font-size: 12px;
 }
 
 
 /* =====================================================
-   EMPTY
+   ABOUT
    ===================================================== */
 
-.empty-message {
-    width: 100%;
-    padding: 30px 15px;
-    color: #777;
+.about {
+    margin-top: 45px;
+
+    padding: 22px;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 10px;
+}
+
+.about p {
+    color: #999999;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
     text-align: center;
-    grid-column: 1 / -1;
 }
 
 
 /* =====================================================
-   MOBILE
+   FOOTER
+   ===================================================== */
+
+.footer {
+    padding: 25px 0 10px;
+
+    text-align: center;
+}
+
+.copyright {
+    color: #777777;
+
+    font-size: 12px;
+}
+
+.copyright-note {
+    margin-top: 6px;
+
+    color: #555555;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   TELEGRAM POPUP
+   ===================================================== */
+
+.telegram-popup {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 1200;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 14px;
+
+    background: #151515;
+
+    border: 1px solid #303030;
+
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease;
+}
+
+.telegram-popup:hover {
+    transform: translateY(-2px);
+
+    background: #1d1d1d;
+}
+
+.telegram-icon {
+    font-size: 20px;
+}
+
+.telegram-text {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.telegram-text strong {
+    font-size: 13px;
+}
+
+.telegram-text small {
+    color: #777777;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE - TABLET
+   ===================================================== */
+
+@media (max-width: 1000px) {
+
+    .video-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE - MOBILE
    ===================================================== */
 
 @media (max-width: 700px) {
 
+    .header {
+        height: 58px;
+
+        padding: 0 14px;
+    }
+
+    .logo {
+        margin-left: 12px;
+
+        font-size: 20px;
+    }
+
+    .container {
+        padding:
+            22px 14px 40px;
+    }
+
+    .container > h1 {
+        font-size: 26px;
+    }
+
+    .video-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .popular-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .video-info {
+        padding: 10px;
+    }
+
+    .video-title {
+        font-size: 13px;
+    }
+
+    .video-description {
+        font-size: 11px;
+    }
+
+    .telegram-popup {
+        right: 12px;
+        bottom: 12px;
+
+        padding: 10px 12px;
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE - SMALL PHONE
+   ===================================================== */
+
+@media (max-width: 450px) {
+
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
     .popular-grid {
         grid-template-columns: 1fr;
+    }
+
+    .search-box input {
+        font-size: 13px;
+    }
+
+    .section-title h2 {
+        font-size: 18px;
+    }
+
+    .pagination {
+        gap: 7px;
+    }
+
+    .pagination button {
+        padding: 0 10px;
+
+        font-size: 12px;
+    }
+
+    .telegram-text small {
+        display: none;
     }
 
 }
