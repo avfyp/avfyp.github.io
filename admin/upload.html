@@ -6,198 +6,138 @@
 
     <title>AVFYP Admin Upload</title>
 
-    <link rel="stylesheet" href="css/upload.css">
+    <link rel="stylesheet" href="/admin/upload.css">
 </head>
-
 <body>
 
     <main class="admin-container">
 
-        <header class="admin-header">
-            <h1>AVFYP Admin</h1>
-            <p>Upload video baru</p>
-        </header>
+        <div class="admin-header">
+            <div>
+                <div class="logo">AVFYP</div>
+                <h1>Upload Video</h1>
+                <p>Tambah postingan baru ke website.</p>
+            </div>
 
+            <a href="/" class="home-button">
+                ← Home
+            </a>
+        </div>
 
-        <section class="upload-card">
+        <form id="uploadForm">
 
-            <!-- ADMIN KEY -->
-
-            <div class="form-group">
-                <label for="adminKey">
-                    Admin Key
-                </label>
-
+            <label>
+                Password Admin
                 <input
                     type="password"
                     id="adminKey"
-                    placeholder="Masukkan Admin Key"
-                    autocomplete="off"
+                    placeholder="Masukkan password admin"
+                    required
                 >
-            </div>
+            </label>
 
-
-            <!-- TITLE -->
-
-            <div class="form-group">
-                <label for="title">
-                    Judul Video
-                </label>
-
+            <label>
+                Judul Video
                 <input
                     type="text"
                     id="title"
-                    placeholder="Judul video"
+                    placeholder="Contoh: Video FYP Hari Ini"
+                    required
                 >
-            </div>
+            </label>
 
-
-            <!-- SLUG -->
-
-            <div class="form-group">
-                <label for="slug">
-                    Slug
-                </label>
-
+            <label>
+                Slug URL
                 <input
                     type="text"
                     id="slug"
-                    placeholder="judul-video"
+                    placeholder="video-fyp-hari-ini"
                 >
 
                 <small>
-                    Otomatis dibuat dari judul. Bisa diedit manual.
+                    Kosongkan untuk membuat otomatis dari judul.
                 </small>
-            </div>
+            </label>
 
-
-            <!-- DESCRIPTION -->
-
-            <div class="form-group">
-                <label for="description">
-                    Deskripsi
-                </label>
-
+            <label>
+                Deskripsi
                 <textarea
                     id="description"
                     placeholder="Deskripsi video..."
+                    rows="4"
                 ></textarea>
-            </div>
+            </label>
 
-
-            <!-- THUMBNAIL -->
-
-            <div class="form-group">
-                <label for="thumbnail">
-                    Thumbnail URL
-                </label>
-
+            <label>
+                Thumbnail URL
                 <input
                     type="url"
                     id="thumbnail"
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://..."
                 >
 
                 <small>
                     Opsional.
                 </small>
-            </div>
+            </label>
 
+            <div class="server-box">
 
-            <!-- SERVER -->
+                <h2>Server Video</h2>
 
-            <div class="server-section">
-
-                <div class="section-heading">
-                    Server Video
-                </div>
-
-
-                <div class="form-group">
-                    <label for="st">
-                        ST
-                    </label>
-
+                <label>
+                    Streamtape (ST)
                     <input
                         type="url"
                         id="st"
-                        placeholder="URL embed ST"
+                        placeholder="https://..."
                     >
-                </div>
+                </label>
 
-
-                <div class="form-group">
-                    <label for="gd">
-                        GD
-                    </label>
-
+                <label>
+                    Google Drive (GD)
                     <input
                         type="url"
                         id="gd"
-                        placeholder="https://drive.google.com/file/d/.../preview"
+                        placeholder="https://drive.google.com/file/d/.../view"
                     >
-                </div>
-
-
-                <div class="form-group">
-                    <label for="vd">
-                        VD
-                    </label>
-
-                    <input
-                        type="url"
-                        id="vd"
-                        placeholder="URL embed VD"
-                    >
-                </div>
-
-
-                <small>
-                    Minimal satu server harus diisi.
-                </small>
+                </label>
 
             </div>
 
-
-            <!-- POPULAR -->
-
-            <label class="checkbox-row">
-
+            <label class="checkbox">
                 <input
                     type="checkbox"
                     id="popular"
                 >
 
                 <span>
-                    Tandai sebagai populer
+                    Masukkan ke Populer
                 </span>
-
             </label>
 
-
-            <!-- SUBMIT -->
-
             <button
-                type="button"
+                type="submit"
                 id="uploadButton"
             >
                 🚀 Upload Video
             </button>
 
+        </form>
 
-            <!-- STATUS -->
+        <div
+            id="status"
+            class="status hidden"
+        ></div>
 
-            <div
-                id="status"
-                class="status"
-            ></div>
-
-        </section>
+        <div
+            id="result"
+            class="result hidden"
+        ></div>
 
     </main>
 
-
-    <script src="js/upload.js"></script>
+    <script src="/admin/upload.js"></script>
 
 </body>
 </html>
