@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AVFYP</title>
-    <link rel="stylesheet" href="/css/style.css?v=999">
+
+    <link rel="stylesheet" href="/css/style.css?v=1000">
 </head>
 <body>
 
     <!-- HEADER -->
     <header class="header">
+
         <button
             class="menu-button"
             id="menuButton"
@@ -21,33 +23,64 @@
         </button>
 
         <a href="/" class="logo">AVFYP</a>
+
     </header>
+
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
+
         <div class="sidebar-header">
             <span>MENU</span>
-            <button id="closeMenu" class="close-menu">×</button>
+
+            <button
+                id="closeMenu"
+                class="close-menu"
+                aria-label="Tutup menu"
+            >
+                ×
+            </button>
         </div>
 
         <nav class="sidebar-menu">
-            <a href="index.html">🏠 Beranda</a>
-            <a href="#">🔥 Populer</a>
-            <a href="#">🆕 Terbaru</a>
-            <a href="#">📂 Kategori</a>
+
+            <a href="/">
+                🏠 Beranda
+            </a>
+
+            <a href="/populer/">
+                🔥 Populer
+            </a>
+
+            <a href="#">
+                🆕 Terbaru
+            </a>
+
+            <a href="#">
+                📂 Kategori
+            </a>
+
         </nav>
+
     </aside>
 
+
     <!-- OVERLAY -->
-    <div class="overlay" id="overlay"></div>
+    <div
+        class="overlay"
+        id="overlay"
+    ></div>
+
 
     <!-- MAIN -->
     <main class="container">
 
         <h1>Beranda</h1>
 
+
         <!-- SEARCH -->
         <div class="search-box">
+
             <input
                 type="search"
                 id="searchInput"
@@ -61,22 +94,33 @@
             >
                 🔍
             </button>
+
         </div>
 
-        <!-- VIDEO -->
+
+        <!-- LAST UPDATED -->
         <section>
+
             <div class="section-title">
+
                 <h2>Last Updated</h2>
-                <span id="pageInfo">Halaman 1</span>
+
+                <span id="pageInfo">
+                    Halaman 1
+                </span>
+
             </div>
+
 
             <div
                 class="video-grid"
                 id="videoGrid"
             ></div>
 
+
             <!-- PAGINATION -->
             <div class="pagination">
+
                 <button
                     id="prevButton"
                     disabled
@@ -84,21 +128,35 @@
                     ← Sebelumnya
                 </button>
 
-                <span id="pageNumber">1</span>
+                <span id="pageNumber">
+                    1
+                </span>
 
                 <button id="nextButton">
                     Selanjutnya →
                 </button>
+
             </div>
+
         </section>
 
-        <!-- TOP 3 POPULER -->
+
+        <!-- TOP 4 POPULER -->
         <section class="popular-section">
 
             <div class="section-title">
+
                 <h2>🔥 Populer</h2>
-                <span>Top 3</span>
+
+                <a
+                    href="/populer/"
+                    class="section-link"
+                >
+                    Lihat Semua
+                </a>
+
             </div>
+
 
             <div
                 class="popular-grid"
@@ -107,13 +165,17 @@
 
         </section>
 
+
         <!-- ABOUT -->
         <section class="about">
+
             <p>
                 Pusat nonton video viral fyp. Update setiap hari dan pastinya 100% gratis.
                 Hanya di AVFYP Asupan FYP Untuk Penyegar Harimu :)
             </p>
+
         </section>
+
 
         <!-- COPYRIGHT -->
         <footer class="footer">
@@ -130,6 +192,7 @@
 
     </main>
 
+
     <!-- TELEGRAM -->
     <a
         href="https://t.me/AVFYP"
@@ -138,15 +201,20 @@
         class="telegram-popup"
         aria-label="Telegram AVFYP"
     >
-        <span class="telegram-icon">✈️</span>
+
+        <span class="telegram-icon">
+            ✈️
+        </span>
 
         <div class="telegram-text">
             <!--<strong>Join Telegram</strong>
             <small>Dapatkan update terbaru</small>-->
         </div>
+
     </a>
 
-    <script src="/js/script.js?v=999"></script>
+
+    <script src="/js/script.js?v=1000"></script>
 
 </body>
 </html>
