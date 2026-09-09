@@ -1,30 +1,160 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =====================================================
+   VIDEO CONTAINER
+===================================================== */
+
+.video-container {
+    max-width: 1000px;
 }
 
 
-html,
-body {
-    min-height: 100%;
+/* =====================================================
+   BREADCRUMB
+===================================================== */
 
-    background: #0d0d0d;
+.video-breadcrumb {
+    margin-bottom: 12px;
+}
 
-    color: #ffffff;
+.video-breadcrumb a {
+    color: #aaa;
+    text-decoration: none;
+}
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+.video-breadcrumb a:hover {
+    color: #fff;
 }
 
 
-/* HEADER */
+/* =====================================================
+   TITLE
+===================================================== */
 
-.video-header {
+.video-title {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 0 0 18px;
+}
 
-    height: 64px;
+.video-description {
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   VIDEO PLAYER
+===================================================== */
+
+.player-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.player-wrapper iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.empty-player {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #888;
+}
+
+
+/* =====================================================
+   SERVER SWITCHER
+===================================================== */
+
+.server-switcher {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.server-button {
+    border: 1px solid #333;
+
+    background: #171717;
+
+    color: #aaa;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.server-button:hover {
+    background: #252525;
+    color: #fff;
+}
+
+.server-button.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+
+/* =====================================================
+   VIEWS
+===================================================== */
+
+.views-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    color: #aaa;
+
+    font-size: 15px;
+}
+
+.views-box strong {
+    color: #fff;
+}
+
+
+/* =====================================================
+   COMMENTS
+===================================================== */
+
+.comments-section {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    margin: 40px auto;
+}
+
+
+.comments-section .section-title {
 
     display: flex;
 
@@ -32,249 +162,285 @@ body {
 
     justify-content: space-between;
 
-    padding: 0 20px;
-
-    background: #0d0d0d;
-
-    border-bottom: 1px solid #242424;
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 100;
-
+    margin-bottom: 18px;
 }
 
 
-.logo {
-
-    color: #ffffff;
-
-    text-decoration: none;
-
-    font-size: 20px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-
+.comments-section h2 {
+    margin: 0;
 }
 
 
-.home-button {
+/* =====================================================
+   COMMENT FORM
+===================================================== */
 
-    color: #888888;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-}
-
-
-.home-button:hover {
-
-    color: #ffffff;
-
-}
-
-
-/* MAIN */
-
-.video-container {
+.comment-form {
 
     width: 100%;
 
-    max-width: 1100px;
+    display: flex;
 
-    margin: auto;
+    flex-direction: column;
 
-    padding: 35px 20px 70px;
+    align-items: center;
 
+    gap: 12px;
 }
 
 
-.video-container h1 {
+.comment-input,
+.comment-textarea {
 
-    font-size: 25px;
+    width: 100%;
 
-    line-height: 1.4;
+    box-sizing: border-box;
 
-    margin-bottom: 20px;
+    border: 1px solid #333;
 
+    border-radius: 8px;
+
+    background: #171717;
+
+    color: #fff;
+
+    padding: 12px 14px;
+
+    font-size: 16px;
+
+    outline: none;
 }
 
 
-/* PLAYER */
+.comment-input:focus,
+.comment-textarea:focus {
 
-.player-wrapper {
+    border-color: #666;
+}
+
+
+.comment-textarea {
+
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* =====================================================
+   COMMENT BUTTON
+===================================================== */
+
+.comment-submit {
+
+    width: 100%;
+
+    max-width: 220px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    padding: 12px 18px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.comment-submit:hover {
+    opacity: .9;
+}
+
+
+.comment-submit:disabled {
+
+    opacity: .5;
+
+    cursor: wait;
+}
+
+
+/* =====================================================
+   COMMENT LIST
+===================================================== */
+
+.comment-list {
+
+    width: 100%;
+
+    margin-top: 25px;
+}
+
+
+.comment-item {
+
+    padding: 14px 0;
+
+    border-bottom:
+        1px solid #292929;
+}
+
+
+.comment-item strong {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #fff;
+}
+
+
+.comment-item p {
+
+    margin: 0;
+
+    color: #bbb;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+.message {
+
+    text-align: center;
+
+    color: #888;
+
+    padding: 20px 10px;
+}
+
+
+/* =====================================================
+   POPULAR
+===================================================== */
+
+.popular-section {
+
+    margin-top: 40px;
+}
+
+
+.popular-card {
+
+    display: block;
+
+    text-decoration: none;
+
+    color: #fff;
+
+    background: #151515;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    border: 1px solid #252525;
+}
+
+
+.popular-card img {
+
+    display: block;
 
     width: 100%;
 
     aspect-ratio: 16 / 9;
 
-    background: #050505;
-
-    border: 1px solid #292929;
-
-    border-radius: 8px;
-
-    overflow: hidden;
-
+    object-fit: cover;
 }
 
 
-.player-wrapper iframe {
+.popular-content {
 
-    width: 100%;
-
-    height: 100%;
-
-    display: block;
-
-    border: none;
-
+    padding: 12px;
 }
 
 
-/* SERVER */
+.popular-content h3 {
 
-.server-switcher {
+    margin: 0 0 8px;
 
-    display: flex;
+    font-size: 15px;
 
-    gap: 8px;
-
-    margin-top: 14px;
-
+    line-height: 1.4;
 }
 
 
-.server-button {
+.popular-content span {
 
-    min-width: 55px;
+    color: #888;
 
-    padding: 9px 16px;
-
-    border: 1px solid #303030;
-
-    border-radius: 6px;
-
-    background: #151515;
-
-    color: #aaa;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
+    font-size: 13px;
 }
 
 
-.server-button:hover {
-
-    background: #242424;
-
-    color: #fff;
-
-}
-
-
-.server-button.active {
-
-    background: #ffffff;
-
-    color: #000000;
-
-    border-color: #ffffff;
-
-}
-
-
-/* THUMBNAIL */
-
-.thumbnail-preview {
-
-    display: none;
-
-}
-
-
-/* EMPTY */
-
-.empty-video {
-
-    text-align: center;
-
-    padding: 100px 20px;
-
-}
-
-
-.empty-video h1 {
-
-    margin-bottom: 10px;
-
-}
-
-
-.empty-video p {
-
-    color: #666666;
-
-    margin-bottom: 20px;
-
-}
-
-
-.empty-video a {
-
-    color: #aaa;
-
-    text-decoration: none;
-
-}
-
-
-.empty-video a:hover {
-
-    color: #fff;
-
-}
-
-
-/* MOBILE */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 600px) {
 
-    .video-header {
+    .video-title {
 
-        padding: 0 14px;
-
+        font-size: 18px;
     }
 
 
-    .video-container {
+    .server-switcher {
 
-        padding: 25px 12px 60px;
-
+        gap: 8px;
     }
 
 
-    .video-container h1 {
+    .server-button {
 
-        font-size: 20px;
+        flex: 1;
 
+        min-width: 0;
+
+        padding:
+            10px 12px;
     }
 
 
-    .player-wrapper {
+    .views-box {
 
-        border-radius: 5px;
+        justify-content: center;
+    }
 
+
+    .comments-section {
+
+        width:
+            calc(100% - 30px);
+
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+
+    .comments-section
+    .section-title {
+
+        align-items: center;
+    }
+
+
+    .comment-submit {
+
+        max-width: 100%;
     }
 
 }
