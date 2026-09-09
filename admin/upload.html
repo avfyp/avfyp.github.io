@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AVFYP - Upload Video</title>
 
-    <link rel="stylesheet" href="css/upload.css">
+    <link
+        rel="stylesheet"
+        href="css/upload.css"
+    >
+
 </head>
 
 <body>
@@ -14,17 +23,34 @@
 <div class="admin-container">
 
     <header class="admin-header">
-        <a href="/" class="back-link">← Beranda</a>
-        <h1>AVFYP Upload</h1>
-        <p>Tambah postingan video baru</p>
+
+        <a
+            href="/"
+            class="back-link"
+        >
+            ← Beranda
+        </a>
+
+        <h1>
+            AVFYP Upload
+        </h1>
+
+        <p>
+            Tambah postingan video baru
+        </p>
+
     </header>
 
 
-    <form id="uploadForm" autocomplete="off">
+    <form
+        id="uploadForm"
+        autocomplete="off"
+    >
 
         <!-- ADMIN KEY -->
 
         <div class="form-group">
+
             <label for="adminKey">
                 Password Admin
             </label>
@@ -35,12 +61,14 @@
                 placeholder="Masukkan password admin"
                 required
             >
+
         </div>
 
 
         <!-- TITLE -->
 
         <div class="form-group">
+
             <label for="title">
                 Judul Video
             </label>
@@ -52,12 +80,14 @@
                 maxlength="150"
                 required
             >
+
         </div>
 
 
         <!-- SLUG -->
 
         <div class="form-group">
+
             <label for="slug">
                 Slug
             </label>
@@ -72,12 +102,14 @@
             <small>
                 Otomatis dibuat dari judul jika dikosongkan.
             </small>
+
         </div>
 
 
         <!-- DESCRIPTION -->
 
         <div class="form-group">
+
             <label for="description">
                 Deskripsi
             </label>
@@ -87,12 +119,14 @@
                 placeholder="Deskripsi video..."
                 rows="5"
             ></textarea>
+
         </div>
 
 
         <!-- THUMBNAIL -->
 
         <div class="form-group">
+
             <label for="thumbnail">
                 Thumbnail URL
             </label>
@@ -106,6 +140,7 @@
             <small>
                 Opsional. Masukkan URL gambar thumbnail.
             </small>
+
         </div>
 
 
@@ -113,9 +148,13 @@
 
         <div class="server-box">
 
-            <h2>Server Video</h2>
+            <h2>
+                Server Video
+            </h2>
+
 
             <div class="form-group">
+
                 <label for="server1">
                     SERVER1
                 </label>
@@ -129,10 +168,12 @@
                 <small>
                     Server pemutaran utama.
                 </small>
+
             </div>
 
 
             <div class="form-group">
+
                 <label for="server2">
                     SERVER2
                 </label>
@@ -146,6 +187,7 @@
                 <small>
                     Server pemutaran alternatif.
                 </small>
+
             </div>
 
         </div>
@@ -198,7 +240,9 @@
 </div>
 
 
-<script src="js/upload.js"></script>
+<script
+    src="js/upload.js"
+></script>
 
 </body>
 </html>
