@@ -2,23 +2,34 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AVFYP Admin Upload</title>
 
-    <link rel="stylesheet" href="/admin/css/upload.css">
+    <link
+        rel="stylesheet"
+        href="/admin/css/upload.css"
+    >
 </head>
 
 <body>
 
 <main class="admin-container">
 
+    <!-- HEADER -->
     <div class="admin-header">
 
         <div>
-            <div class="logo">AVFYP</div>
+            <div class="logo">
+                AVFYP
+            </div>
 
-            <h1>Upload Video</h1>
+            <h1>
+                Upload Video
+            </h1>
 
             <p>
                 Tambah postingan baru ke website.
@@ -35,8 +46,10 @@
     </div>
 
 
+    <!-- FORM -->
     <form id="uploadForm">
 
+        <!-- PASSWORD -->
         <label>
             Password Admin
 
@@ -44,11 +57,13 @@
                 type="password"
                 id="adminKey"
                 placeholder="Masukkan password admin"
+                autocomplete="off"
                 required
             >
         </label>
 
 
+        <!-- TITLE -->
         <label>
             Judul Video
 
@@ -56,11 +71,13 @@
                 type="text"
                 id="title"
                 placeholder="Judul video"
+                maxlength="200"
                 required
             >
         </label>
 
 
+        <!-- SLUG -->
         <label>
             Slug URL
 
@@ -68,25 +85,29 @@
                 type="text"
                 id="slug"
                 placeholder="judul-video"
+                maxlength="80"
             >
 
             <small>
-                Kosongkan untuk otomatis dari judul.
+                Kosongkan untuk otomatis dibuat dari judul.
             </small>
         </label>
 
 
+        <!-- DESCRIPTION -->
         <label>
             Deskripsi
 
             <textarea
                 id="description"
                 rows="4"
+                maxlength="2000"
                 placeholder="Deskripsi video..."
             ></textarea>
         </label>
 
 
+        <!-- THUMBNAIL -->
         <label>
             Thumbnail URL
 
@@ -97,15 +118,19 @@
             >
 
             <small>
-                Opsional.
+                Opsional. Masukkan URL gambar thumbnail.
             </small>
         </label>
 
 
+        <!-- SERVER -->
         <div class="server-box">
 
-            <h2>Server Video</h2>
+            <h2>
+                Server Video
+            </h2>
 
+            <!-- STREAMTAPE -->
             <label>
                 Streamtape (ST)
 
@@ -114,22 +139,49 @@
                     id="st"
                     placeholder="https://..."
                 >
+
+                <small>
+                    Server utama.
+                </small>
             </label>
 
 
+            <!-- GOOGLE DRIVE -->
             <label>
-                AVPLAYER (AV)
+                Google Drive (GD)
 
                 <input
                     type="url"
-                    id="av"
+                    id="gd"
+                    placeholder="https://drive.google.com/file/d/..."
+                >
+
+                <small>
+                    Bisa menggunakan link Google Drive biasa.
+                    Sistem akan mengubahnya menjadi link preview.
+                </small>
+            </label>
+
+
+            <!-- VD -->
+            <label>
+                AVPLAYER (VD)
+
+                <input
+                    type="url"
+                    id="vd"
                     placeholder="https://..."
                 >
+
+                <small>
+                    Server video alternatif.
+                </small>
             </label>
 
         </div>
 
 
+        <!-- POPULAR -->
         <label class="checkbox">
 
             <input
@@ -144,6 +196,7 @@
         </label>
 
 
+        <!-- SUBMIT -->
         <button
             type="submit"
             id="uploadButton"
@@ -154,12 +207,14 @@
     </form>
 
 
+    <!-- STATUS -->
     <div
         id="status"
         class="status hidden"
     ></div>
 
 
+    <!-- RESULT -->
     <div
         id="result"
         class="result hidden"
@@ -168,6 +223,7 @@
 </main>
 
 
+<!-- ADMIN JAVASCRIPT -->
 <script src="/admin/js/upload.js"></script>
 
 </body>
