@@ -585,7 +585,8 @@ body {
 
 
 /* =====================================================
-   POPULAR
+   POPULAR HOME
+   TOP 4 - SQUARE 2x2
    ===================================================== */
 
 .popular-section {
@@ -602,7 +603,7 @@ body {
 
     grid-template-columns:
         repeat(
-            4,
+            2,
             minmax(0, 1fr)
         );
 
@@ -610,13 +611,226 @@ body {
 }
 
 
-/*
-   Popular homepage memakai tampilan
-   yang sama dengan video card homepage.
-*/
+/* =====================================================
+   POPULAR CARD
+   ===================================================== */
 
-.popular-grid .video-card {
+.popular-card {
+    display: block;
+
     min-width: 0;
+
+    overflow: hidden;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+}
+
+
+.popular-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #444444;
+
+    background: #181818;
+}
+
+
+/* =====================================================
+   POPULAR THUMBNAIL
+   SQUARE 1:1
+   ===================================================== */
+
+.popular-card-thumbnail {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    background: #101010;
+
+    overflow: hidden;
+}
+
+
+.popular-card-thumbnail img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =====================================================
+   POPULAR OVERLAY
+   ===================================================== */
+
+.popular-card-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.35)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   POPULAR RANK
+   ===================================================== */
+
+.popular-card-rank {
+    position: absolute;
+
+    top: 10px;
+
+    left: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 34px;
+
+    height: 28px;
+
+    padding: 0 9px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.72
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   POPULAR PLAY
+   ===================================================== */
+
+.popular-card-play {
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.68
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    padding-left: 2px;
+}
+
+
+/* =====================================================
+   POPULAR INFO
+   ===================================================== */
+
+.popular-card-info {
+    padding: 12px;
+}
+
+
+.popular-card-title {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.45;
+}
+
+
+.popular-card-views {
+    margin-top: 7px;
+
+    color: #777777;
+
+    font-size: 12px;
+
+    line-height: 1.4;
 }
 
 
@@ -633,10 +847,6 @@ body {
     margin-top: 2px;
 }
 
-
-/* =====================================================
-   POPULAR RANK
-   ===================================================== */
 
 .popular-rank {
     margin-bottom: 5px;
@@ -894,10 +1104,14 @@ body {
     }
 
 
+    /*
+     * Popular tetap 2x2.
+     */
+
     .popular-grid {
         grid-template-columns:
             repeat(
-                3,
+                2,
                 minmax(0, 1fr)
             );
     }
@@ -949,6 +1163,11 @@ body {
     }
 
 
+    /*
+     * Popular tetap 2 kolom
+     * di mobile.
+     */
+
     .popular-grid {
         grid-template-columns:
             repeat(
@@ -975,6 +1194,45 @@ body {
     }
 
 
+    .popular-card-info {
+        padding: 10px;
+    }
+
+
+    .popular-card-title {
+        font-size: 13px;
+    }
+
+
+    .popular-card-views {
+        font-size: 11px;
+    }
+
+
+    .popular-card-rank {
+        top: 8px;
+
+        left: 8px;
+
+        min-width: 31px;
+
+        height: 25px;
+
+        padding: 0 8px;
+
+        font-size: 11px;
+    }
+
+
+    .popular-card-play {
+        width: 42px;
+
+        height: 42px;
+
+        font-size: 16px;
+    }
+
+
     .telegram-popup {
         right: 12px;
 
@@ -994,12 +1252,26 @@ body {
 
 @media (max-width: 450px) {
 
-    .video-grid {
-        grid-template-columns: 1fr;
+    /*
+     * Popular sengaja TETAP 2 kolom.
+     * Jadi Top 4 selalu:
+     *
+     * [ #1 ][ #2 ]
+     * [ #3 ][ #4 ]
+     */
+
+    .popular-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 8px;
     }
 
 
-    .popular-grid {
+    .video-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1030,6 +1302,21 @@ body {
 
     .telegram-text small {
         display: none;
+    }
+
+
+    .popular-card-info {
+        padding: 9px;
+    }
+
+
+    .popular-card-title {
+        font-size: 12px;
+    }
+
+
+    .popular-card-views {
+        font-size: 10px;
     }
 
 }
