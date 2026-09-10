@@ -54,9 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
        DETECT PAGE
        ================================================= */
 
+    const pathname =
+        window.location.pathname;
+
+
     const isPopularPage =
-        window.location.pathname === "/populer/" ||
-        window.location.pathname === "/populer/index.html";
+        pathname === "/populer/" ||
+        pathname === "/populer/index.html";
 
 
     /* =================================================
@@ -68,38 +72,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =================================================
+       CONFIG
+       ================================================= */
+
+    const POSTS_PER_PAGE = 15;
+
+    const HOME_POPULAR_LIMIT = 4;
+
+
+    /* =================================================
        MENU
        ================================================= */
 
     function openMenu() {
 
         if (sidebar) {
-            sidebar.classList.add("active");
+
+            sidebar.classList.add(
+                "active"
+            );
+
         }
 
 
         if (overlay) {
-            overlay.classList.add("active");
+
+            overlay.classList.add(
+                "active"
+            );
+
         }
 
 
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow =
+            "hidden";
+
     }
 
 
     function closeSidebar() {
 
         if (sidebar) {
-            sidebar.classList.remove("active");
+
+            sidebar.classList.remove(
+                "active"
+            );
+
         }
 
 
         if (overlay) {
-            overlay.classList.remove("active");
+
+            overlay.classList.remove(
+                "active"
+            );
+
         }
 
 
-        document.body.style.overflow = "";
+        document.body.style.overflow =
+            "";
+
     }
 
 
@@ -157,7 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "keydown",
         (event) => {
 
-            if (event.key === "Escape") {
+            if (
+                event.key === "Escape"
+            ) {
 
                 closeSidebar();
 
@@ -177,8 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentPage = 1;
 
-    const POSTS_PER_PAGE = 15;
-
 
     /* =================================================
        ESCAPE HTML
@@ -190,27 +223,34 @@ document.addEventListener("DOMContentLoaded", () => {
             value === null ||
             value === undefined
         ) {
+
             return "";
+
         }
 
 
         return String(value)
+
             .replace(
                 /&/g,
                 "&amp;"
             )
+
             .replace(
                 /</g,
                 "&lt;"
             )
+
             .replace(
                 />/g,
                 "&gt;"
             )
+
             .replace(
                 /"/g,
                 "&quot;"
             )
+
             .replace(
                 /'/g,
                 "&#039;"
@@ -225,7 +265,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getSlug(post) {
 
-        if (post.slug) {
+        if (
+            post &&
+            post.slug
+        ) {
 
             return String(
                 post.slug
@@ -235,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (
+            post &&
             post.id !== undefined
         ) {
 
@@ -261,13 +305,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (!slug) {
+
             return "#";
+
         }
 
 
         return (
             "/v/" +
-            encodeURIComponent(slug) +
+            encodeURIComponent(
+                slug
+            ) +
             "/"
         );
 
@@ -281,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function getThumbnail(post) {
 
         if (
+            post &&
             post.thumbnail &&
             String(
                 post.thumbnail
@@ -305,11 +354,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getViews(post) {
 
+        if (!post) {
+
+            return 0;
+
+        }
+
+
         const possibleViews = [
+
             post.views,
+
             post.video_views,
+
             post.view_count,
+
             post.total_views
+
         ];
 
 
@@ -328,7 +389,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (
-                    Number.isFinite(number)
+                    Number.isFinite(
+                        number
+                    )
                 ) {
 
                     return number;
@@ -355,48 +418,79 @@ document.addEventListener("DOMContentLoaded", () => {
             Number(value) || 0;
 
 
-        if (views >= 1000000) {
+        if (
+            views >= 1000000
+        ) {
 
             return (
-                (views / 1000000)
-                    .toFixed(
-                        views >= 10000000
-                            ? 0
-                            : 1
-                    ) +
-                " jt tayangan"
+
+                (
+                    views /
+                    1000000
+                )
+
+                .toFixed(
+                    views >= 10000000
+                        ? 0
+                        : 1
+                )
+
+                .replace(
+                    ".0",
+                    ""
+                )
+
+                + " jt tayangan"
+
             );
 
         }
 
 
-        if (views >= 1000) {
+        if (
+            views >= 1000
+        ) {
 
             return (
-                (views / 1000)
-                    .toFixed(
-                        views >= 10000
-                            ? 0
-                            : 1
-                    ) +
-                " rb tayangan"
+
+                (
+                    views /
+                    1000
+                )
+
+                .toFixed(
+                    views >= 10000
+                        ? 0
+                        : 1
+                )
+
+                .replace(
+                    ".0",
+                    ""
+                )
+
+                + " rb tayangan"
+
             );
 
         }
 
 
         return (
+
             views.toLocaleString(
                 "id-ID"
-            ) +
-            " tayangan"
+            )
+
+            + " tayangan"
+
         );
 
     }
 
 
     /* =================================================
-       VIDEO CARD
+       CREATE NORMAL VIDEO CARD
        ================================================= */
 
     function createVideoCard(
@@ -434,7 +528,8 @@ document.addEventListener("DOMContentLoaded", () => {
             options.rank;
 
 
-        let thumbnailHtml = "";
+        let thumbnailHtml =
+            "";
 
 
         if (thumbnail) {
@@ -451,17 +546,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        let extraHtml = "";
+        let extraHtml =
+            "";
 
 
         if (
-            rank !== undefined
+            rank !== undefined &&
+            rank !== null
         ) {
 
-            extraHtml += `
+            extraHtml = `
+
                 <div class="popular-rank">
                     #${rank}
                 </div>
+
             `;
 
         }
@@ -470,47 +569,168 @@ document.addEventListener("DOMContentLoaded", () => {
         if (showViews) {
 
             extraHtml += `
+
                 <div class="popular-views">
                     ${formatViews(
                         getViews(post)
                     )}
                 </div>
+
             `;
 
         }
 
 
         return `
+
             <a
                 class="video-card"
                 href="${url}"
             >
 
                 <div class="video-thumbnail">
+
                     ${thumbnailHtml}
+
                 </div>
+
 
                 <div class="video-info">
 
                     ${extraHtml}
 
+
                     <div class="video-title">
+
                         ${title}
+
                     </div>
+
 
                     ${
                         description
-                        ? `
-                            <div class="video-description">
-                                ${description}
-                            </div>
-                        `
-                        : ""
+                            ? `
+
+                                <div class="video-description">
+
+                                    ${description}
+
+                                </div>
+
+                              `
+                            : ""
                     }
 
                 </div>
 
             </a>
+
+        `;
+
+    }
+
+
+    /* =================================================
+       CREATE POPULAR HOME CARD
+       ================================================= */
+
+    function createPopularHomeCard(
+        post,
+        rank
+    ) {
+
+        const title =
+            escapeHtml(
+                post.title ||
+                "Tanpa Judul"
+            );
+
+
+        const url =
+            getVideoUrl(post);
+
+
+        const thumbnail =
+            getThumbnail(post);
+
+
+        const views =
+            formatViews(
+                getViews(post)
+            );
+
+
+        let thumbnailHtml =
+            "";
+
+
+        if (thumbnail) {
+
+            thumbnailHtml = `
+
+                <img
+                    src="${escapeHtml(thumbnail)}"
+                    alt="${title}"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
+
+            `;
+
+        }
+
+
+        return `
+
+            <a
+                class="popular-card"
+                href="${url}"
+            >
+
+                <div class="popular-card-thumbnail">
+
+                    ${thumbnailHtml}
+
+
+                    <div class="popular-card-overlay">
+
+                        <span
+                            class="popular-card-rank"
+                        >
+                            #${rank}
+                        </span>
+
+
+                        <span
+                            class="popular-card-play"
+                        >
+                            ▶
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="popular-card-info">
+
+                    <div
+                        class="popular-card-title"
+                    >
+                        ${title}
+                    </div>
+
+
+                    <div
+                        class="popular-card-views"
+                    >
+                        👁 ${views}
+                    </div>
+
+                </div>
+
+            </a>
+
         `;
 
     }
@@ -522,16 +742,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showLoading() {
 
-        if (!videoGrid) {
-            return;
+        if (videoGrid) {
+
+            videoGrid.innerHTML = `
+
+                <div class="empty-message">
+
+                    Memuat video...
+
+                </div>
+
+            `;
+
         }
-
-
-        videoGrid.innerHTML = `
-            <div class="empty-message">
-                Memuat video...
-            </div>
-        `;
 
     }
 
@@ -542,40 +765,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showError() {
 
-        if (!videoGrid) {
-            return;
+        if (videoGrid) {
+
+            videoGrid.innerHTML = `
+
+                <div class="empty-message">
+
+                    Gagal memuat video.
+
+                    <br>
+
+                    <small>
+                        Silakan refresh halaman.
+                    </small>
+
+                </div>
+
+            `;
+
         }
-
-
-        videoGrid.innerHTML = `
-            <div class="empty-message">
-
-                Gagal memuat video.
-
-                <br>
-
-                <small>
-                    Silakan refresh halaman.
-                </small>
-
-            </div>
-        `;
 
 
         if (popularGrid) {
 
-            popularGrid.innerHTML = "";
+            popularGrid.innerHTML =
+                "";
 
         }
 
 
-        updatePagination(0);
+        updatePagination(
+            0
+        );
 
     }
 
 
     /* =================================================
-       LOAD POSTS - HOME
+       LOAD POSTS
        ================================================= */
 
     async function loadPosts() {
@@ -590,12 +817,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     "/posts.json?v=" +
                     Date.now(),
                     {
-                        cache: "no-store"
+                        cache:
+                            "no-store"
                     }
                 );
 
 
-            if (!response.ok) {
+            if (
+                !response.ok
+            ) {
 
                 throw new Error(
                     "HTTP " +
@@ -609,7 +839,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
 
-            if (!Array.isArray(data)) {
+            if (
+                !Array.isArray(data)
+            ) {
 
                 throw new Error(
                     "posts.json bukan array"
@@ -618,20 +850,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            allPosts = data;
+            allPosts =
+                data;
 
 
             filteredPosts =
                 [...allPosts];
 
 
-            currentPage = 1;
+            currentPage =
+                1;
 
 
             renderVideos();
 
 
-            if (!isPopularPage) {
+            if (
+                !isPopularPage
+            ) {
 
                 await loadHomePopular();
 
@@ -663,25 +899,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            /*
-             * Ambil daftar populer dari API.
-             *
-             * Limit besar supaya halaman populer
-             * bisa melakukan pagination sendiri.
-             */
-
             const response =
                 await fetch(
+
                     POPULAR_API +
                     "?limit=10000&t=" +
                     Date.now(),
+
                     {
-                        cache: "no-store"
+                        cache:
+                            "no-store"
                     }
+
                 );
 
 
-            if (!response.ok) {
+            if (
+                !response.ok
+            ) {
 
                 throw new Error(
                     "Popular API HTTP " +
@@ -695,60 +930,77 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
 
-            /*
-             * API bisa saja mengembalikan:
-             *
-             * [
-             *   {...},
-             *   {...}
-             * ]
-             *
-             * atau:
-             *
-             * {
-             *   posts: [...]
-             * }
-             */
-
-            let posts = [];
+            let posts =
+                [];
 
 
-            if (Array.isArray(data)) {
+            /* -----------------------------------------
+               API ARRAY
+               ----------------------------------------- */
 
-                posts = data;
-
-            } else if (
-                data &&
-                Array.isArray(data.posts)
+            if (
+                Array.isArray(data)
             ) {
 
-                posts = data.posts;
-
-            } else if (
-                data &&
-                Array.isArray(data.data)
-            ) {
-
-                posts = data.data;
+                posts =
+                    data;
 
             }
 
 
-            if (!posts.length) {
+            /* -----------------------------------------
+               API { posts: [] }
+               ----------------------------------------- */
 
-                /*
-                 * Fallback:
-                 * gunakan posts.json jika API
-                 * tidak mengembalikan data.
-                 */
+            else if (
+                data &&
+                Array.isArray(
+                    data.posts
+                )
+            ) {
+
+                posts =
+                    data.posts;
+
+            }
+
+
+            /* -----------------------------------------
+               API { data: [] }
+               ----------------------------------------- */
+
+            else if (
+                data &&
+                Array.isArray(
+                    data.data
+                )
+            ) {
+
+                posts =
+                    data.data;
+
+            }
+
+
+            /* -----------------------------------------
+               FALLBACK POSTS.JSON
+               ----------------------------------------- */
+
+            if (
+                posts.length === 0
+            ) {
 
                 const fallbackResponse =
                     await fetch(
+
                         "/posts.json?v=" +
                         Date.now(),
+
                         {
-                            cache: "no-store"
+                            cache:
+                                "no-store"
                         }
+
                     );
 
 
@@ -767,16 +1019,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     ) {
 
                         posts =
-                            fallbackData
-                                .map(
-                                    post => ({
-                                        ...post,
-                                        views:
-                                            getViews(
-                                                post
-                                            )
-                                    })
-                                );
+                            fallbackData.map(
+                                post => ({
+
+                                    ...post,
+
+                                    views:
+                                        getViews(
+                                            post
+                                        )
+
+                                })
+                            );
 
                     }
 
@@ -785,25 +1039,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            /*
-             * Pastikan sorting tetap berdasarkan
-             * jumlah views terbesar.
-             */
+            /* -----------------------------------------
+               SORT BY VIEWS
+               ----------------------------------------- */
 
             posts.sort(
-                (a, b) =>
-                    getViews(b) -
-                    getViews(a)
+                (
+                    a,
+                    b
+                ) => {
+
+                    return (
+                        getViews(b) -
+                        getViews(a)
+                    );
+
+                }
             );
 
 
-            allPosts = posts;
+            allPosts =
+                posts;
+
 
             filteredPosts =
                 [...allPosts];
 
 
-            currentPage = 1;
+            currentPage =
+                1;
 
 
             renderPopularPage();
@@ -824,20 +1088,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =================================================
-       HOME POPULAR TOP 4
+       LOAD HOME POPULAR TOP 4
        ================================================= */
 
     async function loadHomePopular() {
 
         if (!popularGrid) {
+
             return;
+
         }
 
 
         popularGrid.innerHTML = `
+
             <div class="empty-message">
+
                 Memuat video populer...
+
             </div>
+
         `;
 
 
@@ -845,16 +1115,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response =
                 await fetch(
+
                     POPULAR_API +
-                    "?limit=4&t=" +
+                    "?limit=" +
+                    HOME_POPULAR_LIMIT +
+                    "&t=" +
                     Date.now(),
+
                     {
-                        cache: "no-store"
+                        cache:
+                            "no-store"
                     }
+
                 );
 
 
-            if (!response.ok) {
+            if (
+                !response.ok
+            ) {
 
                 throw new Error(
                     "Popular API HTTP " +
@@ -868,16 +1146,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
 
-            let popularPosts = [];
+            let popularPosts =
+                [];
 
+
+            /* -----------------------------------------
+               ARRAY
+               ----------------------------------------- */
 
             if (
                 Array.isArray(data)
             ) {
 
-                popularPosts = data;
+                popularPosts =
+                    data;
 
-            } else if (
+            }
+
+
+            /* -----------------------------------------
+               { posts: [] }
+               ----------------------------------------- */
+
+            else if (
                 data &&
                 Array.isArray(
                     data.posts
@@ -887,7 +1178,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 popularPosts =
                     data.posts;
 
-            } else if (
+            }
+
+
+            /* -----------------------------------------
+               { data: [] }
+               ----------------------------------------- */
+
+            else if (
                 data &&
                 Array.isArray(
                     data.data
@@ -900,10 +1198,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            /*
-             * Jika API kosong,
-             * fallback ke posts.json.
-             */
+            /* -----------------------------------------
+               FALLBACK
+               ----------------------------------------- */
 
             if (
                 popularPosts.length === 0
@@ -911,38 +1208,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 popularPosts =
                     [...allPosts]
+
                         .sort(
-                            (a, b) =>
-                                getViews(b) -
-                                getViews(a)
+                            (
+                                a,
+                                b
+                            ) => {
+
+                                return (
+                                    getViews(b) -
+                                    getViews(a)
+                                );
+
+                            }
                         )
-                        .slice(0, 4);
+
+                        .slice(
+                            0,
+                            HOME_POPULAR_LIMIT
+                        );
 
             }
 
 
-            /*
-             * Tetap pastikan Top 4.
-             */
+            /* -----------------------------------------
+               SORT
+               ----------------------------------------- */
 
             popularPosts =
                 popularPosts
-                    .sort(
-                        (a, b) =>
-                            getViews(b) -
-                            getViews(a)
-                    )
-                    .slice(0, 4);
 
+                    .sort(
+                        (
+                            a,
+                            b
+                        ) => {
+
+                            return (
+                                getViews(b) -
+                                getViews(a)
+                            );
+
+                        }
+                    )
+
+                    .slice(
+                        0,
+                        HOME_POPULAR_LIMIT
+                    );
+
+
+            /* -----------------------------------------
+               EMPTY
+               ----------------------------------------- */
 
             if (
                 popularPosts.length === 0
             ) {
 
                 popularGrid.innerHTML = `
+
                     <div class="empty-message">
+
                         Belum ada video populer.
+
                     </div>
+
                 `;
 
                 return;
@@ -950,24 +1281,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /* -----------------------------------------
+               RENDER TOP 4
+               ----------------------------------------- */
+
             popularGrid.innerHTML =
                 popularPosts
+
                     .map(
                         (
                             post,
                             index
-                        ) =>
-                            createVideoCard(
-                                post,
-                                {
-                                    rank:
-                                        index + 1,
+                        ) => {
 
-                                    showViews:
-                                        true
-                                }
-                            )
+                            return createPopularHomeCard(
+                                post,
+                                index + 1
+                            );
+
+                        }
                     )
+
                     .join("");
 
 
@@ -979,19 +1313,31 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-            /*
-             * Fallback terakhir:
-             * ambil dari posts.json.
-             */
+            /* -----------------------------------------
+               FINAL FALLBACK
+               ----------------------------------------- */
 
             const fallback =
                 [...allPosts]
+
                     .sort(
-                        (a, b) =>
-                            getViews(b) -
-                            getViews(a)
+                        (
+                            a,
+                            b
+                        ) => {
+
+                            return (
+                                getViews(b) -
+                                getViews(a)
+                            );
+
+                        }
                     )
-                    .slice(0, 4);
+
+                    .slice(
+                        0,
+                        HOME_POPULAR_LIMIT
+                    );
 
 
             if (
@@ -1000,30 +1346,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 popularGrid.innerHTML =
                     fallback
+
                         .map(
                             (
                                 post,
                                 index
-                            ) =>
-                                createVideoCard(
-                                    post,
-                                    {
-                                        rank:
-                                            index + 1,
+                            ) => {
 
-                                        showViews:
-                                            true
-                                    }
-                                )
+                                return createPopularHomeCard(
+                                    post,
+                                    index + 1
+                                );
+
+                            }
                         )
+
                         .join("");
 
             } else {
 
                 popularGrid.innerHTML = `
+
                     <div class="empty-message">
+
                         Belum ada video populer.
+
                     </div>
+
                 `;
 
             }
@@ -1040,7 +1389,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderVideos() {
 
         if (!videoGrid) {
+
             return;
+
         }
 
 
@@ -1049,13 +1400,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             videoGrid.innerHTML = `
+
                 <div class="empty-message">
+
                     Video tidak ditemukan.
+
                 </div>
+
             `;
 
 
-            updatePagination(0);
+            updatePagination(
+                0
+            );
 
             return;
 
@@ -1064,8 +1421,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const totalPages =
             Math.ceil(
+
                 filteredPosts.length /
                 POSTS_PER_PAGE
+
             );
 
 
@@ -1084,7 +1443,8 @@ document.addEventListener("DOMContentLoaded", () => {
             currentPage < 1
         ) {
 
-            currentPage = 1;
+            currentPage =
+                1;
 
         }
 
@@ -1110,9 +1470,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         videoGrid.innerHTML =
             pagePosts
+
                 .map(
-                    createVideoCard
+                    post =>
+                        createVideoCard(
+                            post
+                        )
                 )
+
                 .join("");
 
 
@@ -1130,7 +1495,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderPopularPage() {
 
         if (!videoGrid) {
+
             return;
+
         }
 
 
@@ -1139,13 +1506,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
 
             videoGrid.innerHTML = `
+
                 <div class="empty-message">
+
                     Video populer tidak ditemukan.
+
                 </div>
+
             `;
 
 
-            updatePagination(0);
+            updatePagination(
+                0
+            );
 
             return;
 
@@ -1154,8 +1527,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const totalPages =
             Math.ceil(
+
                 filteredPosts.length /
                 POSTS_PER_PAGE
+
             );
 
 
@@ -1174,7 +1549,8 @@ document.addEventListener("DOMContentLoaded", () => {
             currentPage < 1
         ) {
 
-            currentPage = 1;
+            currentPage =
+                1;
 
         }
 
@@ -1200,6 +1576,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         videoGrid.innerHTML =
             pagePosts
+
                 .map(
                     (
                         post,
@@ -1213,7 +1590,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         return createVideoCard(
+
                             post,
+
                             {
                                 rank:
                                     globalRank,
@@ -1221,10 +1600,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 showViews:
                                     true
                             }
+
                         );
 
                     }
                 )
+
                 .join("");
 
 
@@ -1246,8 +1627,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (pageNumber) {
 
             pageNumber.textContent =
+
                 totalPages > 0
+
                     ? currentPage
+
                     : "0";
 
         }
@@ -1260,7 +1644,10 @@ document.addEventListener("DOMContentLoaded", () => {
             ) {
 
                 pageInfo.textContent =
-                    `Halaman ${currentPage} / ${totalPages}`;
+                    "Halaman " +
+                    currentPage +
+                    " / " +
+                    totalPages;
 
             } else {
 
@@ -1275,6 +1662,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (prevButton) {
 
             prevButton.disabled =
+
                 currentPage <= 1 ||
                 totalPages <= 1;
 
@@ -1284,6 +1672,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (nextButton) {
 
             nextButton.disabled =
+
                 currentPage >= totalPages ||
                 totalPages <= 1;
 
@@ -1293,7 +1682,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =================================================
-       SCROLL
+       SCROLL TO VIDEO
        ================================================= */
 
     function scrollToVideos() {
@@ -1305,17 +1694,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (!section) {
+
             return;
+
         }
 
 
-        const headerHeight = 70;
+        const headerHeight =
+            70;
 
 
         const top =
-            section.getBoundingClientRect()
+
+            section
+                .getBoundingClientRect()
                 .top +
+
             window.scrollY -
+
             headerHeight;
 
 
@@ -1387,8 +1783,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const totalPages =
                     Math.ceil(
+
                         filteredPosts.length /
                         POSTS_PER_PAGE
+
                     );
 
 
@@ -1430,10 +1828,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function performSearch() {
 
         const keyword =
+
             searchInput
+
                 ? searchInput.value
                     .trim()
                     .toLowerCase()
+
                 : "";
 
 
@@ -1445,31 +1846,39 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
 
             filteredPosts =
+
                 allPosts.filter(
                     (post) => {
 
                         const title =
+
                             String(
                                 post.title ||
                                 ""
-                            ).toLowerCase();
+                            )
+                            .toLowerCase();
 
 
                         const description =
+
                             String(
                                 post.description ||
                                 ""
-                            ).toLowerCase();
+                            )
+                            .toLowerCase();
 
 
                         const slug =
+
                             String(
                                 post.slug ||
                                 ""
-                            ).toLowerCase();
+                            )
+                            .toLowerCase();
 
 
                         return (
+
                             title.includes(
                                 keyword
                             ) ||
@@ -1481,6 +1890,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             slug.includes(
                                 keyword
                             )
+
                         );
 
                     }
@@ -1489,7 +1899,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        currentPage = 1;
+        currentPage =
+            1;
 
 
         if (
@@ -1507,6 +1918,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =================================================
+       SEARCH BUTTON
+       ================================================= */
+
     if (searchButton) {
 
         searchButton.addEventListener(
@@ -1516,6 +1931,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+
+    /* =================================================
+       SEARCH ENTER
+       ================================================= */
 
     if (searchInput) {
 
@@ -1538,6 +1957,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+        /* ---------------------------------------------
+           RESET SEARCH
+           --------------------------------------------- */
+
         searchInput.addEventListener(
             "input",
             () => {
@@ -1550,7 +1973,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     filteredPosts =
                         [...allPosts];
 
-                    currentPage = 1;
+
+                    currentPage =
+                        1;
 
 
                     if (
@@ -1574,7 +1999,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =================================================
-       SIDEBAR LINK
+       SIDEBAR LINKS
        ================================================= */
 
     if (sidebar) {
@@ -1607,7 +2032,9 @@ document.addEventListener("DOMContentLoaded", () => {
        START
        ================================================= */
 
-    if (isPopularPage) {
+    if (
+        isPopularPage
+    ) {
 
         loadPopularPage();
 
