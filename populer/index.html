@@ -9,6 +9,7 @@
 
     <link rel="icon" type="image/png" href="/admin/thumbnail/favicon/avfyp.png">
     <link rel="stylesheet" href="/css/style.css?v=1000">
+    <link rel="stylesheet" href="/css/popup.css?v=1000">
 
     <!-- POPUNDER ADS -->
     <script src="https://falconhoe.com/85/e8/fa/85e8fa1acc570ef0473a2f4798db7269.js"></script>
@@ -146,17 +147,58 @@
         <span class="telegram-icon">✈️</span>
 
         <div class="telegram-text">
-            <!--<strong>Join Telegram</strong>
-            <small>Dapatkan update terbaru</small>-->
+            <strong>Join Telegram</strong>
+            <!--<small>Dapatkan update terbaru</small>-->
         </div>
 
     </a>
-
 
     <script src="/js/script.js?v=1000"></script>
 
     <!-- SOCIALBAR ADS -->
     <script src="https://falconhoe.com/26/fd/17/26fd17015006d77681f6b3a7776bae40.js"></script>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popupOverlay">
+
+        <div class="popup">
+
+            <button
+                class="popup-close"
+                id="popupClose"
+                aria-label="Tutup"
+            >
+                ×
+            </button>
+
+            <a
+                href="https://falconhoe.com/bui4637q?key=1cf7bc491aa31c39bfe9cb1959bf4454"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img
+                    src="https://raw.githubusercontent.com/avfyp/avfyp.github.io/refs/heads/main/admin/thumbnail/favicon/file_00000000a18c82078050e62e29b91926.png"
+                    alt="Popup"
+                >
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        const popupOverlay = document.getElementById("popupOverlay");
+        const popupClose = document.getElementById("popupClose");
+
+        function hidePopup() {
+            popupOverlay.style.display = "none";
+        }
+
+        popupClose.addEventListener("click", hidePopup);
+
+        setTimeout(hidePopup, 5000);
+    </script>
 
 </body>
 </html>
