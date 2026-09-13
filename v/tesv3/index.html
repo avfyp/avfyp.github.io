@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>AVFYP</title>
+
+</head>
+
+<body>
+
+<script>
+
+(async () => {
+
+    try {
+
+        const response =
+            await fetch(
+                "https://avfyp-upload.cntk-njay.workers.dev/api/page/tesv3"
+            );
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+        }
+
+
+        const html =
+            await response.text();
+
+
+        document.open();
+
+        document.write(
+            html
+        );
+
+        document.close();
+
+
+    } catch (
+        error
+    ) {
+
+        console.error(
+            "Load page:",
+            error
+        );
+
+
+        document.body.innerHTML =
+            "<h2>Gagal memuat halaman.</h2>";
+    }
+
+})();
+
+</script>
+
+</body>
+
+</html>
