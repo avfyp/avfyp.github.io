@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1789270235290,
+    "title": "Tes Link Bang",
+    "description": "",
+    "slug": "tes-link-bang",
+    "thumbnail": "",
+    "popular": false,
+    "servers": {
+      "server1": "https://streamtape.com/e/BB6dqLQ7MPIy1KL",
+      "server2": "https://streamtape.com/e/BB6dqLQ7MPIy1KL"
+    }
+  }
+]
