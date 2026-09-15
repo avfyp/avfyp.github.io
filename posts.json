@@ -1,29 +1,5 @@
 [
   {
-    "id": 1789512498770,
-    "title": "sjjssijsej",
-    "description": "",
-    "slug": "sjjssijsej",
-    "thumbnail": "",
-    "popular": false,
-    "servers": {
-      "server1": "https://voe.sx/e/eqf18khhcpzd",
-      "server2": "https://playmogo.com/e/oav74ltz7ulp"
-    }
-  },
-  {
-    "id": 1789512092653,
-    "title": "Andini Permata Nyusuin Adek",
-    "description": "",
-    "slug": "andini-permata-nyusuin-adek",
-    "thumbnail": "https://github.com/avfyp/avfyp.github.io/blob/main/admin/thumbnail/Andini-Permata-Nyusuin-Adek.jpg",
-    "popular": false,
-    "servers": {
-      "server1": "https://voe.sx/e/eqf18khhcpzd",
-      "server2": "https://playmogo.com/e/oav74ltz7ulp"
-    }
-  },
-  {
     "id": 1789512029680,
     "title": "Andini Permata Jilmek With Adek",
     "description": "",
@@ -34,5 +10,4 @@
       "server1": "https://voe.sx/e/fzkkn8zilipx",
       "server2": "https://playmogo.com/e/hbmduj53x00a"
     }
-  }
 ]
